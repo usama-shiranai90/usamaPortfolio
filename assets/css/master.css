@@ -1,0 +1,185 @@
+@tailwind base;
+@tailwind components;
+
+:root {
+  --ex-dark-color: #1A1A1A;
+  --d-dark-color: #1B1B1B;
+  --md-dark-color: #212529;
+  --sm-dark-color: #3B3E43;
+
+  /*shaddy*/
+  --l_Skobeloff-color: #006466;
+  --l_MidnightGreenEagleGreen-color: #006466;
+  --lx_MidnightGreenEagleGreen-color: #0B525B;
+  --lxx_MidnightGreenEagleGreen-color: #144552;
+  --l_Charcoal-color: #1B3A4B;
+  --PrussianBlue-color: #212F45;
+  --SpaceCadet-color: #272640;
+  --DarkPurple-color: #312244;
+  --PalatinatePurple-color: #4D194D;
+
+  /*bluesh*/
+  --dark-color: #02010A;
+  --oxfordBlue-color: #04052E;
+  --midnightBlue-color: #140152;
+  --navyBlue-color: #22007C;
+  --dukeBlue-color: #0D00A4;
+  --richBlack-color: #051923;
+  --blueJean-color: #00A6FB;
+  --blueCrayola-color: #0582CA;
+  --sapBlue-color: #006494;
+  --prussianBlue-color: #003554;
+
+  /*light*/
+  --cultured-color: #F8F9FA;
+  --cultured-d-color: #E9ECEF;
+  --gainsboro-color: #DEE2E6;
+  --light-gray-color: #CED4DA;
+}
+
+/*Fonts being used in headers*/
+@font-face {
+  font-family: syne-Regular;
+  src: url(../../assets/font/syne/Syne-Regular.ttf);
+}
+
+@font-face {
+  font-family: syne-Medium;
+  src: url(../../assets/font/syne/Syne-Medium.ttf);
+}
+
+@font-face {
+  font-family: syne-Bold;
+  src: url(../../assets/font/syne/Syne-Bold.ttf);
+}
+
+.sticky{
+  @apply fixed top-0 z-50 transition ease-out duration-300;
+}
+
+.text-selected {
+  @apply font-semibold border-b-2 rounded text-shaddy-PrussianBlue;
+}
+
+.owl-nav-uline {
+  @apply border-b-0 bg-no-repeat bg-nvSimple
+}
+
+.owl-nav-uline-color {
+  @apply bg-nvSimpleh
+}
+
+.owl-p-button {
+  @apply px-6 py-2 border-2 rounded border-shaddy-l_Charcoal text-bluesh-richBlack;
+}
+
+.owl-p-button:hover {
+  @apply hover:scale-105 hover:text-gray-50 hover:bg-bluesh-richBlack hover:opacity-90;
+}
+
+.owl-animate-out {
+  @apply transition transform ease-out duration-300;
+}
+
+.owl-animate-linear {
+  @apply transition transform ease-linear duration-300;
+}
+
+.owl-ni-title {
+  @apply font-semibold uppercase text-center md:text-left text-3xl md:text-4xl lg:text-5xl text-shaddy-PalatinatePurple
+}
+
+.owl-ni-title::after {
+  content: "";
+  @apply block w-2/12 h-2 bg-bluesh-richBlack opacity-80 rounded-full my-1
+}
+
+.owl-sub-badge {
+  @apply px-4 py-2 text-sm text-gray-100 rounded bg-shaddy-l_Skobeloff;
+}
+
+/*work-section*/
+
+
+@tailwind utilities;
+
+/* input checkbox for hamburger */
+input[type="checkbox"]:checked ~ span:nth-of-type(1) {
+  transform-origin: bottom;
+  transform: rotatez(45deg) translate(8px, 0px)
+}
+
+input[type="checkbox"]:checked ~ span:nth-of-type(2) {
+  transform-origin: top;
+  transform: rotatez(-45deg)
+}
+
+input[type="checkbox"]:checked ~ span:nth-of-type(3) {
+  transform-origin: bottom;
+  width: 50%;
+  transform: translate(28px, -8px) rotatez(45deg);
+}
+
+/* Underline nav design */
+.owl-nav-uline {
+  background-position: 0 100%;
+  background-size: 0 3px;
+  transition: background-size .5s ease-in-out;
+}
+
+.owl-nav-uline:hover {
+  background-size: 100% 3px;
+  background-position: 0 100%
+}
+
+.owl-side-nav-d {
+  transition: background 200ms, border-color 200ms;
+}
+
+.owl-side-nav-d:hover span {
+  @apply opacity-100
+}
+
+.owl-side-nav-selected {
+  @apply border-opacity-100 bg-opacity-100 border-shaddy-lxx_MidnightGreenEagleGreen bg-shaddy-lx_MidnightGreenEagleGreen
+}
+
+.left-5 {
+  left: 5%;
+}
+
+.right-5 {
+  right: 5%;
+}
+
+.top-5 {
+  top: 5%;
+}
+
+.bottom-5 {
+  bottom: 5%;
+}
+
+.left-50 {
+  left: 50%;
+}
+
+.right-50 {
+  right: 50%;
+}
+
+.top-50 {
+  top: 50%;
+}
+
+.bottom-50 {
+  bottom: 50%;
+}
+
+.-z-1 {
+  z-index: -1;
+}
+
+[id] {
+  scroll-margin-top: 100px;
+}

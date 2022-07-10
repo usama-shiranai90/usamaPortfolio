@@ -1,0 +1,22 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "autoprefixer": "^10.4.7",
+    "postcss-import": "^14.1.0",
+    "tailwindcss": "^2.2.16"
+  },
+  "scripts": {
+    "build-css": "tailwindcss build assets/css/master.css -o assets/css/Tailwind.css",
+    "master-watcher": "tailwindcss build -i assets/css/master.css -o assets/css/Tailwind.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "jquery": "^3.6.0",
+    "postcss": "^8.3.11"
+  }
+}
