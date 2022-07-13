@@ -144,6 +144,7 @@ input[type="checkbox"]:checked ~ span:nth-of-type(3) {
   @apply border-opacity-100 bg-opacity-100 border-shaddy-lxx_MidnightGreenEagleGreen bg-shaddy-lx_MidnightGreenEagleGreen
 }
 
+
 .left-5 {
   left: 5%;
 }
