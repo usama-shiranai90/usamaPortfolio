@@ -1,3 +1,4 @@
+AOS.init();
 window.ga = function () {
   ga.q.push(arguments)
 };

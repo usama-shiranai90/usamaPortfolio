@@ -59,16 +59,11 @@ module.exports = {
         nvSimpleh: 'linear-gradient(transparent, transparent), linear-gradient(#051923, #051923)',
       },
       screens: {
-        'sm': '640px',        // => @media (min-width: 640px) { ... }
-        'md': '768px',        // => @media (min-width: 768px) { ... }
-        'lg': '1024px',        // => @media (min-width: 1024px) { ... }
-        'xl': '1280px',        // => @media (min-width: 1280px) { ... }
-        '2xl': '1536px',  // => @media (min-width: 1536px) { ... }
-        /*        sm: '640px', // tablet
-                md: '768px',
-                lg: '1024px', // laptop
-                xl: '1280px',// desktop
-                ul: '1536px',*/
+        'sm': '640px',         // tablet  (min-width: 640px)
+        'md': '768px',         //         (min-width: 768px)
+        'lg': '1024px',        // laptop  (min-width: 1024px)
+        'xl': '1280px',        // desktop (min-width: 1280px)
+        '2xl': '1536px',       //         (min-width: 1536px)
       },
     },
 

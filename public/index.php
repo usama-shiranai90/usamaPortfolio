@@ -22,15 +22,17 @@
   <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         referrerpolicy="no-referrer" rel="stylesheet"/>
+
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <!--  <link rel="preconnect" href="https://fonts.googleapis.com">-->
-  <!--  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>-->
+  <!--  <link rel="preconnect" href="https://fonts.gstatic.com" crossing>-->
   <!--  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&display=swap" rel="stylesheet">-->
 </head>
 <body class="bg-gray-50">
 
 <header class="bg-light-cultured w-full">
-  <div class="relative top-0 px-4 py-3 text-white bg-bluesh-richBlack pr-14">
-    <p class="text-base font-medium text-left sm:text-center capitalize sticky">
+  <div class="relative top-0 px-4 py-3 text-white pr-14 bg-bluesh-richBlack sm:bg-red-200 md:bg-blue-200 lg:bg-yellow-200 2xl:bg-gray-200">
+    <p class="text-base font-medium text-center capitalize sticky">
       Owl's website is underdevelopment.
     </p>
     <button aria-label="Close"
@@ -42,9 +44,10 @@
       </svg>
     </button>
   </div>
-  <div class="container w-full flex gap-5 justify-between items-center mx-auto px-8 md:px-14 lg:px-24">
-    <a class="block py-2 lg:py-3 bg-cat" href="#">
-      <img alt="logo" class="-w-8/12 -h-8/12" height="50" src="../assets/images/Logo.svg" width="240"/>
+  <div class="container w-full flex gap-20 md:gap-5 justify-between items-center mx-auto px-8 md:px-14 lg:px-24">
+    <a class="block py-2 lg:py-3" href="#">
+<!--      height="50" width="240"-->
+      <img alt="logo" class="-w-8/12 -h-8/12 sm:w-1/3 md:w-8/12" src="../assets/images/Logo.svg"/>
     </a>
     <nav class="hidden md:flex md:space-x-8 lg:space-x-12 items-center antialiased font-medium md:text-base lg:text-lg">
       <a class="font-semibold border-b-0 bg-contain rounded-b-md text-shaddy-PrussianBlue" href="#"><span
@@ -150,8 +153,8 @@
 
       <!--      bg-white p-4  gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3-->
       <div class="text-sm leading-normal text-center flex flex-wrap gap-4 w-full py-5 justify-center items-stretch">
-        <div
-          class="w-full md:w-1/2 lg:w-1/4 rounded shadow-sm flex flex-col gap-1.5 transform transition duration-150 ease-linear group hover:scale-105 hover:shadow-lg hover:bg-gray-50">
+        <div data-aos="zoom-in"
+             class="w-full md:w-1/2 lg:w-1/4 rounded shadow-sm flex flex-col gap-1.5 transform transition duration-150 ease-linear group hover:scale-105 hover:shadow-lg hover:bg-gray-50">
           <div class="block w-full text-shaddy-lxx_MidnightGreenEagleGreen text-5xl text-center"><i
             class="fab fa-java"></i></div>
           <h3 class="text-shaddy-PalatinatePurple text-2xl font-semibold">Java</h3>
@@ -164,8 +167,8 @@
             <div class="owl-sub-badge">MVC</div>
           </div>
         </div>
-        <div
-          class="w-full md:w-1/2 lg:w-1/4 rounded shadow-sm flex flex-col gap-1.5 transform transition duration-150 ease-linear group hover:scale-105 hover:shadow-lg hover:bg-gray-50 ">
+        <div data-aos="zoom-in"
+             class="w-full md:w-1/2 lg:w-1/4 rounded shadow-sm flex flex-col gap-1.5 transform transition duration-150 ease-linear group hover:scale-105 hover:shadow-lg hover:bg-gray-50 ">
           <div class="block w-full text-shaddy-lxx_MidnightGreenEagleGreen text-5xl text-center">
             <i class="fab fa-python"></i></div>
           <h3 class="text-shaddy-PalatinatePurple text-2xl font-semibold">Python</h3>
@@ -177,8 +180,8 @@
             <div class="owl-sub-badge">Django</div>
           </div>
         </div>
-        <div
-          class="w-full md:w-1/2 lg:w-1/4 rounded shadow-sm flex flex-col gap-1.5 transform transition duration-150 ease-linear group hover:scale-105 hover:shadow-lg hover:bg-gray-50 ">
+        <div data-aos="zoom-in"
+             class="w-full md:w-1/2 lg:w-1/4 rounded shadow-sm flex flex-col gap-1.5 transform transition duration-150 ease-linear group hover:scale-105 hover:shadow-lg hover:bg-gray-50 ">
           <div class="block w-full text-shaddy-lxx_MidnightGreenEagleGreen text-5xl text-center"><i
             class="fa-solid fa-database"></i></div>
           <h3 class="text-shaddy-PalatinatePurple text-2xl font-semibold">Databases</h3>
@@ -188,8 +191,8 @@
             <div class="owl-sub-badge">PostGradSQL</div>
           </div>
         </div>
-        <div
-          class="w-full md:w-1/2 lg:w-1/4 rounded shadow-sm flex flex-col gap-1.5 transform transition duration-150 ease-linear group hover:scale-105 hover:shadow-lg hover:bg-gray-50 ">
+        <div data-aos="zoom-in"
+             class="w-full md:w-1/2 lg:w-1/4 rounded shadow-sm flex flex-col gap-1.5 transform transition duration-150 ease-linear group hover:scale-105 hover:shadow-lg hover:bg-gray-50 ">
           <div class="block w-full text-5xl text-center"><i class="fa-brands fa-html5"></i></div>
           <h3 class="text-shaddy-PalatinatePurple text-2xl font-semibold">Web Development</h3>
 
@@ -201,8 +204,8 @@
             <div class="owl-sub-badge">Ajax</div>
           </div>
         </div>
-        <div
-          class="w-full md:w-1/2 lg:w-1/4 rounded shadow-sm flex flex-col gap-1.5 transform transition duration-150 ease-linear group hover:scale-105 hover:shadow-lg hover:bg-gray-50 ">
+        <div data-aos="zoom-in"
+             class="w-full md:w-1/2 lg:w-1/4 rounded shadow-sm flex flex-col gap-1.5 transform transition duration-150 ease-linear group hover:scale-105 hover:shadow-lg hover:bg-gray-50 ">
           <div class="block w-full text-shaddy-lxx_MidnightGreenEagleGreen text-5xl text-center"><i
             class="fa-brands fa-php"></i></div>
           <h3 class="text-shaddy-PalatinatePurple text-2xl font-semibold">PHP</h3>
@@ -212,8 +215,8 @@
             <div class="owl-sub-badge">Laravel</div>
           </div>
         </div>
-        <div
-          class="w-full md:w-1/2 lg:w-1/4 rounded shadow-sm flex flex-col gap-1.5 transform transition duration-150 ease-linear group hover:scale-105 hover:shadow-lg hover:bg-gray-50">
+        <div data-aos="zoom-in"
+             class="w-full md:w-1/2 lg:w-1/4 rounded shadow-sm flex flex-col gap-1.5 transform transition duration-150 ease-linear group hover:scale-105 hover:shadow-lg hover:bg-gray-50">
           <div class="block w-full text-shaddy-lxx_MidnightGreenEagleGreen text-5xl text-center"><i
             class="fa-solid fa-microchip"></i></div>
           <h3 class="text-shaddy-PalatinatePurple text-2xl font-semibold">Technology</h3>
@@ -340,8 +343,10 @@
   </div>
 </footer>
 </body>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
 <script src="../assets/js/vendor/modernizr-3.11.2.min.js"></script>
 <script src="../assets/js/plugins.js"></script>
 <script src="../assets/js/main.js"></script>
-<script async src="https://www.google-analytics.com/analytics.js"></script>
 </html>
