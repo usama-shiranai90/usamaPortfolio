@@ -1,4 +1,10 @@
-AOS.init();
+AOS.init({
+  offset: 200,
+  duration: 600,
+  easing: 'ease-in-sine',
+  delay: 100,
+});
+
 window.ga = function () {
   ga.q.push(arguments)
 };
@@ -23,8 +29,6 @@ window.onload = function () {
       return Math.abs(a.getBoundingClientRect().top) - Math.abs(b.getBoundingClientRect().top);
     });
     document.querySelectorAll(".owl-side-nav-selected").forEach(c => c.classList.remove("owl-side-nav-selected"));
-
-    console.log(document.querySelectorAll(".owl-side-nav-d")[[...document.querySelectorAll('h1, h2')].indexOf(titles[0])]);
     document.querySelectorAll(".owl-side-nav-d")[[...document.querySelectorAll('h1, h2')].indexOf(titles[0])].classList.add("owl-side-nav-selected");
   }
 
@@ -41,6 +45,7 @@ window.onload = function () {
       left: left
     };
   }
+
   function stickyHeader() {
     var bodyScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
     if (bodyScrollTop > headerOffset.top)//if scroll position is greater than stickyDiv, make div fixed at top by adding class 'fixed'

@@ -16,7 +16,11 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "aos": "^2.3.4",
+    "fullscreen": "^1.1.1",
     "jquery": "^3.6.0",
-    "postcss": "^8.3.11"
+    "modernizr": "^3.12.0",
+    "postcss": "^8.3.11",
+    "screenfull": "^6.0.2"
   }
 }
