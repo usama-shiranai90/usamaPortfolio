@@ -251,3 +251,22 @@ details {
 summary {
   display: list-item;
 }
+
+
+::-webkit-scrollbar {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+
+  display: none;  /* Safari and Chrome */
+}
+
+/* TO STYLE THE SCROLLBAR TRACK */
+::-webkit-scrollbar-track {
+  background-color: #ffffff;
+}
+
+/* TO STYLE THE SCROLLBAR THUMB */
+::-webkit-scrollbar-thumb {
+  background-color: var(--richBlack-color);
+  border: 0.3vw solid #ffffff;
+  border-radius: 5vw;
+}

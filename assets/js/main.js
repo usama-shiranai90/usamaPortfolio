@@ -6,6 +6,7 @@ AOS.init({
 });
 
 window.onload = function () {
+
   const sticky = document.getElementsByTagName('header')[0];
   let headerOffset = findOffset(sticky);
   window.addEventListener('scroll', () => {
@@ -36,7 +37,7 @@ window.onload = function () {
   }
 
   function stickyHeader() {
-    var bodyScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    let bodyScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
     if (bodyScrollTop > headerOffset.top)//if scroll position is greater than stickyDiv, make div fixed at top by adding class 'fixed'
     {
       sticky.classList.add('sticky');
@@ -48,14 +49,41 @@ window.onload = function () {
   window.onload = function () {
     $(document).ready(function () {
       /*Navigation Bar*/
-      var tabs = $('.tabs');
-      var activeItem = tabs.find('.active');
-      var activeWidth = activeItem.innerWidth();
+      let tabs = $('.tabs');
+      let activeItem = tabs.find('.active');
+      let activeWidth = activeItem.innerWidth();
       $(".selector").css({
         "left": activeItem.position.left + "px",
         "width": activeWidth + "px"
       });
     })
+  }
+
+  function disableScroll() {
+    let keys = {37: 1, 38: 1, 39: 1, 40: 1};
+    function preventDefault(e) {
+      e.preventDefault();
+    }
+    function preventDefaultForScrollKeys(e) {
+      if (keys[e.keyCode]) {
+        preventDefault(e);
+        return false;
+      }
+    }
+    let supportsPassive = false;
+    try {
+      window.addEventListener("test", null, Object.defineProperty({}, 'passive', {
+        get: function () { supportsPassive = true; }
+      }));
+    } catch(e) {}
+    let wheelOpt = supportsPassive ? { passive: false } : false;
+    let wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
+
+    window.addEventListener('DOMMouseScroll', preventDefault, false); // older FF
+    window.addEventListener(wheelEvent, preventDefault, wheelOpt); // modern desktop
+    window.addEventListener('touchmove', preventDefault, wheelOpt); // mobile
+    window.addEventListener('keydown', preventDefaultForScrollKeys, false);
+
   }
 
 
