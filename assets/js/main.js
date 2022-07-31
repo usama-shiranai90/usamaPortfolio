@@ -5,20 +5,9 @@ AOS.init({
   delay: 100,
 });
 
-window.ga = function () {
-  ga.q.push(arguments)
-};
-ga.q = [];
-ga.l = +new Date;
-ga('create', 'UA-XXXXX-Y', 'auto');
-ga('set', 'anonymizeIp', true);
-ga('set', 'transport', 'beacon');
-ga('send', 'pageview')
-
 window.onload = function () {
   const sticky = document.getElementsByTagName('header')[0];
   let headerOffset = findOffset(sticky);
-
   window.addEventListener('scroll', () => {
     stickyHeader();
     updateList();
@@ -55,4 +44,19 @@ window.onload = function () {
       sticky.classList.remove('sticky');
     }
   }
+
+  window.onload = function () {
+    $(document).ready(function () {
+      /*Navigation Bar*/
+      var tabs = $('.tabs');
+      var activeItem = tabs.find('.active');
+      var activeWidth = activeItem.innerWidth();
+      $(".selector").css({
+        "left": activeItem.position.left + "px",
+        "width": activeWidth + "px"
+      });
+    })
+  }
+
+
 };
