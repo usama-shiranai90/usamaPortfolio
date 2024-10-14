@@ -11,13 +11,13 @@ import {
     GitHubIcon, DataCampCommunityIcon, DataCampIcon, KaggleIcon, StackOverflowIcon,
     LinkedInIcon, ArrowDownIcon,
 } from '@/components/SocialIcons'
-import logoImmentia from '/public/resource/images/logos/immentia.png'
-import logoCarecloud from '/public/resource/images/logos/CareCloud_Logo.jpg'
-import image1 from '/public/resource/images/photos/image-1.jpg'
-import image2 from '/public/resource/images/photos/image-2.jpg'
-import image3 from '/public/resource/images/photos/image-3.jpg'
-import image4 from '/public/resource/images/photos/image-4.jpg'
-import image5 from '/public/resource/images/photos/image-5.jpg'
+import logoImmentia from '/public/images/logos/immentia.png'
+import logoCarecloud from '/public/images/logos/CareCloud_Logo.jpg'
+import image1 from '/public/images/photos/image-1.jpg'
+import image2 from '/public/images/photos/image-2.jpg'
+import image3 from '/public/images/photos/image-3.jpg'
+import image4 from '/public/images/photos/image-4.jpg'
+import image5 from '/public/images/photos/image-5.jpg'
 import {getAllArticles} from '@/lib/articles'
 import {formatDate} from '@/lib/formatDate'
 

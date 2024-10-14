@@ -2,11 +2,11 @@ import Image from 'next/image'
 
 import {Card} from '@/components/Card'
 import {SimpleLayout} from '@/components/SimpleLayout'
-import logoAnimaginary from '/public/resource/images/logos/animaginary.svg'
-import logoCosmos from '/public/resource/images/logos/cosmos.svg'
-import logoHelioStream from '/public/resource/images/logos/helio-stream.svg'
-import logoOpenShuttle from '/public/resource/images/logos/open-shuttle.svg'
-import logoPlanetaria from '/public/resource/images/logos/planetaria.svg'
+import logoAnimaginary from '/public/images/logos/animaginary.svg'
+import logoCosmos from '/public/images/logos/cosmos.svg'
+import logoHelioStream from '/public/images/logos/helio-stream.svg'
+import logoOpenShuttle from '/public/images/logos/open-shuttle.svg'
+import logoPlanetaria from '/public/images/logos/planetaria.svg'
 
 const projects = [
     {
