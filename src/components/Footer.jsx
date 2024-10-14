@@ -1,15 +1,15 @@
-// import Link from 'next/link'
+import Link from 'next/link'
 
-import { ContainerInner, ContainerOuter } from './Container'
+import { ContainerInner, ContainerOuter } from '@/components/Container'
 
 function NavLink({ href, children }) {
   return (
-    <a
+    <Link
       href={href}
       className="transition hover:text-teal-500 dark:hover:text-teal-400"
     >
       {children}
-    </a>
+    </Link>
   )
 }
 
@@ -27,7 +27,7 @@ export function Footer() {
                 <NavLink href="/uses">Uses</NavLink>
               </div>
               <p className="text-sm text-zinc-400 dark:text-zinc-500">
-                &copy; {new Date().getFullYear()} Syed Usama Bukhari. All rights
+                &copy; {new Date().getFullYear()} OneEyeOwl, Inc. All rights
                 reserved.
               </p>
             </div>

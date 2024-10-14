@@ -1,6 +1,5 @@
-
+import Link from 'next/link'
 import clsx from 'clsx'
-import {NavLink} from "react-router-dom";
 
 const variantStyles = {
   primary:
@@ -19,6 +18,6 @@ export function Button({ variant = 'primary', className, ...props }) {
   return typeof props.href === 'undefined' ? (
     <button className={className} {...props} />
   ) : (
-    <NavLink className={className} {...props} />
+    <Link className={className} {...props} />
   )
 }
