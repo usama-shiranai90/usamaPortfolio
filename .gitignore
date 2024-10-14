@@ -12,6 +12,7 @@
 
 # production build outputs
 /.next/        # Next.js
+/.next/*        # Next.js
 /out/          # Next.js
 /build         # General build output
 
