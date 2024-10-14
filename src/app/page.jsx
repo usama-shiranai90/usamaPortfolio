@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unescaped-entities */
+
 import Image from 'next/image'
 import Link from 'next/link'
 import clsx from 'clsx'
@@ -11,11 +13,11 @@ import {
 } from '@/components/SocialIcons'
 import logoImmentia from '../../public/resource/images/logos/immentia.png'
 import logoCarecloud from '../../public/resource/images/logos/CareCloud_Logo.jpg'
-import image1 from '../../public/resource/images/photos/image-1.jpg'
-import image2 from '../../public/resource/images/photos/image-2.jpg'
-import image3 from '../../public/resource/images/photos/image-3.jpg'
-import image4 from '../../public/resource/images/photos/image-4.jpg'
-import image5 from '../../public/resource/images/photos/image-5.jpg'
+import image1 from 'public/resource/images/photos/image-1.jpg'
+import image2 from 'public/resource/images/photos/image-2.jpg'
+import image3 from 'public/resource/images/photos/image-3.jpg'
+import image4 from 'public/resource/images/photos/image-4.jpg'
+import image5 from 'public/resource/images/photos/image-5.jpg'
 import {getAllArticles} from '@/lib/articles'
 import {formatDate} from '@/lib/formatDate'
 
@@ -242,7 +244,7 @@ export default async function Home() {
                         Software Engineer & <span className={"text-shaddy-DarkPurple"}> Data science Enthusiast </span>
                     </h1>
                     <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-                        I'm <span className="text-catalystDark-dark dark:text-zinc-100 italic capitalize">Syed Usama Bukhari</span>,
+                        I&apos;m <span className="text-catalystDark-dark dark:text-zinc-100 italic capitalize">Syed Usama Bukhari</span>,
                         A Web and Desktop
                         Application Developer.
 

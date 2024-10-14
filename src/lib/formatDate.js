@@ -1,4 +1,5 @@
-export function formatDate(dateString) {
+
+function formatDate(dateString) {
   return new Date(`${dateString}T00:00:00Z`).toLocaleDateString('en-US', {
     day: 'numeric',
     month: 'long',
@@ -6,3 +7,4 @@ export function formatDate(dateString) {
     timeZone: 'UTC',
   })
 }
+module.exports = { formatDate };
