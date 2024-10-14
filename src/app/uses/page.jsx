@@ -1,112 +1,115 @@
-import { Card } from '@/components/Card'
-import { Section } from '@/components/Section'
-import { SimpleLayout } from '@/components/SimpleLayout'
+import {Card} from '@/components/Card'
+import {Section} from '@/components/Section'
+import {SimpleLayout} from '@/components/SimpleLayout'
 
-function ToolsSection({ children, ...props }) {
-  return (
-    <Section {...props}>
-      <ul role="list" className="space-y-16">
-        {children}
-      </ul>
-    </Section>
-  )
+function ToolsSection({children, ...props}) {
+    return (
+        <Section {...props}>
+            <ul role="list" className="space-y-16">
+                {children}
+            </ul>
+        </Section>
+    )
 }
 
-function Tool({ title, href, children }) {
-  return (
-    <Card as="li">
-      <Card.Title as="h3" href={href}>
-        {title}
-      </Card.Title>
-      <Card.Description>{children}</Card.Description>
-    </Card>
-  )
+function Tool({title, href, children}) {
+    return (
+        <Card as="li">
+            <Card.Title as="h3" href={href}>
+                {title}
+            </Card.Title>
+            <Card.Description>{children}</Card.Description>
+        </Card>
+    )
 }
 
 export const metadata = {
-  title: 'Uses',
-  description: 'Software I use, gadgets I love, and other things I recommend.',
+    title: 'Uses',
+    description: 'Tools I recommend & use for development.',
 }
 
 export default function Uses() {
-  return (
-    <SimpleLayout
-      title="Software I use, gadgets I love, and other things I recommend."
-      intro="I get asked a lot about the things I use to build software, stay productive, or buy to fool myself into thinking I’m being productive when I’m really just procrastinating. Here’s a big list of all of my favorite stuff."
-    >
-      <div className="space-y-20">
-        <ToolsSection title="Workstation">
-          <Tool title="16” MacBook Pro, M1 Max, 64GB RAM (2021)">
-            I was using an Intel-based 16” MacBook Pro prior to this and the
-            difference is night and day. I’ve never heard the fans turn on a
-            single time, even under the incredibly heavy loads I put it through
-            with our various launch simulations.
-          </Tool>
-          <Tool title="Apple Pro Display XDR (Standard Glass)">
-            The only display on the market if you want something HiDPI and
-            bigger than 27”. When you’re working at planetary scale, every pixel
-            you can get counts.
-          </Tool>
-          <Tool title="IBM Model M SSK Industrial Keyboard">
-            They don’t make keyboards the way they used to. I buy these any time
-            I see them go up for sale and keep them in storage in case I need
-            parts or need to retire my main.
-          </Tool>
-          <Tool title="Apple Magic Trackpad">
-            Something about all the gestures makes me feel like a wizard with
-            special powers. I really like feeling like a wizard with special
-            powers.
-          </Tool>
-          <Tool title="Herman Miller Aeron Chair">
-            If I’m going to slouch in the worst ergonomic position imaginable
-            all day, I might as well do it in an expensive chair.
-          </Tool>
-        </ToolsSection>
-        <ToolsSection title="Development tools">
-          <Tool title="Sublime Text 4">
-            I don’t care if it’s missing all of the fancy IDE features everyone
-            else relies on, Sublime Text is still the best text editor ever
-            made.
-          </Tool>
-          <Tool title="iTerm2">
-            I’m honestly not even sure what features I get with this that aren’t
-            just part of the macOS Terminal but it’s what I use.
-          </Tool>
-          <Tool title="TablePlus">
-            Great software for working with databases. Has saved me from
-            building about a thousand admin interfaces for my various projects
-            over the years.
-          </Tool>
-        </ToolsSection>
-        <ToolsSection title="Design">
-          <Tool title="Figma">
-            We started using Figma as just a design tool but now it’s become our
-            virtual whiteboard for the entire company. Never would have expected
-            the collaboration features to be the real hook.
-          </Tool>
-        </ToolsSection>
-        <ToolsSection title="Productivity">
-          <Tool title="Alfred">
-            It’s not the newest kid on the block but it’s still the fastest. The
-            Sublime Text of the application launcher world.
-          </Tool>
-          <Tool title="Reflect">
-            Using a daily notes system instead of trying to keep things
-            organized by topics has been super powerful for me. And with
-            Reflect, it’s still easy for me to keep all of that stuff
-            discoverable by topic even though all of my writing happens in the
-            daily note.
-          </Tool>
-          <Tool title="SavvyCal">
-            Great tool for scheduling meetings while protecting my calendar and
-            making sure I still have lots of time for deep work during the week.
-          </Tool>
-          <Tool title="Focus">
-            Simple tool for blocking distracting websites when I need to just do
-            the work and get some momentum going.
-          </Tool>
-        </ToolsSection>
-      </div>
-    </SimpleLayout>
-  )
+    return (
+        <SimpleLayout
+            title="Tools I use for software development and data science."
+            intro="As a software engineer and data science enthusiast, I’m often asked about the tools, technologies, and gadgets I use to build software, analyze data, and stay productive. Below is a curated list of hardware, software, and services that are essential to my workflow, helping me tackle everything from coding to complex data projects."
+        >
+            <div className="space-y-20">
+                <ToolsSection title="Workstation">
+                    <Tool title="Asus ROG Zephyrus G14">
+                        This compact powerhouse is my go-to laptop for all things development and design. With its Ryzen
+                        9 processor and 32GB of RAM, it handles everything I throw at it, whether coding, gaming, or
+                        running simulations.
+                    </Tool>
+                    <Tool title="Logitech MX Mechanical Keyboard">
+                        Comfortable, durable, and tactile. This mechanical keyboard has been a game changer for both
+                        typing and gaming sessions.
+                    </Tool>
+                    <Tool title="Logitech G502 Wireless">
+                        The precision and customizable buttons make it perfect for coding work. It's a productivity
+                        booster in every sense.
+                    </Tool>
+                    <Tool title="ErgoChair Pro by Autonomous">
+                        Long coding sessions demand comfort, and this chair provides excellent support while ensuring
+                        proper ergonomics.
+                    </Tool>
+                </ToolsSection>
+
+                <ToolsSection title="Development tools">
+                    <Tool title="JetBrains IDE's">
+                        My favorite IDE for development. The smart code completion and refactoring tools keep my
+                        workflow smooth and efficient.
+                        <div className={"flex gap-x-2 mt-1.5"}>
+                            <img
+                                src="https://resources.jetbrains.com/storage/products/company/brand/logos/PyCharm_icon.png"
+                                alt="JetBrains WebStorm" width="30" height="30"/>
+                            <img
+                                src="https://resources.jetbrains.com/storage/products/company/brand/logos/DataSpell_icon.png"
+                                alt="JetBrains WebStorm" width="30" height="30"/>
+                            <img
+                                src="https://resources.jetbrains.com/storage/products/company/brand/logos/PhpStorm_icon.png"
+                                alt="JetBrains WebStorm" width="30" height="30"/>
+                            <img
+                                src="https://resources.jetbrains.com/storage/products/company/brand/logos/WebStorm_icon.png"
+                                alt="JetBrains WebStorm" width="30" height="30"/>
+                        </div>
+
+                    </Tool>
+                    <Tool title="TablePlus">
+                        The best database management tool I've found. It supports multiple databases and provides a
+                        simple yet powerful interface for running queries and managing data.
+                    </Tool>
+                </ToolsSection>
+
+                <ToolsSection title="Design">
+                    <Tool title="Figma">
+                        Not just for design—Figma has become the collaboration hub for our team. From mockups to
+                        brainstorming, it's essential to our workflow.
+                        <img src="https://www.vectorlogo.zone/logos/figma/figma-icon.svg" alt="Figma"
+                             className={"mt-1.5"} width="25"/>
+                    </Tool>
+                </ToolsSection>
+
+                <ToolsSection title="Productivity">
+                    <Tool title="Notion">
+                        An all-in-one workspace designed to enhance productivity and collaboration across various tasks.
+                        I personally use it for content organization, notes.
+                    </Tool>
+                    <Tool title="Todoist">
+                        Todoist keeps my notes organized using a daily journal system. It's a great way to track
+                        thoughts, tasks, and ideas without worrying about categories or folders.
+                    </Tool>
+                    <Tool title="Notion Calender">
+                        My preferred tool for scheduling meetings, ensuring my calendar stays balanced between work and
+                        downtime.
+                    </Tool>
+                    <Tool title="Focus">
+                        A simple but effective website blocker that helps me avoid distractions when I need to get into
+                        deep work mode.
+                    </Tool>
+                </ToolsSection>
+            </div>
+
+        </SimpleLayout>
+    )
 }

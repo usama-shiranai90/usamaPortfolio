@@ -114,9 +114,9 @@ function MobileNavigation(props) {
         <nav className="mt-6">
           <ul className="-my-2 divide-y divide-zinc-100 text-base text-zinc-800 dark:divide-zinc-100/5 dark:text-zinc-300">
             <MobileNavItem href="/about">About</MobileNavItem>
-            <MobileNavItem href="/articles">Articles</MobileNavItem>
+            {/*<MobileNavItem href="/articles">Articles</MobileNavItem>*/}
             <MobileNavItem href="/projects">Projects</MobileNavItem>
-            <MobileNavItem href="/speaking">Speaking</MobileNavItem>
+            <MobileNavItem href="/resume">Resume</MobileNavItem>
             <MobileNavItem href="/uses">Uses</MobileNavItem>
           </ul>
         </nav>
@@ -153,9 +153,9 @@ function DesktopNavigation(props) {
     <nav {...props}>
       <ul className="flex rounded-full bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10">
         <NavItem href="/about">About</NavItem>
-        <NavItem href="/articles">Articles</NavItem>
+        {/*<NavItem href="/articles">Articles</NavItem>*/}
         <NavItem href="/projects">Projects</NavItem>
-        <NavItem href="/speaking">Speaking</NavItem>
+        <NavItem href="/resume">Resume</NavItem>
         <NavItem href="/uses">Uses</NavItem>
       </ul>
     </nav>
@@ -332,90 +332,120 @@ export function Header() {
   }, [isHomePage])
 
   return (
-    <>
-      <header
-        className="pointer-events-none relative z-50 flex flex-none flex-col"
-        style={{
-          height: 'var(--header-height)',
-          marginBottom: 'var(--header-mb)',
-        }}
-      >
-        {isHomePage && (
-          <>
-            <div
-              ref={avatarRef}
-              className="order-last mt-[calc(theme(spacing.16)-theme(spacing.3))]"
-            />
-            <Container
-              className="top-0 order-last -mb-3 pt-3"
+      <>
+
+        <div className="pointer-events-none fixed inset-x-0 bottom-0 sm:flex sm:justify-center sm:px-6 sm:pb-5 lg:px-8" style={{
+          zIndex: '9999',
+        }}>
+          <div
+              className="pointer-events-auto flex items-center justify-between gap-x-6 bg-gray-900 px-6 py-2.5 sm:rounded-xl sm:py-3 sm:pl-4 sm:pr-3.5">
+            <p className="text-sm leading-6 text-white">
+              <a href="#">
+                <strong className="font-semibold">Owl's</strong>
+                <svg viewBox="0 0 2 2" aria-hidden="true" className="mx-2 inline h-0.5 w-0.5 fill-current">
+                  <circle r={1} cx={1} cy={1}/>
+                </svg>
+                website is under development&nbsp;<span aria-hidden="true">&rarr;</span>
+              </a>
+            </p>
+            <button type="button" className="-m-3 p-3 focus-visible:outline-offset-[-4px]">
+              <span className="sr-only">Dismiss</span>
+              <svg className="w-5 h-5 text-white dark:text-zinc-100" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path clip-rule="evenodd"
+                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                      fill-rule="evenodd"/>
+              </svg>
+
+            </button>
+          </div>
+        </div>
+
+        <header
+            className="pointer-events-none relative z-50 flex flex-none flex-col"
+            style={{
+              height: 'var(--header-height)',
+              marginBottom: 'var(--header-mb)',
+            }}>
+
+          {isHomePage && (
+              <>
+
+                <div
+                    ref={avatarRef}
+                    className="order-last mt-[calc(theme(spacing.16)-theme(spacing.3))]"
+                />
+                <Container
+                    className="top-0 order-last -mb-3 pt-3"
+                    style={{
+                      position: 'var(--header-position)',
+                    }}
+                >
+                  <div
+                      className="top-[var(--avatar-top,theme(spacing.3))] w-full"
+                      style={{
+                        position: 'var(--header-inner-position)',
+                      }}
+                  >
+                    <div className="relative">
+                      <AvatarContainer
+                          className="absolute left-0 top-3 origin-left transition-opacity"
+                          style={{
+                            opacity: 'var(--avatar-border-opacity, 0)',
+                            transform: 'var(--avatar-border-transform)',
+                          }}
+                      />
+                      <Avatar
+                          large
+                          className="block h-16 w-16 origin-left"
+                          style={{transform: 'var(--avatar-image-transform)'}}
+                      />
+                    </div>
+                  </div>
+                </Container>
+              </>
+          )}
+
+          <div
+              ref={headerRef}
+              className="top-0 z-10 h-16 pt-6"
               style={{
                 position: 'var(--header-position)',
               }}
-            >
-              <div
-                className="top-[var(--avatar-top,theme(spacing.3))] w-full"
+          >
+
+            <Container
+                className="top-[var(--header-top,theme(spacing.6))] w-full"
                 style={{
                   position: 'var(--header-inner-position)',
                 }}
-              >
-                <div className="relative">
-                  <AvatarContainer
-                    className="absolute left-0 top-3 origin-left transition-opacity"
-                    style={{
-                      opacity: 'var(--avatar-border-opacity, 0)',
-                      transform: 'var(--avatar-border-transform)',
-                    }}
-                  />
-                  <Avatar
-                    large
-                    className="block h-16 w-16 origin-left"
-                    style={{ transform: 'var(--avatar-image-transform)' }}
-                  />
+            >
+              <div className="relative flex gap-4">
+                <div className="flex flex-1">
+                  {!isHomePage && (
+                      <AvatarContainer>
+                        <Avatar/>
+                      </AvatarContainer>
+                  )}
+                </div>
+                <div className="flex flex-1 justify-end md:justify-center">
+                  <MobileNavigation className="pointer-events-auto md:hidden"/>
+                  <DesktopNavigation className="pointer-events-auto hidden md:block"/>
+                </div>
+                <div className="flex justify-end md:flex-1">
+                  <div className="pointer-events-auto">
+                    <ThemeToggle/>
+                  </div>
                 </div>
               </div>
             </Container>
-          </>
+          </div>
+        </header>
+        {isHomePage && (
+            <div
+                className="flex-none"
+                style={{height: 'var(--content-offset)'}}
+            />
         )}
-        <div
-          ref={headerRef}
-          className="top-0 z-10 h-16 pt-6"
-          style={{
-            position: 'var(--header-position)',
-          }}
-        >
-          <Container
-            className="top-[var(--header-top,theme(spacing.6))] w-full"
-            style={{
-              position: 'var(--header-inner-position)',
-            }}
-          >
-            <div className="relative flex gap-4">
-              <div className="flex flex-1">
-                {!isHomePage && (
-                  <AvatarContainer>
-                    <Avatar />
-                  </AvatarContainer>
-                )}
-              </div>
-              <div className="flex flex-1 justify-end md:justify-center">
-                <MobileNavigation className="pointer-events-auto md:hidden" />
-                <DesktopNavigation className="pointer-events-auto hidden md:block" />
-              </div>
-              <div className="flex justify-end md:flex-1">
-                <div className="pointer-events-auto">
-                  <ThemeToggle />
-                </div>
-              </div>
-            </div>
-          </Container>
-        </div>
-      </header>
-      {isHomePage && (
-        <div
-          className="flex-none"
-          style={{ height: 'var(--content-offset)' }}
-        />
-      )}
-    </>
+      </>
   )
 }
