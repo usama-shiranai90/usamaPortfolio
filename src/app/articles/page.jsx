@@ -1,7 +1,7 @@
-import { Card } from 'src/components/Card'
-import { SimpleLayout } from 'src/components/SimpleLayout'
-import { getAllArticles } from 'src/lib/articles'
-import { formatDate } from 'src/lib/formatDate'
+import { Card } from '@/components/Card'
+import { SimpleLayout } from '@/components/SimpleLayout'
+import { getAllArticles } from '@/lib/articles'
+import { formatDate } from '@/lib/formatDate'
 
 function Article({ article }) {
   return (

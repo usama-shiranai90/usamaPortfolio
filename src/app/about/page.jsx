@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import clsx from 'clsx'
 
-import {Container} from 'src/components/Container'
+import {Container} from '@/components/Container'
 import {
     ArrowDownIcon,
     DataCampIcon,
@@ -10,9 +10,9 @@ import {
     InstagramIcon,
     LinkedInIcon,
     XIcon,
-} from 'src/components/SocialIcons'
+} from '@/components/SocialIcons'
 import portraitImage from 'p/images/portrait.jpg'
-import {Button} from "src/components/Button";
+import {Button} from "@/components/Button";
 
 function SocialLink({className, href, children, icon: Icon}) {
     return (
