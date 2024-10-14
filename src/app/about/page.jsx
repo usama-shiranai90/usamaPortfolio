@@ -11,7 +11,7 @@ import {
     LinkedInIcon,
     XIcon,
 } from '@/components/SocialIcons'
-import portraitImage from '@/resource/images/portrait.jpg'
+import portraitImage from '../../resource/images/portrait.jpg'
 import {Button} from "@/components/Button";
 
 function SocialLink({className, href, children, icon: Icon}) {

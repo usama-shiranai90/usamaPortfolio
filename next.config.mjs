@@ -11,7 +11,6 @@ const __dirname = dirname(__filename);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    // Your existing configuration
     webpack: (config) => {
         config.resolve.alias = {
             ...config.resolve.alias,
