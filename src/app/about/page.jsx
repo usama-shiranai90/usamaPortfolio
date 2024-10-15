@@ -61,9 +61,9 @@ export default function About() {
                 </div>
                 <div className="lg:order-first lg:row-span-2">
                     <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
-                        I’m <span className="text-catalystDark-dark dark:text-zinc-100 italic capitalize">Usama Bukhari</span>.
+                        I’m <span className="text-teal-500 dark:text-teal-700 capitalize">Usama Bukhari</span>.
                     </h1>
-                    <h2 className="text-3xl font-bold tracking-tight text-zinc-800 sm:text-4xl dark:text-zinc-100 capitalize">
+                    <h2 className="text-2xl font-bold tracking-tight text-zinc-800 sm:text-3xl dark:text-zinc-100 capitalize">
                         A software engineer and research student at Kyushu University - Japan.
                     </h2>
 

@@ -12,7 +12,7 @@ const projects = [
     {
         name: 'Catalyst - A Web Solution For OBE',
         description: 'A web application made for foundation university to automate progressive course profile, manage respective users and track student performance.',
-        link: {href: 'http://planetaria.tech', label: 'planetaria.tech'},
+        link: {href: 'https://github.com/usama-shiranai90', label: 'github.com'},
         logo: logoPlanetaria,
     },
     {
