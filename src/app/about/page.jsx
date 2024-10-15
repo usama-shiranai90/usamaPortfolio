@@ -5,10 +5,9 @@ import clsx from 'clsx'
 import {Container} from '@/components/Container'
 import {
     ArrowDownIcon,
-    DataCampIcon,
     GitHubIcon,
-    InstagramIcon,
     LinkedInIcon,
+    StackOverflowIcon,
     XIcon,
 } from '@/components/SocialIcons'
 import portraitImage from 'p/images/portrait.jpg'
@@ -50,7 +49,7 @@ export default function About() {
         <Container className="mt-16 sm:mt-32">
             <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-y-12">
                 <div className="lg:pl-20">
-                    <h2 className="owl-ni-title mb-5">Who am <span className="text-shaddy-lx_MidnightGreenEagleGreen">I</span>?</h2>
+                    <h2 className="owl-ni-title mb-5">Who am <span className="text-shaddy-lx_MidnightGreenEagleGreen text-teal-500">I</span>?</h2>
                     <div className="max-w-xs px-2.5 lg:max-w-none">
                         <Image
                             src={portraitImage}
@@ -127,7 +126,7 @@ export default function About() {
             </div>
 
             <div className={"flex items-center justify-center"}>
-                <Button href="" download="UsamaBukhari-Resume.pdf" variant="secondary"
+                <Button href="/resume" download="UsamaBukhari-Resume.pdf" variant="secondary"
                         className="group mt-6 w-1/2 owl-p-button owl-animate-out -dark-side-move">
                     View Resume
                     <ArrowDownIcon

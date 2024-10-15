@@ -10,37 +10,29 @@ import logoPlanetaria from '/public/images/logos/planetaria.svg'
 
 const projects = [
     {
-        name: 'Planetaria',
-        description:
-            'Creating technology to empower civilians to explore space on their own terms.',
+        name: 'Catalyst - A Web Solution For OBE',
+        description: 'A web application made for foundation university to automate progressive course profile, manage respective users and track student performance.',
         link: {href: 'http://planetaria.tech', label: 'planetaria.tech'},
         logo: logoPlanetaria,
     },
     {
-        name: 'Animaginary',
+        name: 'Portable Health Clinic 2.0',
         description:
-            'High performance web animation library, hand-written in optimized WASM.',
+            'Portable Health Clinic (PHC) aims to build an affordable, usable, and sustainable preventive healthcare system for unreached people.',
+        link: {href: 'https://idyllic-peony-d2f460.netlify.app/', label: 'portable-health.org'},
+        logo: logoHelioStream,
+    },
+    {
+        name: 'Advance SMTP Sender',
+        description:
+            'Real-time SMTP based sender using python and streamlit.',
         link: {href: '#', label: 'github.com'},
         logo: logoAnimaginary,
     },
     {
-        name: 'HelioStream',
+        name: 'OllamaMedVoice',
         description:
-            'Real-time video streaming library, optimized for interstellar transmission.',
-        link: {href: '#', label: 'github.com'},
-        logo: logoHelioStream,
-    },
-    {
-        name: 'cosmOS',
-        description:
-            'The operating system that powers our Planetaria space shuttles.',
-        link: {href: '#', label: 'github.com'},
-        logo: logoCosmos,
-    },
-    {
-        name: 'OpenShuttle',
-        description:
-            'The schematics for the first rocket I designed that successfully made it to orbit.',
+            'The project that integrates the Ollama-based models and ChatGPT with audio recognition technology to provide accurate and efficient medical question answering. This project aims to enhance the accessibility and responsiveness of medical information through voice interactions.',
         link: {href: '#', label: 'github.com'},
         logo: logoOpenShuttle,
     },
@@ -66,7 +58,7 @@ export default function Projects() {
     return (
         <SimpleLayout
             title="Things I’ve made trying to put my dent in the universe."
-            intro="I’ve worked on tons of little projects over the years but these are the ones that I’m most proud of. Many of them are open-source, so if you see something that piques your interest, check out the code and contribute if you have ideas for how it can be improved."
+            intro="I’ve worked on tons of little projects over the years but these are the ones."
         >
             <ul
                 role="list"

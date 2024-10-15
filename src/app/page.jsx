@@ -86,7 +86,7 @@ function Article({article}) {
 
 function SocialLink({icon: Icon, ...props}) {
     return (
-        <Link className="group -m-1 p-1" {...props}>
+        <Link className="group -m-1 p-1" {...props} target="_blank" rel="noopener noreferrer">
             <Icon
                 className="h-6 w-6 fill-zinc-500 transition group-hover:fill-zinc-600 dark:fill-zinc-400 dark:group-hover:fill-zinc-300"/>
         </Link>
@@ -253,13 +253,19 @@ export default async function Home() {
                         positive
                         response to work while under pressure. Firm grip in numerous programming languages incl.
                     </p>
-                    <div className="mt-6 flex gap-6">
+                    <div className="mt-6 flex gap-5">
                         <SocialLink href="https://github.com/usama-shiranai90" aria-label="Follow on GitHub"
                                     icon={GitHubIcon}/>
                         <SocialLink href="https://www.linkedin.com/in/syed-usama-bukhari-0a6373175"
                                     aria-label="Follow on LinkedIn" icon={LinkedInIcon}/>
-                        <SocialLink href="https://www.datacamp.com/portfolio/usamabukhari"
+                        <SocialLink href="https://www.datacamp.com/portfolio/syedusama78"
                                     aria-label="Follow on Datacamp" icon={DataCampIcon}/>
+
+                        <SocialLink href="https://stackoverflow.com/users/13632819/usama-bukhari"
+                                    aria-label="Follow on Datacamp" icon={StackOverflowIcon}/>
+
+                        <SocialLink href="https://www.kaggle.com/usamabukhari"
+                                    aria-label="Follow on Datacamp" icon={KaggleIcon}/>
 
                     </div>
                 </div>

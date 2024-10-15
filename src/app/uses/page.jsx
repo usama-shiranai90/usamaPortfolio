@@ -31,8 +31,8 @@ export const metadata = {
 export default function Uses() {
     return (
         <SimpleLayout
-            title="Tools I use for software development and data science."
-            intro="As a software engineer and data science enthusiast, I’m often asked about the tools, technologies, and gadgets I use to build software, analyze data, and stay productive. Below is a curated list of hardware, software, and services that are essential to my workflow, helping me tackle everything from coding to complex data projects."
+            title="Tools I use for software development & data science."
+            intro="As a software engineer & data science enthusiast, I’m often asked about the tools, technologies, and gadgets I use to build software, analyze data, and stay productive. Below is a curated list of hardware, software, and services that are essential to my workflow, helping me tackle everything from coding to complex data projects."
         >
             <div className="space-y-20">
                 <ToolsSection title="Workstation">
@@ -41,17 +41,13 @@ export default function Uses() {
                         9 processor and 32GB of RAM, it handles everything I throw at it, whether coding, gaming, or
                         running simulations.
                     </Tool>
-                    <Tool title="Logitech MX Mechanical Keyboard">
-                        Comfortable, durable, and tactile. This mechanical keyboard has been a game changer for both
+                    <Tool title="Logitech G213 Prodigy RGB">
+                        Comfortable, durable, and tactile. This keyboard has been a game changer for both
                         typing and gaming sessions.
                     </Tool>
                     <Tool title="Logitech G502 Wireless">
                         The precision and customizable buttons make it perfect for coding work. It's a productivity
                         booster in every sense.
-                    </Tool>
-                    <Tool title="ErgoChair Pro by Autonomous">
-                        Long coding sessions demand comfort, and this chair provides excellent support while ensuring
-                        proper ergonomics.
                     </Tool>
                 </ToolsSection>
 
