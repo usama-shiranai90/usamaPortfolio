@@ -1,10 +1,10 @@
 import Image from 'next/image'
 
-import {Card} from '@/components/Card'
-import {SimpleLayout} from '@/components/SimpleLayout'
+import {Card} from '@/components/Partials/Card'
+import {SimpleLayout} from '@/components/Partials/SimpleLayout'
 import logoAnimaginary from '/public/images/logos/animaginary.svg'
 import logoCosmos from '/public/images/logos/cosmos.svg'
-import logoHelioStream from '/public/images/logos/helio-stream.svg'
+import logoHelioStream from '/public/images/logos/PHC_Logo_2022_V-DmQv-LMF.png'
 import logoOpenShuttle from '/public/images/logos/open-shuttle.svg'
 import logoPlanetaria from '/public/images/logos/planetaria.svg'
 
@@ -19,7 +19,14 @@ const projects = [
         name: 'Portable Health Clinic 2.0',
         description:
             'Portable Health Clinic (PHC) aims to build an affordable, usable, and sustainable preventive healthcare system for unreached people.',
-        link: {href: 'https://idyllic-peony-d2f460.netlify.app/', label: 'portable-health.org'},
+        link: {href: 'https://portable-healthcare-clinic-2.netlify.app/', label: 'portable-health.org'},
+        logo: logoHelioStream,
+    },
+    {
+        name: 'Smart Health Gantt Chart',
+        description:
+            'Portable Health Clinic (PHC) aims to build an affordable, usable, and sustainable preventive healthcare system for unreached people.',
+        link: {href: 'https://shgchart.com/', label: 'shgchart.com'},
         logo: logoHelioStream,
     },
     {

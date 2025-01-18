@@ -1,4 +1,4 @@
-import { SimpleLayout } from '@/components/SimpleLayout'
+import { SimpleLayout } from '@/components/Partials/SimpleLayout'
 
 export const metadata = {
   title: 'You’re subscribed',

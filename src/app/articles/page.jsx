@@ -1,5 +1,5 @@
-import { Card } from '@/components/Card'
-import { SimpleLayout } from '@/components/SimpleLayout'
+import { Card } from '@/components/Partials/Card'
+import { SimpleLayout } from '@/components/Partials/SimpleLayout'
 import { getAllArticles } from '@/lib/articles'
 import { formatDate } from '@/lib/formatDate'
 

@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import clsx from 'clsx'
 
-import {Container} from '@/components/Container'
+import {Container} from '@/components/Partials/Container'
 
 import resumeImage1 from 'p/images/Syed Usama Bukhari Resume_Page_1.png'
 import resumeImage2 from 'p/images/Syed Usama Bukhari Resume_Page_2.png'
@@ -10,7 +10,7 @@ import resumeImage2 from 'p/images/Syed Usama Bukhari Resume_Page_2.png'
 import resumeImage11 from 'p/images/Syed Usama Bukhari EU_Page_1.png'
 import resumeImage12 from 'p/images/Syed Usama Bukhari EU_Page_2.png'
 
-import {Button} from "@/components/Button";
+import {Button} from "@/components/Partials/Button";
 
 
 export const metadata = {

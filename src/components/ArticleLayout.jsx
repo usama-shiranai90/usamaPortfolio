@@ -4,8 +4,8 @@ import { useContext } from 'react'
 import { useRouter } from 'next/navigation'
 
 import { AppContext } from '@/app/providers'
-import { Container } from '@/components/Container'
-import { Prose } from '@/components/Prose'
+import { Container } from '@/components/Partials/Container'
+import { Prose } from '@/components/Partials/Prose'
 import { formatDate } from '@/lib/formatDate'
 
 function ArrowLeftIcon(props) {
