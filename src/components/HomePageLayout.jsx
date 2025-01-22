@@ -26,8 +26,6 @@ import {LuBriefcaseBusiness} from "react-icons/lu";
 import fuiLogo from '/public/images/logos/fui.svg';
 import kyushuLogo from '/public/images/logos/kyushu_University.svg';
 import avatarImage from "p/images/avatar_1.jpg";
-import kaggleImage from "p/images/logos/STL_BLUE_LOGO.png";
-import {FiGithub} from "react-icons/fi";
 import {FaGithubAlt, FaKaggle, FaLinkedinIn} from "react-icons/fa";
 import {SiDatacamp, SiKaggle, SiStackoverflow} from "react-icons/si";
 import {useTheme} from "next-themes";
