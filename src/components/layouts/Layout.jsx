@@ -1,5 +1,5 @@
-import { FooterLayout } from '@/components/FooterLayout'
-import { HeaderLayout } from '@/components/HeaderLayout'
+import { FooterLayout } from '@/components/layouts/FooterLayout'
+import { HeaderLayout } from '@/components/layouts/HeaderLayout'
 
 export function Layout({ children }) {
   return (

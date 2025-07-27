@@ -5,13 +5,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import clsx from 'clsx'
 
-import {Button} from '@/components/Partials/Button'
-import {Card} from '@/components/Partials/Card'
-import {Container} from '@/components/Partials/Container'
+import {Button} from '@/components/ui/Button'
+import {Card} from '@/components/ui/Card'
+import {Container} from '@/components/ui/Container'
 import {
     GitHubIcon, DataCampCommunityIcon, DataCampIcon, KaggleIcon, StackOverflowIcon,
     LinkedInIcon, ArrowDownIcon,
-} from '@/components/Partials/SocialIcons'
+} from '@/components/ui/SocialIcons'
 import logoImmentia from '/public/images/logos/immentia.png'
 import logoCarecloud from '/public/images/logos/CareCloud_Logo.jpg'
 import image1 from '/public/images/photos/image-1.jpg'
@@ -25,7 +25,7 @@ import {LuBriefcaseBusiness} from "react-icons/lu";
 
 import fuiLogo from '/public/images/logos/fui.svg';
 import kyushuLogo from '/public/images/logos/kyushu_University.svg';
-import avatarImage from "p/images/avatar_1.jpg";
+import avatarImage from "p/images/avatars/avatar_1.jpg";
 import kaggleImage from "p/images/logos/STL_BLUE_LOGO.png";
 import {FiGithub} from "react-icons/fi";
 import {FaGithubAlt, FaKaggle, FaLinkedinIn} from "react-icons/fa";
@@ -292,7 +292,6 @@ export default async function HomePageLayout() {
                             I&apos;m <span className="text-catalystDark-dark dark:text-zinc-100 italic capitalize">Syed Usama Bukhari</span>,
                             A Web and Desktop
                             Application Developer.
-
                             Result-oriented individual with a strong aptitude to solve complex problem. Capable of
                             showing
                             firm and

@@ -5,9 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import clsx from "clsx";
 
-import { Button } from "@/components/Partials/Button";
-import { Card } from "@/components/Partials/Card";
-import { Container } from "@/components/Partials/Container";
+import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
+import { Container } from "@/components/ui/Container";
 import {
     GitHubIcon,
     DataCampCommunityIcon,
@@ -16,7 +16,7 @@ import {
     StackOverflowIcon,
     LinkedInIcon,
     ArrowDownIcon, // Retaining ArrowDownIcon as per your original code
-} from "@/components/Partials/SocialIcons";
+} from "@/components/ui/SocialIcons";
 import logoImmentia from "/public/images/logos/immentia.png";
 import logoCarecloud from "/public/images/logos/CareCloud_Logo.jpg";
 import image1 from "/public/images/photos/image-1.jpg";
@@ -26,7 +26,7 @@ import image4 from "/public/images/photos/image-4.jpg";
 import image5 from "/public/images/photos/image-5.jpg";
 import fuiLogo from "/public/images/logos/fui.svg";
 import kyushuLogo from "/public/images/logos/kyushu_University.svg";
-import avatarImage from "p/images/avatar.jpg";
+import avatarImage from "p/images/avatars/avatar.jpg";
 
 // Animation Variants
 const fadeIn = {

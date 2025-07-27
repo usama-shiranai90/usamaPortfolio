@@ -13,10 +13,10 @@ import {
 } from '@headlessui/react'
 import clsx from 'clsx'
 
-import { Container } from '@/components/Partials/Container'
-import avatarImage from 'p/images/avatar.jpg'
+import { Container } from '@/components/ui/Container'
+import avatarImage from 'p/images/avatars/avatar.jpg'
 
-import ThemeToggle from "@/components/Utilities/ThemeToggle";
+import ThemeToggle from "@/components/utilities/ThemeToggle";
 
 /* -------------------------------------------------------------------------- */
 /*                                  ICONS                                     */
@@ -172,7 +172,7 @@ function AvatarContainer({ className, ...props }) {
 function Avatar({ large = false, className, ...props }) {
   return (
       <Link
-          href="/"
+          href="/public"
           aria-label="Home"
           className={clsx(className, 'pointer-events-auto')}
           {...props}

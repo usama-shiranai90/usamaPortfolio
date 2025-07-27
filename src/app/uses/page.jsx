@@ -1,6 +1,6 @@
-import {Card} from '@/components/Partials/Card'
-import {Section} from '@/components/Partials/Section'
-import {SimpleLayout} from '@/components/Partials/SimpleLayout'
+import {Card} from '@/components/ui/Card'
+import {Section} from '@/components/ui/Section'
+import {SimpleLayout} from '@/components/layouts/SimpleLayout'
 
 function ToolsSection({children, ...props}) {
     return (

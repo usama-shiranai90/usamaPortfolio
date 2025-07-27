@@ -1,5 +1,5 @@
 import { Providers } from '@/app/providers'
-import { Layout } from '@/components/Layout'
+import { Layout } from '@/components/layouts/Layout'
 
 import 'p/styles/tailwind.css'
 

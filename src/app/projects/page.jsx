@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
-import {Card} from '@/components/Partials/Card'
-import {SimpleLayout} from '@/components/Partials/SimpleLayout'
+import {Card} from '@/components/ui/Card'
+import {SimpleLayout} from '@/components/layouts/SimpleLayout'
 import logoAnimaginary from '/public/images/logos/animaginary.svg'
 import logoCosmos from '/public/images/logos/cosmos.svg'
 import logoHelioStream from '/public/images/logos/PHC_Logo_2022_V-DmQv-LMF.png'

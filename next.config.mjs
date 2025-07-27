@@ -1,7 +1,5 @@
-
-
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import {fileURLToPath} from 'url';
+import {dirname} from 'path';
 import * as path from "node:path";
 import rehypePrism from '@mapbox/rehype-prism'
 import nextMDX from '@next/mdx'
@@ -12,9 +10,9 @@ const __dirname = dirname(__filename);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-   /* serverRuntimeConfig: {
-        PROJECT_ROOT: __dirname
-    },*/
+    /* serverRuntimeConfig: {
+         PROJECT_ROOT: __dirname
+     },*/
     pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'mdx'],
     experimental: {
         outputFileTracingIncludes: {

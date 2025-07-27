@@ -40,17 +40,17 @@
 /*Fonts being used in headers*/
 @font-face {
   font-family: syne-Regular;
-  src: url(../font/syne/Syne-Regular.ttf);
+  src: url(../fonts/syne/Syne-Regular.ttf);
 }
 
 @font-face {
   font-family: syne-Medium;
-  src: url(../font/syne/Syne-Medium.ttf);
+  src: url(../fonts/syne/Syne-Medium.ttf);
 }
 
 @font-face {
   font-family: syne-Bold;
-  src: url(../font/syne/Syne-Bold.ttf);
+  src: url(../fonts/syne/Syne-Bold.ttf);
 }
 
 *{

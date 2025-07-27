@@ -9,19 +9,19 @@ import dynamic from 'next/dynamic';
 const MotionDiv = dynamic(() => import('framer-motion').then(mod => mod.motion.div), {ssr: false});
 
 
-import {Container} from '@/components/Partials/Container';
+import {Container} from '@/components/ui/Container';
 import {
     ArrowDownIcon,
     GitHubIcon,
     LinkedInIcon,
     StackOverflowIcon,
     XIcon,
-} from '@/components/Partials/SocialIcons';
-import portraitImage from 'p/images/portrait.jpg';
-import {Button} from '@/components/Partials/Button';
+} from '@/components/ui/SocialIcons';
+import portraitImage from 'p/images/avatars/portrait.jpg';
+import {Button} from '@/components/ui/Button';
 import {FaGithubAlt, FaLinkedinIn} from 'react-icons/fa';
 import {IoMailOutline} from 'react-icons/io5';
-import TypingEffect from "@/components/Utilities/TypingEffect";
+import TypingEffect from "@/components/utilities/TypingEffect";
 
 function SocialLink({className, href, children, icon: Icon}) {
     return (

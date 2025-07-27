@@ -1,4 +1,4 @@
-import AboutMeLayout from "@/components/AboutMeLayout";
+import AboutMeLayout from "@/components/layouts/AboutMeLayout";
 
 export const metadata = {
     title: 'About',

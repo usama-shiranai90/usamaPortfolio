@@ -2,15 +2,15 @@ import Image from 'next/image'
 import Link from 'next/link'
 import clsx from 'clsx'
 
-import {Container} from '@/components/Partials/Container'
+import {Container} from '@/components/ui/Container'
 
-import resumeImage1 from 'p/images/Syed Usama Bukhari Resume_Page_1.png'
-import resumeImage2 from 'p/images/Syed Usama Bukhari Resume_Page_2.png'
+import resumeImage1 from 'p/images/resume/Syed Usama Bukhari Resume_Page_1.png'
+import resumeImage2 from 'p/images/resume/Syed Usama Bukhari Resume_Page_2.png'
 
-import resumeImage11 from 'p/images/Syed Usama Bukhari EU_Page_1.png'
-import resumeImage12 from 'p/images/Syed Usama Bukhari EU_Page_2.png'
+import resumeImage11 from 'p/images/resume/Syed Usama Bukhari EU_Page_1.png'
+import resumeImage12 from 'p/images/resume/Syed Usama Bukhari EU_Page_2.png'
 
-import {Button} from "@/components/Partials/Button";
+import {Button} from "@/components/ui/Button";
 
 
 export const metadata = {
