@@ -10,8 +10,11 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        syne: ['syne', 'sans-serif'],
-        sans: ['Inter', 'sans-serif'],
+        heading: ['syne-Medium', 'sans-serif'],
+        body: ['syne-Regular', 'sans-serif'],
+        // Aliases for backward compatibility
+        syne: ['syne-Medium', 'sans-serif'],
+        sans: ['syne-Regular', 'sans-serif'],
       },
 
       colors: {

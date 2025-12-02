@@ -49,6 +49,13 @@ export function ThemeProvider({ children }) {
         const root = document.documentElement;
         const themeColors = isDark ? themes.dark : themes.light;
 
+        // Toggle Dark Class
+        if (isDark) {
+            root.classList.add('dark');
+        } else {
+            root.classList.remove('dark');
+        }
+
         // Apply Base Colors
         Object.entries(themeColors).forEach(([key, value]) => {
             root.style.setProperty(key, value);

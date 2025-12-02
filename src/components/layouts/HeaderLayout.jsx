@@ -12,44 +12,11 @@ import {
   PopoverPanel,
 } from '@headlessui/react'
 import clsx from 'clsx'
+import { X, ChevronDown } from 'lucide-react'
 
 import { Container } from '@/components/ui/Container'
 import avatarImage from 'p/images/avatars/avatar.jpg'
-
 import ThemeToggle from "@/components/utilities/ThemeToggle";
-
-/* -------------------------------------------------------------------------- */
-/*                                  ICONS                                     */
-/* -------------------------------------------------------------------------- */
-function CloseIcon(props) {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" {...props}>
-      <path
-        d="m17.25 6.75-10.5 10.5M6.75 6.75l10.5 10.5"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
-
-function ChevronDownIcon(props) {
-  return (
-    <svg viewBox="0 0 8 6" aria-hidden="true" {...props}>
-      <path
-        d="M1.75 1.75 4 4.25l2.25-2.5"
-        fill="none"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
-
 
 /* -------------------------------------------------------------------------- */
 /*                                  HELPERS                                    */
@@ -83,7 +50,7 @@ function MobileNavigation({ className }) {
     <Popover className={className}>
       <PopoverButton className="group flex items-center rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10 dark:hover:ring-white/20">
         Menu
-        <ChevronDownIcon className="ml-3 h-auto w-2 stroke-zinc-500 group-hover:stroke-zinc-700 dark:group-hover:stroke-zinc-400" />
+        <ChevronDown className="ml-3 h-auto w-2 stroke-zinc-500 group-hover:stroke-zinc-700 dark:group-hover:stroke-zinc-400" />
       </PopoverButton>
 
       <PopoverBackdrop
@@ -100,7 +67,7 @@ function MobileNavigation({ className }) {
             aria-label="Close menu"
             className="-m-1 p-1 hover:text-teal-500 dark:hover:text-teal-400"
           >
-            <CloseIcon className="h-6 w-6 text-zinc-500 dark:text-zinc-400" />
+            <X className="h-6 w-6 text-zinc-500 dark:text-zinc-400" />
           </PopoverButton>
           <h2 className="text-sm font-medium text-zinc-600 dark:text-zinc-400">
             Navigation
@@ -197,6 +164,10 @@ function Avatar({ large = false, className, ...props }) {
 export function HeaderLayout() {
   const [bannerVisible, setBannerVisible] = useState(true)
   const isHomePage = usePathname() === '/'
+
+  // Hide header on large screens where sidebar is visible
+  // We can do this by returning null or wrapping in a div with lg:hidden
+  // But since it has logic, let's wrap the return content
 
   const headerRef = useRef(null)
   const avatarRef = useRef(null)
@@ -324,22 +295,7 @@ export function HeaderLayout() {
               className="-m-3 p-3 focus-visible:outline-offset-[-4px]"
             >
               <span className="sr-only">Dismiss</span>
-              <svg
-                className="h-5 w-5 text-white dark:text-zinc-100"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586
-                     l4.293-4.293a1 1 0 111.414 1.414L11.414
-                     10l4.293 4.293a1 1 0 01-1.414 1.414L10
-                     11.414l-4.293 4.293a1 1 0
-                     01-1.414-1.414L8.586 10 4.293 5.707a1
-                     1 0 010-1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
+              <X className="h-5 w-5 text-white dark:text-zinc-100" />
             </button>
           </div>
         </div>
@@ -347,7 +303,7 @@ export function HeaderLayout() {
 
       {/* Main Header */}
       <header
-        className="pointer-events-none relative z-50 flex flex-none flex-col"
+        className="pointer-events-none relative z-50 flex flex-none flex-col lg:hidden"
         style={{
           height: 'var(--header-height)',
           marginBottom: 'var(--header-mb)',

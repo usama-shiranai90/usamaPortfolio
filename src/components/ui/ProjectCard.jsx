@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
+import { Github, ExternalLink } from 'lucide-react';
 
 export function ProjectCard({ project, index }) {
     return (
@@ -23,7 +23,7 @@ export function ProjectCard({ project, index }) {
             </div>
 
             <div className="p-6 relative z-20">
-                <h3 className="text-2xl font-bold font-syne text-theme-text mb-2 group-hover:text-cyan-accent transition-colors">
+                <h3 className="text-2xl font-bold font-heading text-theme-text mb-2 group-hover:text-cyan-accent transition-colors">
                     {project.title}
                 </h3>
                 <p className="text-theme-text/60 mb-4 line-clamp-2">
@@ -47,14 +47,14 @@ export function ProjectCard({ project, index }) {
                         target="_blank"
                         className="flex items-center gap-2 text-sm font-medium text-theme-text hover:text-cyan-accent transition-colors"
                     >
-                        <FaGithub /> Code
+                        <Github className="w-4 h-4" /> Code
                     </Link>
                     <Link
                         href={project.demo}
                         target="_blank"
                         className="flex items-center gap-2 text-sm font-medium text-theme-text hover:text-cyan-accent transition-colors"
                     >
-                        <FaExternalLinkAlt /> Live Demo
+                        <ExternalLink className="w-4 h-4" /> Live Demo
                     </Link>
                 </div>
             </div>

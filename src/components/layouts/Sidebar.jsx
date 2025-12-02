@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from 'react';
+import logo from 'p/images/logo.png';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Github, Linkedin, Twitter, Mail, FileText, Share2 } from 'lucide-react';
+import { Github, Linkedin, Mail, FileText, Share2 } from 'lucide-react';
+import { useTheme } from '@/context/ThemeContext';
 
 const socialLinks = [
     { icon: Github, href: 'https://github.com/usama-shiranai90', label: 'GitHub' },
@@ -47,6 +49,7 @@ const lineVariants = {
 
 export function Sidebar() {
     const [isSocialHovered, setIsSocialHovered] = useState(false);
+    const { accent } = useTheme();
 
     return (
         <motion.aside
@@ -59,10 +62,29 @@ export function Sidebar() {
             <div className="absolute inset-0 w-full h-full bg-theme-bg/0 backdrop-blur-[2px] -z-10" />
 
             {/* 1. Logo Section */}
-            <motion.div variants={itemVariants} className="relative group cursor-pointer pointer-events-auto">
-                <a href="/" className="text-2xl font-bold font-syne text-cyan-accent hover:text-theme-text transition-colors duration-300 no-underline flex flex-col items-center">
-                    <span className="text-3xl">U</span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-theme-text mt-1 group-hover:bg-cyan-accent transition-colors"></span>
+            <motion.div
+                variants={itemVariants}
+                className="relative group cursor-pointer pointer-events-auto"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.3 }}
+            >
+                <a href="/" className="block relative w-16 h-16 flex items-center justify-center">
+                    {/* Masked Logo for Color Control */}
+                    <div
+                        className="w-full h-full transition-colors duration-300"
+                        style={{
+                            maskImage: `url(${logo.src})`,
+                            maskSize: 'contain',
+                            maskRepeat: 'no-repeat',
+                            maskPosition: 'center',
+                            WebkitMaskImage: `url(${logo.src})`,
+                            WebkitMaskSize: 'contain',
+                            WebkitMaskRepeat: 'no-repeat',
+                            WebkitMaskPosition: 'center',
+                            backgroundColor: accent.value
+                        }}
+                    />
                 </a>
             </motion.div>
 
@@ -80,7 +102,7 @@ export function Sidebar() {
                             <motion.div key={item.label} variants={itemVariants} custom={i} className="relative group">
                                 <a
                                     href={item.href}
-                                    className="relative text-[10px] font-mono font-bold tracking-[0.25em] text-theme-text/50 hover:text-cyan-accent transition-all uppercase py-4 px-2 no-underline flex items-center justify-center bg-theme-bg/80 backdrop-blur-sm border border-transparent hover:border-cyan-accent/30 rounded-full"
+                                    className="relative text-[10px] font-body font-bold tracking-[0.25em] text-theme-text/50 hover:text-cyan-accent transition-all uppercase py-4 px-2 no-underline flex items-center justify-center bg-theme-bg/80 backdrop-blur-sm border border-transparent hover:border-cyan-accent/30 rounded-full"
                                 >
                                     {item.label}
                                 </a>

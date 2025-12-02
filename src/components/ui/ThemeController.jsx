@@ -24,7 +24,7 @@ export function ThemeController() {
                         <div className="space-y-6">
                             {/* Mode Toggle */}
                             <div className="flex items-center justify-between">
-                                <span className="text-sm font-mono text-theme-text/70">THEME_MODE</span>
+                                <span className="text-sm font-body text-theme-text/70">THEME_MODE</span>
                                 <button
                                     onClick={() => setIsDark(!isDark)}
                                     className="relative w-14 h-7 bg-theme-text/10 rounded-full p-1 transition-colors hover:bg-theme-text/20"
@@ -40,7 +40,7 @@ export function ThemeController() {
 
                             {/* Accent Picker */}
                             <div className="space-y-3">
-                                <span className="text-sm font-mono text-theme-text/70">ACCENT_COLOR</span>
+                                <span className="text-sm font-body text-theme-text/70">ACCENT_COLOR</span>
                                 <div className="flex flex-wrap gap-2">
                                     {accents.map((c) => (
                                         <button

@@ -48,19 +48,6 @@
   src: url(../fonts/syne/Syne-Medium.ttf);
 }
 
-@font-face {
-  font-family: syne-Bold;
-  src: url(../fonts/syne/Syne-Bold.ttf);
-}
-
-* {
-  font-family: syne-Regular, serif;
-}
-
-.owl-nav-uline {
-  @apply border-b-0 bg-no-repeat
-}
-
 .owl-nav-uline-color {
   @apply bg-nvSimpleh
 }
