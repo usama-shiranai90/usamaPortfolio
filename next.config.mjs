@@ -1,5 +1,5 @@
-import {fileURLToPath} from 'url';
-import {dirname} from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 import * as path from "node:path";
 import rehypePrism from '@mapbox/rehype-prism'
 import nextMDX from '@next/mdx'
@@ -18,6 +18,18 @@ const nextConfig = {
         outputFileTracingIncludes: {
             '/articles/*': ['./src/app/articles/**/*.mdx'],
         },
+    },
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'resources.jetbrains.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'www.vectorlogo.zone',
+            },
+        ],
     },
 }
 

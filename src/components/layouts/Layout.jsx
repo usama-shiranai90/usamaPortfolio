@@ -1,19 +1,14 @@
-import { FooterLayout } from '@/components/layouts/FooterLayout'
-import { HeaderLayout } from '@/components/layouts/HeaderLayout'
+import { Sidebar } from '@/components/layouts/Sidebar'
 
 export function Layout({ children }) {
   return (
-    <>
-      <div className="fixed inset-0 flex justify-center sm:px-8">
-        <div className="flex w-full max-w-7xl lg:px-8">
-          <div className="w-full bg-white ring-1 ring-zinc-100 dark:bg-zinc-900 dark:ring-zinc-300/20" />
+    <div className="flex min-h-screen bg-theme-bg text-theme-text transition-colors duration-500">
+      <Sidebar />
+      <main className="flex-1 lg:pl-24 relative flex flex-col min-h-screen">
+        <div className="flex-1 w-full">
+          {children}
         </div>
-      </div>
-      <div className="relative flex w-full flex-col">
-        <HeaderLayout />
-        <main className="flex-auto">{children}</main>
-        <FooterLayout />
-      </div>
-    </>
+      </main>
+    </div>
   )
 }

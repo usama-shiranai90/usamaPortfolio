@@ -1,6 +1,7 @@
 import { Providers } from '@/app/providers'
 import { Layout } from '@/components/layouts/Layout'
 
+import { ThemeController } from '@/components/ui/ThemeController'
 import 'p/styles/tailwind.css'
 
 export const metadata = {
@@ -9,6 +10,7 @@ export const metadata = {
     default:
       'Usama Bukhari - Software Engineer & Research student',
   },
+
   description:
     'I’m Usama, a software engineer and research student at Kyushu University - Japan.',
   alternates: {
@@ -23,6 +25,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className="h-full antialiased" suppressHydrationWarning>
       <body className="flex h-full bg-zinc-50 dark:bg-black">
         <Providers>
+          {/* <ThemeController /> */}
           <div className="flex w-full">
             <Layout>{children}</Layout>
           </div>

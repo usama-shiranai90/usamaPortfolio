@@ -1,8 +1,9 @@
-import {Card} from '@/components/ui/Card'
-import {Section} from '@/components/ui/Section'
-import {SimpleLayout} from '@/components/layouts/SimpleLayout'
+import { Card } from '@/components/ui/Card'
+import { Section } from '@/components/ui/Section'
+import { SimpleLayout } from '@/components/layouts/SimpleLayout'
+import Image from 'next/image'
 
-function ToolsSection({children, ...props}) {
+function ToolsSection({ children, ...props }) {
     return (
         <Section {...props}>
             <ul role="list" className="space-y-16">
@@ -12,7 +13,7 @@ function ToolsSection({children, ...props}) {
     )
 }
 
-function Tool({title, href, children}) {
+function Tool({ title, href, children }) {
     return (
         <Card as="li">
             <Card.Title as="h3" href={href}>
@@ -56,18 +57,18 @@ export default function Uses() {
                         My favorite IDE for development. The smart code completion and refactoring tools keep my
                         workflow smooth and efficient.
                         <div className={"flex gap-x-2 mt-1.5"}>
-                            <img
+                            <Image
                                 src="https://resources.jetbrains.com/storage/products/company/brand/logos/PyCharm_icon.png"
-                                alt="JetBrains WebStorm" width="30" height="30"/>
-                            <img
+                                alt="JetBrains PyCharm" width={30} height={30} unoptimized />
+                            <Image
                                 src="https://resources.jetbrains.com/storage/products/company/brand/logos/DataSpell_icon.png"
-                                alt="JetBrains WebStorm" width="30" height="30"/>
-                            <img
+                                alt="JetBrains DataSpell" width={30} height={30} unoptimized />
+                            <Image
                                 src="https://resources.jetbrains.com/storage/products/company/brand/logos/PhpStorm_icon.png"
-                                alt="JetBrains WebStorm" width="30" height="30"/>
-                            <img
+                                alt="JetBrains PhpStorm" width={30} height={30} unoptimized />
+                            <Image
                                 src="https://resources.jetbrains.com/storage/products/company/brand/logos/WebStorm_icon.png"
-                                alt="JetBrains WebStorm" width="30" height="30"/>
+                                alt="JetBrains WebStorm" width={30} height={30} unoptimized />
                         </div>
 
                     </Tool>
@@ -81,8 +82,8 @@ export default function Uses() {
                     <Tool title="Figma">
                         Not just for design—Figma has become the collaboration hub for our team. From mockups to
                         brainstorming, it's essential to our workflow.
-                        <img src="https://www.vectorlogo.zone/logos/figma/figma-icon.svg" alt="Figma"
-                             className={"mt-1.5"} width="25"/>
+                        <Image src="https://www.vectorlogo.zone/logos/figma/figma-icon.svg" alt="Figma"
+                            className={"mt-1.5"} width={25} height={25} unoptimized />
                     </Tool>
                 </ToolsSection>
 
