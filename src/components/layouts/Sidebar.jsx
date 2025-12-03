@@ -97,7 +97,7 @@ export function Sidebar() {
                 />
 
                 <nav className="z-10 py-8">
-                    <div className="flex flex-row gap-12 [writing-mode:vertical-lr] rotate-180 items-center">
+                    <div className="flex flex-row gap-4 [writing-mode:vertical-lr] rotate-180 items-center">
                         {[...navItems].reverse().map((item, i) => (
                             <motion.div key={item.label} variants={itemVariants} custom={i} className="relative group">
                                 <a

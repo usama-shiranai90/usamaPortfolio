@@ -19,11 +19,15 @@ const themes = {
 
 export const accents = [
     { name: 'Teal', value: '#14b8a6', rgb: '20, 184, 166' },
-    { name: 'Cyan', value: '#00d8ff', rgb: '0, 216, 255' },
-    { name: 'Green', value: '#00ff9d', rgb: '0, 255, 157' },
-    { name: 'Purple', value: '#bd00ff', rgb: '189, 0, 255' },
-    { name: 'Orange', value: '#ff9100', rgb: '255, 145, 0' },
-    { name: 'Red', value: '#ff0055', rgb: '255, 0, 85' },
+    { name: 'Cyan', value: '#06b6d4', rgb: '6, 182, 212' },
+    { name: 'Blue', value: '#3b82f6', rgb: '59, 130, 246' },
+    { name: 'Indigo', value: '#6366f1', rgb: '99, 102, 241' },
+    { name: 'Violet', value: '#8b5cf6', rgb: '139, 92, 246' },
+    { name: 'Magenta', value: '#d946ef', rgb: '217, 70, 239' },
+    { name: 'Rose', value: '#f43f5e', rgb: '244, 63, 94' },
+    { name: 'Orange', value: '#f97316', rgb: '249, 115, 22' },
+    { name: 'Emerald', value: '#10b981', rgb: '16, 185, 129' },
+    { name: 'Lime', value: '#84cc16', rgb: '132, 204, 22' },
 ];
 
 export function ThemeProvider({ children }) {
