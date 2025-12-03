@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { ProjectCard } from '@/components/ui/ProjectCard';
 import { ScientificBackground } from '@/components/ui/ScientificBackground';
 import { LoadingScreen } from '@/components/ui/LoadingScreen';
-import { SiJavascript, SiPython, SiMongodb, SiPostgresql, SiGooglecloud } from 'react-icons/si';
+
 
 import image1 from '/public/images/photos/image-1.jpg';
 import image2 from '/public/images/photos/image-2.jpg';
@@ -84,106 +84,6 @@ const experiences = [
     }
 ];
 
-const tools = [
-    { icon: SiJavascript, label: "JavaScript", color: "hover:text-yellow-400" },
-    { icon: SiPython, label: "Python", color: "hover:text-blue-400" },
-    { icon: SiMongodb, label: "MongoDB", color: "hover:text-green-500" },
-    { icon: SiPostgresql, label: "PostgreSQL", color: "hover:text-cyan-400" },
-    { icon: SiGooglecloud, label: "Google Cloud", color: "hover:text-red-400" },
-];
-
-const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.1,
-            delayChildren: 1.5
-        }
-    }
-};
-
-const itemVariants = {
-    hidden: { opacity: 0, x: 20 },
-    visible: { opacity: 1, x: 0 }
-};
-
-function RightTools() {
-    const [hovered, setHovered] = useState(null);
-
-    return (
-        <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={containerVariants}
-            className="fixed right-8 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col items-center gap-2"
-        >
-            <motion.div
-                initial={{ height: 0 }}
-                animate={{ height: 100 }}
-                transition={{ duration: 1, delay: 1 }}
-                className="w-[1px] bg-gradient-to-b from-transparent via-white/20 to-transparent mb-2"
-            />
-
-            <div className="flex flex-col gap-3">
-                {tools.map((Tool, i) => (
-                    <motion.div
-                        key={i}
-                        variants={itemVariants}
-                        onMouseEnter={() => setHovered(i)}
-                        onMouseLeave={() => setHovered(null)}
-                        className={`
-                            relative w-10 h-10 rounded-full 
-                            bg-theme-card/40 backdrop-blur-md 
-                            border border-theme-text/5 
-                            flex items-center justify-center 
-                            text-theme-text/40 transition-all duration-300
-                            hover:border-cyan-accent/50 hover:bg-theme-card/80
-                            hover:-translate-x-1 hover:shadow-[0_0_15px_rgba(0,240,255,0.2)]
-                            group
-                            ${Tool.color}
-                        `}
-                    >
-                        <Tool.icon className="w-5 h-5" />
-                        {hovered === i && (
-                            <motion.span
-                                initial={{ opacity: 0, x: 10 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                className="absolute right-full mr-4 py-1 px-2 bg-theme-bg/90 border border-theme-text/10 rounded text-[10px] font-body whitespace-nowrap text-theme-text"
-                            >
-                                {Tool.label}
-                            </motion.span>
-                        )}
-                    </motion.div>
-                ))}
-
-                <motion.div
-                    variants={itemVariants}
-                    className="
-                        w-10 h-10 rounded-full 
-                        bg-theme-card/40 backdrop-blur-md 
-                        border border-theme-text/5 
-                        flex items-center justify-center 
-                        cursor-pointer group
-                        hover:border-cyan-accent/50 hover:bg-cyan-accent/10 transition-all duration-300
-                    "
-                >
-                    <span className="text-[10px] font-body font-bold text-cyan-accent group-hover:text-theme-text transition-colors">
-                        +12
-                    </span>
-                </motion.div>
-            </div>
-
-            <motion.div
-                initial={{ height: 0 }}
-                animate={{ height: 40 }}
-                transition={{ duration: 1, delay: 1 }}
-                className="w-[1px] bg-gradient-to-b from-theme-text/10 to-transparent mt-2"
-            />
-        </motion.div>
-    );
-}
-
 export default function HomePageLayout() {
     const [isLoading, setIsLoading] = useState(true);
     const [activeCategory, setActiveCategory] = useState("All");
@@ -215,9 +115,17 @@ export default function HomePageLayout() {
                     transition={{ duration: 1 }}
                     className="contents"
                 >
-                    <RightTools />
 
-                    <div className="h-screen overflow-y-scroll md:snap-y md:snap-mandatory scroll-smooth relative z-10 no-scrollbar">
+
+                    <div
+                        className="h-screen overflow-y-scroll md:snap-y md:snap-mandatory scroll-smooth relative z-10"
+                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                    >
+                        <style jsx>{`
+                            div::-webkit-scrollbar {
+                                display: none;
+                            }
+                        `}</style>
                         {/* --- HERO SECTION --- */}
                         <section className="min-h-screen snap-start flex flex-col justify-center max-w-7xl mx-auto w-full pt-20 px-4 md:px-8">
                             <motion.div
@@ -294,9 +202,9 @@ export default function HomePageLayout() {
                                     initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}
                                     className="flex flex-wrap gap-4 pt-4"
                                 >
-                                    <a href="#contact" className="group relative px-8 py-3 bg-cyan-accent text-theme-bg font-bold font-body text-sm overflow-hidden">
+                                    <a href="/resume" className="group relative px-8 py-3 bg-cyan-accent text-theme-bg font-bold font-body text-sm overflow-hidden">
                                         <div className="absolute inset-0 bg-theme-text translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                                        <span className="relative group-hover:text-theme-bg transition-colors">INITIATE_CONTACT</span>
+                                        <span className="relative group-hover:text-theme-bg transition-colors">DOWNLOAD_RESUME</span>
                                     </a>
                                     <a href="#projects" className="group px-8 py-3 border border-theme-text/20 text-theme-text font-bold font-body text-sm hover:border-cyan-accent transition-colors flex items-center gap-2">
                                         <span>VIEW_RESEARCH_DATA</span>
@@ -379,9 +287,8 @@ export default function HomePageLayout() {
                                 <motion.h2
                                     initial={{ opacity: 0, x: -20 }}
                                     whileInView={{ opacity: 1, x: 0 }}
-                                    className="text-4xl md:text-6xl font-bold font-heading text-theme-text"
-                                >
-                                    Selected <br /> <span className="text-cyan-accent">Works</span>
+                                    className="text-4xl md:text-5xl font-bold font-heading text-theme-text">
+                                    Project <span className="text-cyan-accent">Works</span>
                                 </motion.h2>
 
                                 {/* Category Filter */}

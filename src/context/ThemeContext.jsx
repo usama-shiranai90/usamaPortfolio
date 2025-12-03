@@ -6,7 +6,7 @@ const ThemeContext = createContext();
 
 const themes = {
     dark: {
-        '--theme-bg': '#0f0f0f',
+        '--theme-bg': '#000000',
         '--theme-text': '#ffffff',
         '--theme-card': '#18181b',
     },

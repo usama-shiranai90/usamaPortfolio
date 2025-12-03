@@ -12,7 +12,7 @@ export function ThemeController() {
     if (!mounted) return null;
 
     return (
-        <div className="fixed right-6 top-6 z-50 flex flex-col items-end gap-4">
+        <div className="fixed z-0 right-6 top-6 z-[60] flex flex-col items-end gap-4">
             <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -57,8 +57,8 @@ export function ThemeController() {
                                     <button
                                         onClick={() => setIsDark(false)}
                                         className={`flex items-center justify-center gap-2 py-2 rounded-md text-xs font-medium transition-all ${!isDark
-                                                ? 'bg-white text-black shadow-lg'
-                                                : 'text-white/50 hover:text-white hover:bg-white/5'
+                                            ? 'bg-white text-black shadow-lg'
+                                            : 'text-white/50 hover:text-white hover:bg-white/5'
                                             }`}
                                     >
                                         <Sun size={14} />
@@ -67,8 +67,8 @@ export function ThemeController() {
                                     <button
                                         onClick={() => setIsDark(true)}
                                         className={`flex items-center justify-center gap-2 py-2 rounded-md text-xs font-medium transition-all ${isDark
-                                                ? 'bg-zinc-800 text-white shadow-lg border border-white/10'
-                                                : 'text-white/50 hover:text-white hover:bg-white/5'
+                                            ? 'bg-zinc-800 text-white shadow-lg border border-white/10'
+                                            : 'text-white/50 hover:text-white hover:bg-white/5'
                                             }`}
                                     >
                                         <Moon size={14} />

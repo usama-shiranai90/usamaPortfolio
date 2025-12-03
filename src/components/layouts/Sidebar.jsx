@@ -9,7 +9,7 @@ import { useTheme } from '@/context/ThemeContext';
 const socialLinks = [
     { icon: Github, href: 'https://github.com/usama-shiranai90', label: 'GitHub' },
     { icon: Linkedin, href: 'https://www.linkedin.com/in/syed-usama-bukhari-0a6373175', label: 'LinkedIn' },
-    { icon: FileText, href: '/resume.pdf', label: 'Resume' },
+    { icon: FileText, href: '/resume', label: 'Resume' },
     { icon: Mail, href: 'mailto:john@example.com', label: 'Email' },
 ];
 
@@ -56,7 +56,7 @@ export function Sidebar() {
             initial="hidden"
             animate="visible"
             variants={sidebarVariants}
-            className="fixed left-0 top-0 h-screen w-24 flex flex-col items-center justify-between py-12 z-50 hidden lg:flex pointer-events-none"
+            className="fixed bg-theme-bg left-0 top-0 h-screen w-24 flex flex-col items-center justify-between py-12 z-50 hidden lg:flex pointer-events-none"
         >
             {/* Background blur for better visibility */}
             <div className="absolute inset-0 w-full h-full bg-theme-bg/0 backdrop-blur-[2px] -z-10" />
