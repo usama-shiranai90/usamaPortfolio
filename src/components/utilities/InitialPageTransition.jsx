@@ -185,7 +185,7 @@ function Resume() {
 }
 
 // Main Home Component
-export default async function Home() {
+export default function Home() {
     const educations = [
         {
             title: "Research Student",
