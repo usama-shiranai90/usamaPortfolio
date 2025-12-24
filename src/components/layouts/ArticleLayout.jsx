@@ -27,6 +27,36 @@ export function ArticleLayout({ article, children }) {
 
   return (
     <Container className="mt-16 lg:mt-32">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: article.title,
+            datePublished: article.date,
+            dateModified: article.date,
+            description: article.description,
+            author: {
+              '@type': 'Person',
+              name: 'Usama Bukhari',
+              url: 'https://usamabukhari.com',
+            },
+            publisher: {
+              '@type': 'Organization',
+              name: 'Usama Bukhari',
+              logo: {
+                '@type': 'ImageObject',
+                url: 'https://usamabukhari.com/images/logo.png',
+              },
+            },
+            mainEntityOfPage: {
+              '@type': 'WebPage',
+              '@id': `https://usamabukhari.com/articles/${article.slug}`,
+            },
+          }),
+        }}
+      />
       <div className="xl:relative">
         <div className="mx-auto max-w-2xl">
           {previousPathname && (

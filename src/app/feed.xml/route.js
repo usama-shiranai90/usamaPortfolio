@@ -1,6 +1,6 @@
 import assert from 'assert'
 import * as cheerio from 'cheerio'
-import {Feed} from 'feed'
+import { Feed } from 'feed'
 
 export async function GET(req) {
     let siteUrl = process.env.NEXT_PUBLIC_SITE_URL
@@ -10,13 +10,13 @@ export async function GET(req) {
     }
 
     let author = {
-        name: 'OneEyeOwl',
+        name: 'Usama Bukhari',
         email: 'syedusama843@gmail.com',
     }
 
     let feed = new Feed({
         title: author.name,
-        description: 'Your blog description',
+        description: 'Portfolio and blog of Usama Bukhari - Software Engineer & Research Student.',
         author,
         id: siteUrl,
         link: siteUrl,

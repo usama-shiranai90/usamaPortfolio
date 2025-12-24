@@ -67,7 +67,7 @@ export default function AboutMeLayout() {
                     >
                         <Image
                             src={portraitImage}
-                            alt=""
+                            alt="Portrait of Usama Bukhari"
                             sizes="(min-width: 1024px) 32rem, 20rem"
                             className="aspect-square rounded-2xl bg-zinc-100 object-cover dark:bg-zinc-800"
                         />

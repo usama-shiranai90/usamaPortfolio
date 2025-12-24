@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
-import {Card} from '@/components/ui/Card'
-import {SimpleLayout} from '@/components/layouts/SimpleLayout'
+import { Card } from '@/components/ui/Card'
+import { SimpleLayout } from '@/components/layouts/SimpleLayout'
 import logoAnimaginary from '/public/images/logos/animaginary.svg'
 import logoCosmos from '/public/images/logos/cosmos.svg'
 import logoHelioStream from '/public/images/logos/PHC_Logo_2022_V-DmQv-LMF.png'
@@ -12,35 +12,35 @@ const projects = [
     {
         name: 'Catalyst - A Web Solution For OBE',
         description: 'A web application made for foundation university to automate progressive course profile, manage respective users and track student performance.',
-        link: {href: 'https://github.com/usama-shiranai90', label: 'github.com'},
+        link: { href: 'https://github.com/usama-shiranai90', label: 'github.com' },
         logo: logoPlanetaria,
     },
     {
         name: 'Portable Health Clinic 2.0',
         description:
             'Portable Health Clinic (PHC) aims to build an affordable, usable, and sustainable preventive healthcare system for unreached people.',
-        link: {href: 'https://portable-healthcare-clinic-2.netlify.app/', label: 'portable-health.org'},
+        link: { href: 'https://portable-healthcare-clinic-2.netlify.app/', label: 'portable-health.org' },
         logo: logoHelioStream,
     },
     {
         name: 'Smart Health Gantt Chart',
         description:
             'Portable Health Clinic (PHC) aims to build an affordable, usable, and sustainable preventive healthcare system for unreached people.',
-        link: {href: 'https://shgchart.com/', label: 'shgchart.com'},
+        link: { href: 'https://shgchart.com/', label: 'shgchart.com' },
         logo: logoHelioStream,
     },
     {
         name: 'Advance SMTP Sender',
         description:
             'Real-time SMTP based sender using python and streamlit.',
-        link: {href: '#', label: 'github.com'},
+        link: { href: '#', label: 'github.com' },
         logo: logoAnimaginary,
     },
     {
         name: 'OllamaMedVoice',
         description:
             'The project that integrates the Ollama-based models and ChatGPT with audio recognition technology to provide accurate and efficient medical question answering. This project aims to enhance the accessibility and responsiveness of medical information through voice interactions.',
-        link: {href: '#', label: 'github.com'},
+        link: { href: '#', label: 'github.com' },
         logo: logoOpenShuttle,
     },
 ]
@@ -58,7 +58,11 @@ function LinkIcon(props) {
 
 export const metadata = {
     title: 'Projects',
-    description: 'Things I’ve made trying to put my dent in the universe.',
+    description: 'Showcase of software engineering and research projects by Usama Bukhari.',
+    openGraph: {
+        title: 'Projects - Usama Bukhari',
+        description: 'Explore web applications, AI research, and open source contributions by Usama Bukhari.',
+    },
 }
 
 export default function Projects() {
@@ -77,7 +81,7 @@ export default function Projects() {
                             className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
                             <Image
                                 src={project.logo}
-                                alt=""
+                                alt={`${project.name} logo`}
                                 className="h-8 w-8"
                                 unoptimized
                             />
@@ -87,7 +91,7 @@ export default function Projects() {
                         </h2>
                         <Card.Description>{project.description}</Card.Description>
                         <p className="relative z-10 mt-6 flex text-sm font-medium text-zinc-400 transition group-hover:text-teal-500 dark:text-zinc-200">
-                            <LinkIcon className="h-6 w-6 flex-none"/>
+                            <LinkIcon className="h-6 w-6 flex-none" />
                             <span className="ml-2">{project.link.label}</span>
                         </p>
                     </Card>

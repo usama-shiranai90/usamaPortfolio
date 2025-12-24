@@ -1,17 +1,48 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { AppContext } from '@/app/providers';
 import Link from 'next/link';
 import { ProjectCard } from '@/components/ui/ProjectCard';
 import { ScientificBackground } from '@/components/ui/ScientificBackground';
 import { LoadingScreen } from '@/components/ui/LoadingScreen';
+import { PublicationCard } from '@/components/ui/PublicationCard';
+import { TechStack } from '@/components/ui/TechStack';
+import { Timeline } from '@/components/ui/Timeline';
 
 
 import image1 from '/public/images/photos/image-1.jpg';
 import image2 from '/public/images/photos/image-2.jpg';
 import image3 from '/public/images/photos/image-3.jpg';
 import image4 from '/public/images/photos/image-4.jpg';
+
+const publications = [
+    {
+        title: "Optimizing Neural Networks for Medical Imaging Diagnosis using Evolutionary Algorithms",
+        authors: ["Usama Bukhari", "Satoshi Hori"],
+        venue: "IEEE International Conference on Bioinformatics and Biomedicine (BIBM)",
+        year: "2024",
+        type: "Conference",
+        abstract: "This paper proposes a novel evolutionary strategy for hyperparameter optimization in deep convolutional neural networks, specifically tailored for detecting anomalies in high-resolution MRI scans. Our approach reduces computational cost by 40% while maintaining state-of-the-art accuracy.",
+        links: {
+            pdf: "#",
+            code: "https://github.com",
+            project: "#"
+        }
+    },
+    {
+        title: "Graph Neural Networks in Predictive Healthcare: A Survey",
+        authors: ["Usama Bukhari", "Research Group A"],
+        venue: "Journal of Biomedical Informatics",
+        year: "2023",
+        type: "Journal",
+        abstract: "A comprehensive survey on the application of GNNs in healthcare, focusing on patient outcome prediction, drug discovery, and disease usage patterns. We categorize existing methods and propose future research directions.",
+        links: {
+            pdf: "#"
+        }
+    }
+];
 
 const projects = [
     {
@@ -68,33 +99,55 @@ const experiences = [
         company: "Kyushu University",
         role: "Research Student",
         period: "2024 - Present",
-        description: "Conducting research on advanced algorithms and machine learning applications."
+        description: "Conducting research on advanced algorithms and machine learning applications. Focusing on evolutionary strategies for neural architecture search.",
+        tags: ["Machine Learning", "Python", "Research"]
     },
     {
         company: "Carecloud",
         role: "Software Engineer",
         period: "Feb 2023 - Sept 2023",
-        description: "Developed and maintained healthcare software solutions using .NET and Angular."
+        description: "Developed and maintained healthcare software solutions using .NET and Angular. Implemented FHIR standards for interoperability.",
+        tags: [".NET", "Angular", "Healthcare IT"]
     },
     {
         company: "Immentia",
         role: "Software Engineer",
         period: "Aug 2022 - Jan 2023",
-        description: "Worked on full-stack web development projects for international clients."
+        description: "Worked on full-stack web development projects for international clients. Built scalable APIs and responsive front-end interfaces.",
+        tags: ["React", "Node.js", "Full Stack"]
     }
 ];
 
 export default function HomePageLayout() {
-    const [isLoading, setIsLoading] = useState(true);
+    const { introShown, setIntroShown } = useContext(AppContext);
+    // If intro has been shown in this session (context), skip loading.
+    const [isLoading, setIsLoading] = useState(!introShown);
     const [activeCategory, setActiveCategory] = useState("All");
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-        }, 2500);
+        // If context says it's done, ensure we stick to that (though initial state handles it)
+        if (introShown) {
+            return;
+        }
 
-        return () => clearTimeout(timer);
-    }, []);
+        // Check sessionStorage for refresh persistence
+        const hasShownSession = typeof window !== 'undefined' && sessionStorage.getItem('introShown');
+
+        if (hasShownSession) {
+            setIntroShown(true);
+            setIsLoading(false);
+        } else {
+            const timer = setTimeout(() => {
+                setIsLoading(false);
+                setIntroShown(true);
+                if (typeof window !== 'undefined') {
+                    sessionStorage.setItem('introShown', 'true');
+                }
+            }, 2500);
+
+            return () => clearTimeout(timer);
+        }
+    }, [introShown, setIntroShown]);
 
     const filteredProjects = activeCategory === "All"
         ? projects
@@ -281,6 +334,23 @@ export default function HomePageLayout() {
                             </div>
                         </section>
 
+                        {/* Research Section */}
+                        <section id="research" className="min-h-screen snap-start flex flex-col justify-center max-w-7xl mx-auto w-full px-4 md:px-8 py-20">
+                            <motion.h2
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                className="text-4xl md:text-5xl font-bold font-heading text-theme-text mb-12"
+                            >
+                                Selected <span className="text-cyan-accent">Publications</span>
+                            </motion.h2>
+
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                {publications.map((pub, index) => (
+                                    <PublicationCard key={index} publication={pub} />
+                                ))}
+                            </div>
+                        </section>
+
                         {/* Projects Section */}
                         <section id="projects" className="snap-start flex flex-col justify-center max-w-7xl mx-auto w-full px-4 md:px-8 py-20 min-h-[1600px] md:min-h-[1100px] lg:min-h-screen">
                             <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
@@ -322,27 +392,22 @@ export default function HomePageLayout() {
                             </motion.div>
                         </section>
 
+                        {/* Skills Section */}
+                        <section id="skills" className="min-h-screen snap-start flex flex-col justify-center max-w-7xl mx-auto w-full px-4 md:px-8">
+                            <motion.h2
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                className="text-4xl md:text-5xl font-bold font-heading text-theme-text mb-12"
+                            >
+                                Technical <span className="text-cyan-accent">Arsenal</span>
+                            </motion.h2>
+                            <TechStack />
+                        </section>
+
                         {/* Experience Section */}
-                        <section id="experience" className="min-h-screen snap-start flex flex-col justify-center max-w-4xl mx-auto w-full px-4 md:px-8">
-                            <h2 className="text-4xl md:text-5xl font-bold font-heading text-theme-text mb-16">Experience</h2>
-                            <div className="space-y-0 border-l border-theme-text/10 ml-3">
-                                {experiences.map((exp, index) => (
-                                    <motion.div
-                                        key={index}
-                                        initial={{ opacity: 0, x: -20 }}
-                                        whileInView={{ opacity: 1, x: 0 }}
-                                        className="relative pl-12 py-8 group hover:bg-theme-text/5 transition-colors pr-4 rounded-r-xl"
-                                    >
-                                        <div className="absolute -left-[5px] top-10 w-[9px] h-[9px] rounded-full bg-theme-bg border-2 border-cyan-accent group-hover:bg-cyan-accent transition-colors"></div>
-                                        <div className="flex flex-col md:flex-row md:items-baseline md:justify-between mb-2">
-                                            <h3 className="text-2xl font-bold font-heading text-theme-text group-hover:text-cyan-accent transition-colors">{exp.role}</h3>
-                                            <span className="font-body text-sm text-cyan-accent/70">{exp.period}</span>
-                                        </div>
-                                        <p className="text-lg text-theme-text/80 mb-2">{exp.company}</p>
-                                        <p className="text-theme-text/60 max-w-xl">{exp.description}</p>
-                                    </motion.div>
-                                ))}
-                            </div>
+                        <section id="experience" className="min-h-screen snap-start flex flex-col justify-center max-w-5xl mx-auto w-full px-4 md:px-8">
+                            <h2 className="text-4xl md:text-5xl font-bold font-heading text-theme-text mb-16">Experience <span className="text-cyan-accent">Timeline</span></h2>
+                            <Timeline items={experiences} />
                         </section>
 
                         {/* Contact Section */}

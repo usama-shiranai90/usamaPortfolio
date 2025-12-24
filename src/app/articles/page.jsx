@@ -35,7 +35,11 @@ function Article({ article }) {
 export const metadata = {
   title: 'Articles',
   description:
-    'All of my long-form thoughts on programming, leadership, product design, and more, collected in chronological order.',
+    'Read articles by Usama Bukhari on software engineering, AI research, and technology trends. Insights on programming, system design, and more.',
+  openGraph: {
+    title: 'Articles - Usama Bukhari',
+    description: 'Long-form thoughts on programming, AI, and software engineering.',
+  },
 }
 
 export default async function ArticlesIndex() {

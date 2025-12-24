@@ -26,7 +26,11 @@ function Appearance({ title, description, event, cta, href }) {
 export const metadata = {
   title: 'Speaking',
   description:
-    'I’ve spoken at events all around the world and been interviewed for many podcasts.',
+    'Public speaking history and upcoming events for Usama Bukhari. Talks on software engineering, AI, and research.',
+  openGraph: {
+    title: 'Speaking - Usama Bukhari',
+    description: 'Conference talks, podcast interviews, and public speaking events.',
+  },
 }
 
 export default function Speaking() {

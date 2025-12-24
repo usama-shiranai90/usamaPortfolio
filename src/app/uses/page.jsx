@@ -26,7 +26,11 @@ function Tool({ title, href, children }) {
 
 export const metadata = {
     title: 'Uses',
-    description: 'Tools I recommend & use for development.',
+    description: 'A curated list of the hardware, software, and development tools Usama Bukhari uses for software engineering and data science.',
+    openGraph: {
+        title: 'Uses - Usama Bukhari',
+        description: 'Tools, gear, and software recommended by Usama Bukhari.',
+    },
 }
 
 export default function Uses() {
