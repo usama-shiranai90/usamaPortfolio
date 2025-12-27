@@ -14,6 +14,36 @@ const themes = {
         '--theme-bg': '#ffffff',
         '--theme-text': '#0f0f0f',
         '--theme-card': '#f4f4f5',
+    },
+    'github-dark': {
+        '--theme-bg': '#0d1117',
+        '--theme-text': '#c9d1d9',
+        '--theme-card': '#161b22',
+    },
+    dracula: {
+        '--theme-bg': '#282a36',
+        '--theme-text': '#f8f8f2',
+        '--theme-card': '#44475a',
+    },
+    nord: {
+        '--theme-bg': '#2e3440',
+        '--theme-text': '#d8dee9',
+        '--theme-card': '#3b4252',
+    },
+    obsidian: {
+        '--theme-bg': '#0f0f0f',
+        '--theme-text': '#d4d4d4',
+        '--theme-card': '#1e1e1e',
+    },
+    paper: { // Researcher Base
+        '--theme-bg': '#fcfcfc',
+        '--theme-text': '#1a1a1a',
+        '--theme-card': '#f0f0f0',
+    },
+    terminal: { // AI Researcher
+        '--theme-bg': '#0c0c0c',
+        '--theme-text': '#00ff00',
+        '--theme-card': '#141414',
     }
 };
 
@@ -30,31 +60,59 @@ export const accents = [
     { name: 'Lime', value: '#84cc16', rgb: '132, 204, 22' },
 ];
 
+export const backgroundStyles = [
+    { id: 'scientific', name: 'Neuro-Symbolic' },
+    { id: 'ai-network', name: 'AI Network' },
+    { id: 'particles', name: 'Particles' },
+    { id: 'grid', name: 'Cyber Grid' },
+    { id: 'blueprint', name: 'Engineering' },
+    { id: 'algorithm', name: 'Algorithm' },
+    { id: 'research', name: 'Researcher' },
+    { id: 'minimal', name: 'Minimal' },
+];
+
 export function ThemeProvider({ children }) {
-    const [isDark, setIsDark] = useState(true);
+    const [themeMode, setThemeMode] = useState('dark');
     const [accent, setAccent] = useState(accents[0]);
+    const [backgroundStyle, setBackgroundStyle] = useState('scientific');
+    const [language, setLanguage] = useState('en');
     const [mounted, setMounted] = useState(false);
+
+    // Derived state for backward compatibility
+    const isDark = themeMode !== 'light';
 
     useEffect(() => {
         setMounted(true);
-        const savedTheme = localStorage.getItem('theme-mode');
-        const savedAccentVal = localStorage.getItem('theme-accent');
+        const savedTheme = localStorage.getItem('themeMode');
+        const savedAccentVal = localStorage.getItem('accent');
+        const savedBg = localStorage.getItem('backgroundStyle');
+        const savedLanguage = localStorage.getItem('language');
 
-        if (savedTheme) setIsDark(savedTheme === 'dark');
+        if (savedTheme && themes[savedTheme]) setThemeMode(savedTheme);
+
         if (savedAccentVal) {
-            const found = accents.find(a => a.value === savedAccentVal);
-            if (found) setAccent(found);
+            try {
+                const parsedAccent = JSON.parse(savedAccentVal);
+                const found = accents.find(a => a.value === parsedAccent.value);
+                if (found) setAccent(found);
+            } catch (e) {
+                console.error("Failed to parse accent from localStorage", e);
+            }
         }
+
+        if (savedBg) setBackgroundStyle(savedBg);
+        if (savedLanguage) setLanguage(savedLanguage);
     }, []);
 
     useEffect(() => {
         if (!mounted) return;
 
         const root = document.documentElement;
-        const themeColors = isDark ? themes.dark : themes.light;
+        // Fallback to dark if undefined
+        const themeColors = themes[themeMode] || themes.dark;
 
         // Toggle Dark Class
-        if (isDark) {
+        if (themeMode !== 'light') {
             root.classList.add('dark');
         } else {
             root.classList.remove('dark');
@@ -69,16 +127,28 @@ export function ThemeProvider({ children }) {
         root.style.setProperty('--theme-accent', accent.value);
 
         // Save preferences
-        localStorage.setItem('theme-mode', isDark ? 'dark' : 'light');
-        localStorage.setItem('theme-accent', accent.value);
+        localStorage.setItem('themeMode', themeMode);
+        localStorage.setItem('accent', JSON.stringify(accent));
+        localStorage.setItem('backgroundStyle', backgroundStyle);
+        localStorage.setItem('language', language);
 
-    }, [isDark, accent, mounted]);
+    }, [themeMode, accent, backgroundStyle, language, mounted]);
 
     return (
-        <ThemeContext.Provider value={{ isDark, setIsDark, accent, setAccent, mounted }}>
+        <ThemeContext.Provider value={{
+            themeMode, setThemeMode,
+            isDark, // Exported for compatibility
+            accent, setAccent,
+            backgroundStyle, setBackgroundStyle,
+            language, setLanguage,
+            mounted,
+            themes,
+            accents,
+        }}>
             {children}
         </ThemeContext.Provider>
     );
 }
 
 export const useTheme = () => useContext(ThemeContext);
+

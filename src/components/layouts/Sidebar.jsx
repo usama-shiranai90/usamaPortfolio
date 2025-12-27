@@ -10,8 +10,8 @@ const socialLinks = [
     { icon: Github, href: 'https://github.com/usama-shiranai90', label: 'GitHub' },
     { icon: Linkedin, href: 'https://www.linkedin.com/in/syed-usama-bukhari-0a6373175', label: 'LinkedIn' },
     { icon: Twitter, href: 'https://twitter.com/_oneeyeowl', label: 'Twitter' },
-    { icon: Bookmark, href: 'https://medium.com/@oneeyeowl', label: 'Medium' },
-    { icon: Globe, href: 'https://google-scholar.com', label: 'Scholar' },
+    { icon: Bookmark, href: 'https://medium.com/@syedusama78', label: 'Medium' },
+    { icon: Globe, href: 'https://scholar.google.com/citations?user=n5GPnEIAAAAJ&hl=en', label: 'Scholar' },
     { icon: FileText, href: '/resume', label: 'Resume' },
     { icon: Send, href: 'mailto:john@example.com', label: 'Contact' },
 ];
@@ -105,12 +105,17 @@ export function Sidebar() {
                             <motion.div key={item.label} variants={itemVariants} custom={i} className="relative group">
                                 <a
                                     href={item.href}
-                                    className="relative text-[10px] font-body font-bold tracking-[0.25em] text-theme-text/50 hover:text-cyan-accent transition-all uppercase py-4 px-2 no-underline flex items-center justify-center bg-theme-bg/80 backdrop-blur-sm border border-transparent hover:border-cyan-accent/30 rounded-full"
+                                    className="relative text-[10px] font-body font-bold tracking-[0.25em] text-theme-text opacity-50 hover:text-cyan-accent hover:opacity-100 transition-all uppercase py-4 px-2 no-underline flex items-center justify-center bg-theme-bg/80 backdrop-blur-sm border border-transparent hover:border-cyan-accent/30 rounded-full"
                                 >
                                     {item.label}
                                 </a>
                                 {/* Hover Dot Indicator */}
-                                <span className="absolute -right-4 top-1/2 -translate-y-1/2 w-1 h-1 bg-cyan-accent rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-[0_0_8px_rgba(0,216,255,0.8)]"></span>
+                                <span
+                                    className="absolute -right-4 top-1/2 -translate-y-1/2 w-1 h-1 bg-cyan-accent rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                                    style={{
+                                        boxShadow: `0 0 8px rgba(${accent.rgb}, 0.8)`
+                                    }}
+                                ></span>
                             </motion.div>
                         ))}
                     </div>
@@ -129,10 +134,13 @@ export function Sidebar() {
                         className={`
                             relative z-20 w-12 h-12 
                             flex items-center justify-center 
-                            rounded-xl bg-[#0a0a0a] border border-theme-text/10 
+                            rounded-xl bg-theme-card border border-theme-text/10 
                             transition-all duration-300
-                            ${isSocialHovered ? 'border-cyan-accent text-cyan-accent shadow-[0_0_20px_rgba(0,255,255,0.2)]' : 'text-theme-text/50'}
+                            ${isSocialHovered ? 'border-cyan-accent text-cyan-accent' : 'text-theme-text opacity-50'}
                         `}
+                        style={isSocialHovered ? {
+                            boxShadow: `0 0 20px rgba(${accent.rgb}, 0.2)`
+                        } : {}}
                     >
                         <Share2 size={18} strokeWidth={1.5} />
                     </div>
@@ -157,7 +165,7 @@ export function Sidebar() {
                                 {/* The Glass Drawer Content */}
                                 <div className="
                                     flex items-center gap-1 p-2
-                                    bg-[#0a0a0a]/95 backdrop-blur-xl 
+                                    bg-theme-card/95 backdrop-blur-xl 
                                     border border-theme-text/10 rounded-xl shadow-2xl overflow-hidden
                                 ">
                                     {socialLinks.map((link, index) => (
@@ -172,14 +180,14 @@ export function Sidebar() {
                                             className="
                                                 relative group/icon p-2 rounded-lg 
                                                 text-theme-text/60 
-                                                hover:text-cyan-accent hover:bg-white/5 
+                                                hover:text-cyan-accent hover:bg-theme-text/5 
                                                 transition-all duration-200
                                             "
                                         >
                                             <link.icon size={18} strokeWidth={1.5} />
 
                                             {/* Tooltip */}
-                                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-cyan-accent text-black text-[9px] font-bold tracking-widest uppercase opacity-0 group-hover/icon:opacity-100 transition-all duration-200 pointer-events-none rounded whitespace-nowrap shadow-lg">
+                                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-cyan-accent text-theme-bg text-[9px] font-bold tracking-widest uppercase opacity-0 group-hover/icon:opacity-100 transition-all duration-200 pointer-events-none rounded whitespace-nowrap shadow-lg">
                                                 {link.label}
                                                 <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-[1px] border-4 border-transparent border-t-cyan-accent" />
                                             </div>
