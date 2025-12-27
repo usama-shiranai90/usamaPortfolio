@@ -3,14 +3,17 @@
 import { useState } from 'react';
 import logo from 'p/images/logo.png';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Github, Linkedin, Mail, FileText, Share2 } from 'lucide-react';
+import { Github, Linkedin, Mail, FileText, Share2, Twitter, Globe, Send, Bookmark } from 'lucide-react';
 import { useTheme } from '@/context/ThemeContext';
 
 const socialLinks = [
     { icon: Github, href: 'https://github.com/usama-shiranai90', label: 'GitHub' },
     { icon: Linkedin, href: 'https://www.linkedin.com/in/syed-usama-bukhari-0a6373175', label: 'LinkedIn' },
+    { icon: Twitter, href: 'https://twitter.com/_oneeyeowl', label: 'Twitter' },
+    { icon: Bookmark, href: 'https://medium.com/@oneeyeowl', label: 'Medium' },
+    { icon: Globe, href: 'https://google-scholar.com', label: 'Scholar' },
     { icon: FileText, href: '/resume', label: 'Resume' },
-    { icon: Mail, href: 'mailto:john@example.com', label: 'Email' },
+    { icon: Send, href: 'mailto:john@example.com', label: 'Contact' },
 ];
 
 const navItems = [
@@ -114,54 +117,83 @@ export function Sidebar() {
                 </nav>
             </div>
 
-            {/* 3. Social Icons */}
-            <motion.div
-                variants={itemVariants}
-                className="relative pointer-events-auto flex flex-col items-center"
+            {/* 3. Social Icons - Absolute Extended Slider */}
+            <div
+                className="relative z-50 mb-8 pointer-events-auto"
                 onMouseEnter={() => setIsSocialHovered(true)}
                 onMouseLeave={() => setIsSocialHovered(false)}
             >
-                {/* Common Share Icon */}
-                <div className="p-3 rounded-full border border-theme-text/10 bg-theme-bg/50 backdrop-blur-sm text-theme-text/50 hover:text-cyan-accent hover:border-cyan-accent/50 transition-all duration-300 cursor-pointer group z-20 relative">
-                    <Share2 className="w-5 h-5 group-hover:rotate-90 transition-transform duration-500" />
+                <div className="relative flex items-center justify-center">
+                    {/* Trigger Button - Permanent Hub */}
+                    <div
+                        className={`
+                            relative z-20 w-12 h-12 
+                            flex items-center justify-center 
+                            rounded-xl bg-[#0a0a0a] border border-theme-text/10 
+                            transition-all duration-300
+                            ${isSocialHovered ? 'border-cyan-accent text-cyan-accent shadow-[0_0_20px_rgba(0,255,255,0.2)]' : 'text-theme-text/50'}
+                        `}
+                    >
+                        <Share2 size={18} strokeWidth={1.5} />
+                    </div>
+
+                    {/* The "Slider" Drawer - Absolutely Positioned Right */}
+                    <AnimatePresence>
+                        {isSocialHovered && (
+                            <motion.div
+                                initial={{ opacity: 0, x: -15, width: 0 }}
+                                animate={{ opacity: 1, x: 0, width: "auto" }}
+                                exit={{ opacity: 0, x: -15, width: 0 }}
+                                transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
+                                className="absolute left-10 top-1/2 -translate-y-1/2 ml-4 flex items-center z-10"
+                            >
+                                {/* Visual Connector Bridge */}
+                                <motion.div
+                                    initial={{ scaleX: 0 }}
+                                    animate={{ scaleX: 1 }}
+                                    className="w-6 h-[1px] bg-cyan-accent/40 origin-left"
+                                />
+
+                                {/* The Glass Drawer Content */}
+                                <div className="
+                                    flex items-center gap-1 p-2
+                                    bg-[#0a0a0a]/95 backdrop-blur-xl 
+                                    border border-theme-text/10 rounded-xl shadow-2xl overflow-hidden
+                                ">
+                                    {socialLinks.map((link, index) => (
+                                        <motion.a
+                                            key={link.label}
+                                            href={link.href}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            initial={{ opacity: 0, scale: 0 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            transition={{ delay: 0.1 + index * 0.05 }}
+                                            className="
+                                                relative group/icon p-2 rounded-lg 
+                                                text-theme-text/60 
+                                                hover:text-cyan-accent hover:bg-white/5 
+                                                transition-all duration-200
+                                            "
+                                        >
+                                            <link.icon size={18} strokeWidth={1.5} />
+
+                                            {/* Tooltip */}
+                                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-cyan-accent text-black text-[9px] font-bold tracking-widest uppercase opacity-0 group-hover/icon:opacity-100 transition-all duration-200 pointer-events-none rounded whitespace-nowrap shadow-lg">
+                                                {link.label}
+                                                <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-[1px] border-4 border-transparent border-t-cyan-accent" />
+                                            </div>
+                                        </motion.a>
+                                    ))}
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
 
-                {/* Expanding Social Menu */}
-                <AnimatePresence>
-                    {isSocialHovered && (
-                        <motion.div
-                            initial={{ opacity: 0, x: -20, clipPath: 'inset(0 100% 0 0)' }}
-                            animate={{ opacity: 1, x: 20, clipPath: 'inset(0 0 0 0)' }}
-                            exit={{ opacity: 0, x: -20, clipPath: 'inset(0 100% 0 0)' }}
-                            transition={{ duration: 0.4, ease: "easeOut" }}
-                            className="absolute left-full top-0 flex items-center gap-4 px-5 py-3 bg-gray-900/95 backdrop-blur-xl border border-theme-text/10 rounded-full shadow-[0_0_20px_rgba(0,0,0,0.3)] ml-2 z-10"
-                        >
-                            {socialLinks.map((link, index) => (
-                                <motion.a
-                                    key={link.label}
-                                    href={link.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    initial={{ opacity: 0, x: -10 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: index * 0.1 }}
-                                    whileHover={{ scale: 1.2, color: '#00d8ff' }}
-                                    className="text-gray-400 hover:text-cyan-accent transition-colors"
-                                    title={link.label}
-                                >
-                                    <link.icon className="w-5 h-5" />
-                                </motion.a>
-                            ))}
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-
-                {/* Bottom decorative element */}
-                <motion.div
-                    variants={{ hidden: { height: 0 }, visible: { height: 40, transition: { duration: 1, delay: 0.5 } } }}
-                    className="w-[1px] bg-gradient-to-b from-cyan-accent to-transparent opacity-50 mt-6"
-                />
-            </motion.div>
+                {/* Vertical Line Anchor */}
+                <div className="absolute left-1/2 -translate-x-1/2 top-full w-[1px] h-12 bg-gradient-to-b from-theme-text/10 to-transparent mt-4 -z-10" />
+            </div>
         </motion.aside>
     );
 }
