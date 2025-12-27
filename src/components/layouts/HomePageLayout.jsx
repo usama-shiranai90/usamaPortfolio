@@ -11,6 +11,9 @@ import { LoadingScreen } from '@/components/ui/LoadingScreen';
 import { PublicationCard } from '@/components/ui/PublicationCard';
 import { TechStack } from '@/components/ui/TechStack';
 import { Timeline } from '@/components/ui/Timeline';
+import { useTheme } from '@/context/ThemeContext';
+import { translations } from '@/utils/translations';
+import { AlertTriangle, X } from 'lucide-react';
 
 
 import avatar_1 from '/public/images/avatars/avatar_1.jpg';
@@ -123,9 +126,13 @@ const experiences = [
 
 export default function HomePageLayout() {
     const { introShown, setIntroShown } = useContext(AppContext);
+    const { language } = useTheme(); // Get language
+    const t = translations[language] || translations.en;
+
     // If intro has been shown in this session (context), skip loading.
     const [isLoading, setIsLoading] = useState(!introShown);
     const [activeCategory, setActiveCategory] = useState("All");
+    const [showWarning, setShowWarning] = useState(true);
 
     useEffect(() => {
         // If context says it's done, ensure we stick to that (though initial state handles it)
@@ -201,15 +208,50 @@ export default function HomePageLayout() {
                                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-accent opacity-75"></span>
                                             <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-accent"></span>
                                         </span>
-                                        <span className="font-body text-[10px] tracking-widest text-cyan-accent uppercase">OneEyeOwl Online</span>
+                                        <span className="font-body text-[10px] tracking-widest text-cyan-accent uppercase">{t.status}</span>
                                     </div>
                                     <div className="h-[1px] w-12 bg-theme-text/10"></div>
                                 </div>
 
+                                {/* Under Development Warning - Flowing & Removable */}
+                                <AnimatePresence>
+                                    {showWarning && (
+                                        <motion.div
+                                            initial={{ opacity: 0, height: 0, marginBottom: 0 }}
+                                            animate={{ opacity: 1, height: "auto", marginBottom: 32 }}
+                                            exit={{ opacity: 0, height: 0, marginBottom: 0 }}
+                                            className="relative overflow-hidden"
+                                        >
+                                            <div className="flex items-center gap-3 px-4 py-2 bg-yellow-500/10 border border-yellow-500/20 rounded-lg backdrop-blur-sm max-w-md w-fit">
+                                                <AlertTriangle size={16} className="text-yellow-500 shrink-0 animate-pulse" />
+
+                                                {/* Marquee/Flowing Text */}
+                                                <div className="overflow-hidden w-[200px] sm:w-[260px] relative h-4 flex items-center">
+                                                    <motion.div
+                                                        animate={{ x: [0, -200] }} // simple slide
+                                                        transition={{ repeat: Infinity, duration: 10, ease: "linear" }}
+                                                        className="whitespace-nowrap font-mono text-xs text-yellow-500/90 tracking-widest uppercase glow-text-yellow flex gap-8"
+                                                    >
+                                                        <span>{t.underDev}</span>
+                                                        <span>{t.underDev}</span>
+                                                    </motion.div>
+                                                </div>
+
+                                                <button
+                                                    onClick={() => setShowWarning(false)}
+                                                    className="ml-auto pl-2 hover:bg-yellow-500/20 p-1 rounded-full transition-colors text-yellow-500/50 hover:text-yellow-500"
+                                                >
+                                                    <X size={14} />
+                                                </button>
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+
                                 {/* Name & Titles */}
                                 <div className="space-y-6">
                                     <p className="font-body text-xl md:text-2xl tracking-[0.2em] text-cyan-accent uppercase">
-                                        I'm Syed Usama Bukhari
+                                        {t.greeting}
                                     </p>
 
                                     <div className="flex flex-col gap-2 relative">
@@ -219,19 +261,19 @@ export default function HomePageLayout() {
                                                 initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}
                                                 className="block text-2xl md:text-4xl text-cyan-accent"
                                             >
-                                                Software Engineer
+                                                {t.roles.software}
                                             </motion.span>
                                             <motion.span
                                                 initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }}
                                                 className="block text-2xl md:text-4xl text-theme-text/80"
                                             >
-                                                Data Scientist
+                                                {t.roles.data}
                                             </motion.span>
                                             <motion.span
                                                 initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.6 }}
                                                 className="block text-2xl md:text-4xl text-theme-text/60"
                                             >
-                                                PhD Researcher
+                                                {t.roles.researcher}
                                             </motion.span>
                                         </div>
                                     </div>
@@ -245,10 +287,10 @@ export default function HomePageLayout() {
                                     <div className="absolute inset-0 bg-cyan-accent/5 skew-x-[-10deg] rounded-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                                     <div className="relative border-l border-t border-theme-text/10 p-6 backdrop-blur-sm bg-theme-card/30">
                                         <div className="absolute top-0 right-0 p-2">
-                                            <span className="font-body text-[10px] text-theme-text/50">[ ABSTRACT_01 ]</span>
+                                            <span className="font-body text-[10px] text-theme-text/50">[ {t.abstract.title} ]</span>
                                         </div>
                                         <p className="text-theme-text/80 text-lg leading-relaxed font-light">
-                                            <strong className="text-theme-text font-normal">Web & Desktop Application Developer.</strong> Result-oriented individual with a strong aptitude to solve complex problems. Capable of showing firm and positive response to work while under pressure. Firm grip in numerous programming languages incl.
+                                            {t.abstract.text}
                                         </p>
                                     </div>
                                 </motion.div>
@@ -260,10 +302,10 @@ export default function HomePageLayout() {
                                 >
                                     <a href="/resume" className="group relative px-8 py-3 bg-cyan-accent text-theme-bg font-bold font-body text-sm overflow-hidden">
                                         <div className="absolute inset-0 bg-theme-text translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                                        <span className="relative group-hover:text-theme-bg transition-colors">DOWNLOAD_RESUME</span>
+                                        <span className="relative group-hover:text-theme-bg transition-colors">{t.buttons.resume}</span>
                                     </a>
                                     <a href="#projects" className="group px-8 py-3 border border-theme-text/20 text-theme-text font-bold font-body text-sm hover:border-cyan-accent transition-colors flex items-center gap-2">
-                                        <span>VIEW_RESEARCH_DATA</span>
+                                        <span>{t.buttons.research}</span>
                                         <span className="group-hover:translate-x-1 transition-transform">→</span>
                                     </a>
                                 </motion.div>
@@ -277,7 +319,7 @@ export default function HomePageLayout() {
                                 whileInView={{ opacity: 1, x: 0 }}
                                 className="text-4xl md:text-5xl font-bold font-heading text-theme-text mb-12"
                             >
-                                About <span className="text-cyan-accent">Me</span>
+                                {t.about.title} <span className="text-cyan-accent">{t.about.highlight}</span>
                             </motion.h2>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -287,13 +329,13 @@ export default function HomePageLayout() {
                                     className="space-y-6 text-theme-text/80 leading-relaxed"
                                 >
                                     <p>
-                                        I am a <strong className="text-theme-text">Software Engineer</strong> and <strong className="text-theme-text">PhD Researcher</strong> with a passion for bridging the gap between theoretical computer science and practical application.
+                                        {t.about.p1}
                                     </p>
                                     <p>
-                                        My research focuses on <span className="text-cyan-accent">Advanced Algorithms</span> and <span className="text-cyan-accent">Machine Learning</span>, while my professional work involves building robust, scalable web and desktop applications.
+                                        {t.about.p2}
                                     </p>
                                     <p>
-                                        I thrive in challenging environments where I can apply my technical expertise to solve complex problems and create meaningful digital experiences.
+                                        {t.about.p3}
                                     </p>
                                 </motion.div>
 
@@ -305,7 +347,7 @@ export default function HomePageLayout() {
                                     {/* SYSTEM_STATS (Default View) */}
                                     <div className="absolute inset-0 bg-theme-card/50 backdrop-blur-sm border border-theme-text/10 p-6 rounded-xl space-y-6 transition-all duration-500 group-hover:opacity-0 group-hover:scale-95 group-hover:blur-sm z-10">
                                         <div className="flex justify-between items-center border-b border-theme-text/10 pb-4">
-                                            <span className="font-body text-xs text-cyan-accent tracking-widest">SYSTEM_STATS</span>
+                                            <span className="font-body text-xs text-cyan-accent tracking-widest">{t.about.stats.title}</span>
                                             <div className="flex gap-2">
                                                 <div className="w-2 h-2 rounded-full bg-red-500"></div>
                                                 <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
@@ -315,20 +357,20 @@ export default function HomePageLayout() {
 
                                         <div className="space-y-4 font-body text-sm">
                                             <div className="flex justify-between">
-                                                <span className="text-theme-text/60">Location</span>
-                                                <span className="text-theme-text">Fukuoka, Japan</span>
+                                                <span className="text-theme-text/60">{t.about.stats.location}</span>
+                                                <span className="text-theme-text">{t.about.stats.locationVal}</span>
                                             </div>
                                             <div className="flex justify-between">
-                                                <span className="text-theme-text/60">Degree</span>
-                                                <span className="text-theme-text">PhD (In Progress)</span>
+                                                <span className="text-theme-text/60">{t.about.stats.degree}</span>
+                                                <span className="text-theme-text">{t.about.stats.degreeVal}</span>
                                             </div>
                                             <div className="flex justify-between">
-                                                <span className="text-theme-text/60">Experience</span>
-                                                <span className="text-theme-text">3+ Years</span>
+                                                <span className="text-theme-text/60">{t.about.stats.experience}</span>
+                                                <span className="text-theme-text">{t.about.stats.experienceVal}</span>
                                             </div>
                                             <div className="flex justify-between">
-                                                <span className="text-theme-text/60">Status</span>
-                                                <span className="text-cyan-accent animate-pulse">Available for Hire</span>
+                                                <span className="text-theme-text/60">{t.about.stats.status}</span>
+                                                <span className="text-cyan-accent animate-pulse">{t.about.stats.statusVal}</span>
                                             </div>
                                         </div>
 
@@ -385,7 +427,7 @@ export default function HomePageLayout() {
                                 whileInView={{ opacity: 1, x: 0 }}
                                 className="text-4xl md:text-5xl font-bold font-heading text-theme-text mb-12"
                             >
-                                Selected <span className="text-cyan-accent">Publications</span>
+                                {t.research.title} <span className="text-cyan-accent">{t.research.highlight}</span>
                             </motion.h2>
 
                             <div className="space-y-16">
@@ -419,7 +461,7 @@ export default function HomePageLayout() {
                                     initial={{ opacity: 0, x: -20 }}
                                     whileInView={{ opacity: 1, x: 0 }}
                                     className="text-4xl md:text-5xl font-bold font-heading text-theme-text">
-                                    Project <span className="text-cyan-accent">Works</span>
+                                    {t.projects.title} <span className="text-cyan-accent">{t.projects.highlight}</span>
                                 </motion.h2>
 
                                 {/* Category Filter */}
@@ -460,14 +502,14 @@ export default function HomePageLayout() {
                                 whileInView={{ opacity: 1, x: 0 }}
                                 className="text-4xl md:text-5xl font-bold font-heading text-theme-text mb-12"
                             >
-                                Technical <span className="text-cyan-accent">Arsenal</span>
+                                {t.skills.title} <span className="text-cyan-accent">{t.skills.highlight}</span>
                             </motion.h2>
                             <TechStack />
                         </section>
 
                         {/* Experience Section */}
                         <section id="experience" className="min-h-screen snap-start flex flex-col justify-center max-w-5xl mx-auto w-full px-4 md:px-8">
-                            <h2 className="text-4xl md:text-5xl font-bold font-heading text-theme-text mb-16">Experience <span className="text-cyan-accent">Timeline</span></h2>
+                            <h2 className="text-4xl md:text-5xl font-bold font-heading text-theme-text mb-16">{t.experience.title} <span className="text-cyan-accent">{t.experience.highlight}</span></h2>
                             <Timeline items={experiences} />
                         </section>
 
@@ -476,9 +518,9 @@ export default function HomePageLayout() {
                             <div className="bg-gradient-to-br from-theme-text/5 to-transparent p-8 md:p-12 rounded-3xl border border-theme-text/10">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                                     <div>
-                                        <h2 className="text-4xl md:text-5xl font-bold font-heading text-theme-text mb-6">Let's work together</h2>
+                                        <h2 className="text-4xl md:text-5xl font-bold font-heading text-theme-text mb-6">{t.contact.title}</h2>
                                         <p className="text-theme-text/60 mb-8">
-                                            I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
+                                            {t.contact.desc}
                                         </p>
                                         {/* <a href="mailto:john@example.com" className="text-2xl font-bold font-heading text-cyan-accent hover:underline">
                                             john@example.com
@@ -486,12 +528,12 @@ export default function HomePageLayout() {
                                     </div>
                                     <form className="space-y-4">
                                         <div className="grid grid-cols-2 gap-4">
-                                            <input type="text" placeholder="Name" className="w-full px-4 py-3 bg-theme-card/50 border border-theme-text/10 rounded-lg focus:border-cyan-accent focus:outline-none text-theme-text font-body transition-colors" />
-                                            <input type="email" placeholder="Email" className="w-full px-4 py-3 bg-theme-card/50 border border-theme-text/10 rounded-lg focus:border-cyan-accent focus:outline-none text-theme-text font-body transition-colors" />
+                                            <input type="text" placeholder={t.contact.form.name} className="w-full px-4 py-3 bg-theme-card/50 border border-theme-text/10 rounded-lg focus:border-cyan-accent focus:outline-none text-theme-text font-body transition-colors" />
+                                            <input type="email" placeholder={t.contact.form.email} className="w-full px-4 py-3 bg-theme-card/50 border border-theme-text/10 rounded-lg focus:border-cyan-accent focus:outline-none text-theme-text font-body transition-colors" />
                                         </div>
-                                        <textarea placeholder="Message" rows="4" className="w-full px-4 py-3 bg-theme-card/50 border border-theme-text/10 rounded-lg focus:border-cyan-accent focus:outline-none text-theme-text font-body transition-colors"></textarea>
+                                        <textarea placeholder={t.contact.form.message} rows="4" className="w-full px-4 py-3 bg-theme-card/50 border border-theme-text/10 rounded-lg focus:border-cyan-accent focus:outline-none text-theme-text font-body transition-colors"></textarea>
                                         <button type="submit" className="px-8 py-3 bg-cyan-accent text-theme-bg font-bold font-body rounded-lg hover:bg-cyan-400 transition-colors w-full">
-                                            Send Message
+                                            {t.contact.form.send}
                                         </button>
                                     </form>
                                 </div>
