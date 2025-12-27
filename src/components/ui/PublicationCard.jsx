@@ -63,6 +63,11 @@ export function PublicationCard({ publication }) {
                                 <ExternalLink size={14} /> <span className="hidden sm:inline">PROJECT</span>
                             </a>
                         )}
+                        {publication.doi && (
+                            <a href={`https://doi.org/${publication.doi}`} target="_blank" className="flex items-center gap-1.5 text-xs font-medium text-theme-text/50 hover:text-cyan-accent transition-colors">
+                                <BookOpen size={14} /> <span className="hidden sm:inline">DOI</span>
+                            </a>
+                        )}
                     </div>
 
                     <button

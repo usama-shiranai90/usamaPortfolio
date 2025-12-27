@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useContext } from "react";
 import { AppContext } from '@/app/providers';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ProjectCard } from '@/components/ui/ProjectCard';
 import { ScientificBackground } from '@/components/ui/ScientificBackground';
 import { LoadingScreen } from '@/components/ui/LoadingScreen';
@@ -12,6 +13,7 @@ import { TechStack } from '@/components/ui/TechStack';
 import { Timeline } from '@/components/ui/Timeline';
 
 
+import avatar_1 from '/public/images/avatars/avatar_1.jpg';
 import image1 from '/public/images/photos/image-1.jpg';
 import image2 from '/public/images/photos/image-2.jpg';
 import image3 from '/public/images/photos/image-3.jpg';
@@ -19,30 +21,31 @@ import image4 from '/public/images/photos/image-4.jpg';
 
 const publications = [
     {
-        title: "Optimizing Neural Networks for Medical Imaging Diagnosis using Evolutionary Algorithms",
-        authors: ["Usama Bukhari", "Satoshi Hori"],
-        venue: "IEEE International Conference on Bioinformatics and Biomedicine (BIBM)",
-        year: "2024",
+        title: "Real-Time Data Retrieval from Life-long Medical History Using Small Language Model",
+        authors: ["Syed Usama Hussain Shah Bukhari", "Forhad Hossain", "Ashir Ahmed"],
+        venue: "SocialTech Summit 2024",
+        year: "Aug 2024",
         type: "Conference",
-        abstract: "This paper proposes a novel evolutionary strategy for hyperparameter optimization in deep convolutional neural networks, specifically tailored for detecting anomalies in high-resolution MRI scans. Our approach reduces computational cost by 40% while maintaining state-of-the-art accuracy.",
+        abstract: "This study addresses the challenges of managing and visualizing comprehensive medical histories in resource-limited healthcare settings. The Smart Health Gantt Chart (SHGC) system is introduced to improve healthcare delivery by enabling efficient management and sharing of digital medical records. However, current systems face significant obstacles in extracting relevant information from large volumes of data for clinical decision-making. To overcome these issues, the paper proposes a novel approach for the integration of Small Language Models and custom CoVeMedRAG technique to generate real-time, contextual insights from patient histories.",
         links: {
-            pdf: "#",
-            code: "https://github.com",
-            project: "#"
+            pdf: "https://www.researchgate.net/publication/385831791_Real-Time_Data_Retrieval_from_Life-long_Medical_History_Using_Small_Language_Model"
         }
     },
     {
-        title: "Graph Neural Networks in Predictive Healthcare: A Survey",
-        authors: ["Usama Bukhari", "Research Group A"],
-        venue: "Journal of Biomedical Informatics",
-        year: "2023",
-        type: "Journal",
-        abstract: "A comprehensive survey on the application of GNNs in healthcare, focusing on patient outcome prediction, drug discovery, and disease usage patterns. We categorize existing methods and propose future research directions.",
+        title: "A Proposed Framework for Integrating Digital Triage with 3D Human Model for Intuitive Health Visualization and Monitoring",
+        authors: ["Md Jobayer Hossain Chowdhury", "Mohamed Mehfoud Bouh", "Abdullah Al Noman", "Syed Usama Hussain Shah Bukhari", "Ashir Ahmed"],
+        venue: "15th International Conference on Simulation and Modeling Methodologies, Technologies and Applications",
+        year: "Jan 2025",
+        type: "Conference",
+        doi: "10.5220/0013567200003970",
+        abstract: "This paper presents a novel integration of digital triage protocols with three-dimensional human digital twin models to enhance patient assessment and clinical decision-making in healthcare. We investigate how Electronic Health Record (EHR) data can be transformed into intuitive, anatomically-relevant visualizations that map health parameters to specific body regions using color-coded indicators. Building upon the B-logic framework from Portable Health Clinic systems, our approach creates personalized 3D patient models that dynamically represent health status through targeted visual cues.",
         links: {
-            pdf: "#"
+            pdf: "https://www.researchgate.net/publication/392998990_A_Proposed_Framework_for_Integrating_Digital_Triage_with_3D_Human_Model_for_Intuitive_Health_Visualization_and_Monitoring"
         }
     }
 ];
+
+const publicationCategories = ["Journal", "Conference", "Poster"];
 
 const projects = [
     {
@@ -297,11 +300,10 @@ export default function HomePageLayout() {
                                 <motion.div
                                     initial={{ opacity: 0, x: 20 }}
                                     whileInView={{ opacity: 1, x: 0 }}
-                                    className="relative"
+                                    className="relative group h-[300px]"
                                 >
-                                    {/* Decorative Technical Card */}
-                                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-accent/20 to-transparent rounded-xl blur-xl opacity-50"></div>
-                                    <div className="relative bg-theme-card/50 backdrop-blur-sm border border-theme-text/10 p-6 rounded-xl space-y-6">
+                                    {/* SYSTEM_STATS (Default View) */}
+                                    <div className="absolute inset-0 bg-theme-card/50 backdrop-blur-sm border border-theme-text/10 p-6 rounded-xl space-y-6 transition-all duration-500 group-hover:opacity-0 group-hover:scale-95 group-hover:blur-sm z-10">
                                         <div className="flex justify-between items-center border-b border-theme-text/10 pb-4">
                                             <span className="font-body text-xs text-cyan-accent tracking-widest">SYSTEM_STATS</span>
                                             <div className="flex gap-2">
@@ -329,6 +331,48 @@ export default function HomePageLayout() {
                                                 <span className="text-cyan-accent animate-pulse">Available for Hire</span>
                                             </div>
                                         </div>
+
+                                        {/* Hover Hint */}
+                                        <div className="absolute bottom-4 right-6 text-[10px] text-theme-text/30 font-mono animate-pulse">
+                                            HOVER_TO_DECRYPT
+                                        </div>
+                                    </div>
+
+                                    {/* IDENTITY_CARD (Hover View) */}
+                                    <div className="absolute inset-0 z-20 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out transform group-hover:scale-100 scale-105 pointer-events-none group-hover:pointer-events-auto">
+                                        <div className="relative w-full h-full rounded-xl overflow-hidden border border-cyan-accent/30 bg-black/90 shadow-[0_0_30px_rgba(34,211,238,0.2)]">
+                                            {/* Photo */}
+                                            <Image
+                                                src={avatar_1}
+                                                alt="Profile"
+                                                fill
+                                                className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700"
+                                            />
+
+                                            {/* Cyber Overlay */}
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-90" />
+
+                                            {/* HUD Elements */}
+                                            <div className="absolute top-4 left-4 border-l-2 border-cyan-accent pl-2">
+                                                <p className="text-[10px] font-mono text-cyan-accent leading-none mb-1">ID_VERIFIED</p>
+                                                <p className="text-[10px] font-mono text-white/60 leading-none">0x14041999</p>
+                                            </div>
+
+                                            <div className="absolute bottom-6 left-6 right-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                                <h3 className="text-2xl font-bold font-heading text-white mb-2">OneEyeOwl</h3>
+                                                <div className="flex flex-wrap items-center gap-2">
+                                                    <span className="px-2 py-0.5 rounded bg-cyan-accent/20 border border-cyan-accent/30 text-[10px] text-cyan-accent font-mono">DEV</span>
+                                                    <span className="px-2 py-0.5 rounded bg-purple-500/20 border border-purple-500/30 text-[10px] text-purple-400 font-mono">RESEARCHER</span>
+                                                </div>
+                                            </div>
+
+                                            {/* Scanning Effect */}
+                                            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-accent/20 to-transparent translate-y-[-100%] group-hover:translate-y-[100%] transition-transform duration-[1.5s] ease-in-out" />
+
+                                            {/* Corner Accents */}
+                                            <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-cyan-accent/50" />
+                                            <div className="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-cyan-accent/50" />
+                                        </div>
                                     </div>
                                 </motion.div>
                             </div>
@@ -344,10 +388,27 @@ export default function HomePageLayout() {
                                 Selected <span className="text-cyan-accent">Publications</span>
                             </motion.h2>
 
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                                {publications.map((pub, index) => (
-                                    <PublicationCard key={index} publication={pub} />
-                                ))}
+                            <div className="space-y-16">
+                                {publicationCategories.map(category => {
+                                    const categoryPubs = publications.filter(p => p.type === category);
+                                    if (categoryPubs.length === 0) return null;
+
+                                    return (
+                                        <div key={category} className="space-y-8">
+                                            <div className="flex items-center gap-4">
+                                                <h3 className="text-2xl font-bold font-heading text-theme-text/90 tracking-wider uppercase border-l-4 border-cyan-accent pl-4">
+                                                    {category} <span className="text-cyan-accent/60">Section</span>
+                                                </h3>
+                                                <div className="h-[1px] flex-1 bg-gradient-to-r from-theme-text/10 to-transparent"></div>
+                                            </div>
+                                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                                {categoryPubs.map((pub, index) => (
+                                                    <PublicationCard key={index} publication={pub} />
+                                                ))}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </section>
 
