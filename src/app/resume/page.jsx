@@ -227,71 +227,75 @@ export default function Resume() {
 
     return (
         <Container className="mt-16 sm:mt-32">
-            <div className="flex flex-col items-center gap-6 text-center print:hidden">
+            {/* Page Header */}
+            <header className="max-w-2xl mx-auto lg:max-w-none flex flex-col items-center text-center mb-16 print:hidden">
                 <h1 className="text-4xl font-extrabold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl lg:text-6xl">
-                    Curriculum <span className="text-teal-500">Vitae</span>
+                    <span className="block text-teal-500 text-lg font-mono font-medium tracking-wider mb-2 uppercase">Curriculum Vitae</span>
+                    Syed Usama Bukhari
                 </h1>
-                <p className="max-w-2xl text-base text-zinc-600 dark:text-zinc-400">
-                    My professional journey, qualifications, and skills.
+                <p className="mt-4 text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl">
+                    Software Engineer & Data Science Researcher building scalable, healthcare-oriented solutions.
                 </p>
 
-                {/* View Mode Switcher */}
-                <div className="flex space-x-1 rounded-full bg-zinc-100 p-1 dark:bg-zinc-800/50 shadow-sm border border-zinc-200 dark:border-zinc-700/50">
-                    {VIEW_MODES.map((mode) => (
-                        <button
-                            key={mode.id}
-                            onClick={() => setViewMode(mode.id)}
-                            className={clsx(
-                                'relative flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-medium transition-colors focus-visible:outline-2',
-                                viewMode === mode.id
-                                    ? 'text-zinc-900 dark:text-zinc-100'
-                                    : 'text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200'
-                            )}
+                {/* Controls Toolbar */}
+                <div className="mt-8 flex flex-col flex-wrap items-center justify-center gap-4">
+                    {/* View Mode Switcher */}
+                    <div className="flex space-x-1 rounded-full bg-zinc-100 p-1 dark:bg-zinc-800/50 shadow-sm border border-zinc-200 dark:border-zinc-700/50">
+                        {VIEW_MODES.map((mode) => (
+                            <button
+                                key={mode.id}
+                                onClick={() => setViewMode(mode.id)}
+                                className={clsx(
+                                    'relative flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-medium transition-colors focus-visible:outline-2',
+                                    viewMode === mode.id
+                                        ? 'text-zinc-900 dark:text-zinc-100'
+                                        : 'text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200'
+                                )}>
+
+                                {viewMode === mode.id && (
+                                    <motion.div
+                                        layoutId="active-view-pill"
+                                        className="absolute inset-0 bg-white shadow-sm ring-1 ring-zinc-900/5 dark:bg-zinc-700 dark:ring-white/10 rounded-full"
+                                        transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+                                    />
+                                )}
+                                <span className="relative z-10 flex items-center gap-2">
+                                    <mode.icon className="w-4 h-4" />
+                                    {mode.label}
+                                </span>
+                            </button>
+                        ))}
+                    </div>
+
+                    {/* Action Buttons (Only for Interactive) */}
+                    {viewMode === 'interactive' && (
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="flex items-center gap-3"
                         >
-                            {viewMode === mode.id && (
-                                <motion.div
-                                    layoutId="active-view-pill"
-                                    className="absolute inset-0 bg-white shadow-sm ring-1 ring-zinc-900/5 dark:bg-zinc-700 dark:ring-white/10 rounded-full"
-                                    transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
-                                />
-                            )}
-                            <span className="relative z-10 flex items-center gap-2">
-                                <mode.icon className="w-4 h-4" />
-                                {mode.label}
-                            </span>
-                        </button>
-                    ))}
+                            <Button
+                                href={currentPdfTab.download}
+                                download={currentPdfTab.filename}
+                                variant="primary"
+                                className="group flex items-center gap-2"
+                            >
+                                <Download className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
+
+                            </Button>
+                            <Button
+                                onClick={handlePrint}
+                                variant="secondary"
+                                className="group flex items-center gap-2"
+                            >
+                                <Printer className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                            </Button>
+                        </motion.div>
+                    )}
                 </div>
+            </header>
 
-                {/* Global Actions (visible for Interactive, hidden for PDF as it has its own toolbar) */}
-                {viewMode === 'interactive' && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="mt-4 flex flex-wrap w-full max-w-sm justify-center gap-4"
-                    >
-                        <Button
-                            href={currentPdfTab.download}
-                            download={currentPdfTab.filename}
-                            variant="primary"
-                            className="w-full sm:w-auto flex items-center gap-2 justify-center shadow-lg shadow-teal-500/10"
-                        >
-                            <Download className="w-4 h-4" />
-                            Download PDF
-                        </Button>
-                        <Button
-                            onClick={handlePrint}
-                            variant="secondary"
-                            className="w-full sm:w-auto flex items-center gap-2 justify-center"
-                        >
-                            <Printer className="w-4 h-4" />
-                            Print
-                        </Button>
-                    </motion.div>
-                )}
-            </div>
-
-            <div className="mt-12">
+            <div className="">
                 <AnimatePresence mode='wait'>
                     {viewMode === 'interactive' && (
                         <motion.div
@@ -300,175 +304,202 @@ export default function Resume() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -20 }}
                             transition={{ duration: 0.4 }}
-                            className="space-y-24"
+                            className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16"
                         >
-                            {/* Summary Section */}
-                            <section className="max-w-4xl mx-auto">
-                                <div className="flex items-center gap-4 mb-4">
-                                    <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100 flex items-center gap-2">
-                                        <FileText className="w-6 h-6 text-teal-500" />
-                                        Summary
-                                    </h2>
-                                    <div className="h-px bg-zinc-200 dark:bg-zinc-700 flex-1" />
-                                </div>
-                                <p className="text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed bg-zinc-50 dark:bg-zinc-800/50 p-6 rounded-xl border border-zinc-100 dark:border-zinc-700/50">
-                                    {SUMMARY}
-                                </p>
-                            </section>
+                            {/* Sticky Navigation Sidebar */}
+                            <aside className="hidden lg:block lg:col-span-3">
+                                <nav className="sticky top-24 space-y-2">
+                                    <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-4 pl-3">Contents</p>
+                                    {[
+                                        { id: 'summary', label: 'Summary', icon: FileText },
+                                        { id: 'skills', label: 'Skills', icon: Layers },
+                                        { id: 'experience', label: 'Experience', icon: Briefcase },
+                                        { id: 'projects', label: 'Projects', icon: Server },
+                                        { id: 'education', label: 'Education', icon: BookOpen },
+                                        { id: 'certifications', label: 'Certifications', icon: Award },
+                                    ].map((item) => (
+                                        <a
+                                            key={item.id}
+                                            href={`#${item.id}`}
+                                            className="group flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-teal-500 dark:hover:text-teal-400 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 rounded-lg transition-all"
+                                        >
+                                            <item.icon className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity" />
+                                            {item.label}
+                                        </a>
+                                    ))}
+                                </nav>
+                            </aside>
 
-                            {/* Skills Section */}
-                            <section>
-                                <div className="flex items-center gap-4 mb-8">
-                                    <div className="h-px bg-zinc-200 dark:bg-zinc-700 flex-1" />
-                                    <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100 flex items-center gap-2">
-                                        <Layers className="w-6 h-6 text-teal-500" />
-                                        Technical Skills
-                                    </h2>
-                                    <div className="h-px bg-zinc-200 dark:bg-zinc-700 flex-1" />
-                                </div>
-                                <TechStack data={SKILLS_DATA} />
-                            </section>
-
-                            {/* Experience Section */}
-                            <section>
-                                <div className="flex items-center gap-4 mb-8">
-                                    <div className="h-px bg-zinc-200 dark:bg-zinc-700 flex-1" />
-                                    <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100 flex items-center gap-2">
-                                        <Briefcase className="w-6 h-6 text-teal-500" />
-                                        Experience
-                                    </h2>
-                                    <div className="h-px bg-zinc-200 dark:bg-zinc-700 flex-1" />
-                                </div>
-                                <Timeline items={EXPERIENCE_DATA} />
-                            </section>
-
-                            {/* Projects Section */}
-                            <section>
-                                <div className="flex items-center gap-4 mb-8">
-                                    <div className="h-px bg-zinc-200 dark:bg-zinc-700 flex-1" />
-                                    <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100 flex items-center gap-2">
-                                        <Server className="w-6 h-6 text-teal-500" />
-                                        Projects
-                                    </h2>
-                                    <div className="h-px bg-zinc-200 dark:bg-zinc-700 flex-1" />
-                                </div>
-                                <Timeline items={PROJECTS_DATA} />
-                            </section>
-
-
-                            {/* Education Section */}
-                            <section>
-                                <div className="flex items-center gap-4 mb-8">
-                                    <div className="h-px bg-zinc-200 dark:bg-zinc-700 flex-1" />
-                                    <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100 flex items-center gap-2">
-                                        <BookOpen className="w-6 h-6 text-teal-500" />
-                                        Education
-                                    </h2>
-                                    <div className="h-px bg-zinc-200 dark:bg-zinc-700 flex-1" />
-                                </div>
-                                <Timeline items={EDUCATION_DATA} />
-                            </section>
-
-                            {/* Certificates, Achievements, Languages Grid */}
-                            {/* Certificates, Achievements, Languages Grid */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-                                {/* Certificates Column */}
-                                <section>
-                                    <div className="flex items-center gap-4 mb-6">
-                                        <div className="p-2 bg-teal-500/10 rounded-lg">
-                                            <Award className="w-6 h-6 text-teal-500" />
-                                        </div>
-                                        <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100">
-                                            Certificates
+                            {/* Main Content Area */}
+                            <div className="lg:col-span-9 space-y-24">
+                                {/* Summary Section */}
+                                <section id="summary" className="scroll-mt-32">
+                                    <div className="relative bg-gradient-to-br from-teal-500/5 via-zinc-50 to-white dark:from-teal-500/10 dark:via-zinc-900/50 dark:to-zinc-900 p-8 rounded-3xl border border-teal-100 dark:border-teal-500/20 shadow-sm">
+                                        <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100 mb-6 flex items-center gap-3">
+                                            <div className="p-2 bg-teal-500 rounded-xl text-white shadow-lg shadow-teal-500/20">
+                                                <FileText className="w-5 h-5" />
+                                            </div>
+                                            Professional Summary
                                         </h2>
+                                        <p className="text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed font-light">
+                                            {SUMMARY}
+                                        </p>
                                     </div>
-                                    <ul className="grid grid-cols-1 gap-4">
-                                        {CERTIFICATES_DATA.map((cert, idx) => (
-                                            <motion.li
-                                                key={idx}
-                                                whileHover={{ scale: 1.02, y: -2 }}
-                                                className="group relative flex flex-col gap-2 bg-white dark:bg-zinc-800/60 p-5 rounded-2xl border border-zinc-200 dark:border-zinc-700/50 shadow-sm hover:shadow-md transition-all"
-                                            >
-                                                <div className="flex justify-between items-start">
-                                                    <span className="font-semibold text-zinc-800 dark:text-zinc-100 pr-4">{cert.title}</span>
-                                                    {cert.link !== '#' && (
-                                                        <a
-                                                            href={cert.link}
-                                                            target="_blank"
-                                                            rel="noopener noreferrer"
-                                                            className="text-zinc-400 hover:text-teal-500 transition-colors"
-                                                        >
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>
-                                                        </a>
-                                                    )}
-                                                </div>
-                                                <div className="h-1 w-12 bg-teal-500/30 rounded-full group-hover:w-full group-hover:bg-teal-500 transition-all duration-500" />
-                                            </motion.li>
-                                        ))}
-                                    </ul>
                                 </section>
 
-                                {/* Achievements & Languages Column */}
-                                <div className="space-y-12">
-                                    {/* Achievements */}
+                                {/* Skills Section */}
+                                <section id="skills" className="scroll-mt-32">
+                                    <div className="flex items-center gap-4 mb-8">
+                                        <div className="h-px bg-zinc-200 dark:bg-zinc-800 flex-1" />
+                                        <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100 flex items-center gap-2">
+                                            <span className="text-teal-500">#</span> Technical Skills
+                                        </h2>
+                                        <div className="h-px bg-zinc-200 dark:bg-zinc-800 flex-1" />
+                                    </div>
+                                    <div className="bg-zinc-50 dark:bg-zinc-900/50 rounded-3xl p-6 border border-zinc-100 dark:border-zinc-800/50">
+                                        <TechStack data={SKILLS_DATA} />
+                                    </div>
+                                </section>
+
+                                {/* Experience Section */}
+                                <section id="experience" className="scroll-mt-32">
+                                    <div className="flex items-center gap-4 mb-12">
+                                        <div className="p-2 bg-zinc-100 dark:bg-zinc-800 rounded-xl">
+                                            <Briefcase className="w-6 h-6 text-zinc-600 dark:text-zinc-400" />
+                                        </div>
+                                        <h2 className="text-3xl font-bold text-zinc-800 dark:text-zinc-100">
+                                            Experience
+                                        </h2>
+                                    </div>
+                                    <Timeline items={EXPERIENCE_DATA} />
+                                </section>
+
+                                {/* Projects Section */}
+                                <section id="projects" className="scroll-mt-32">
+                                    <div className="flex items-center gap-4 mb-12">
+                                        <div className="p-2 bg-zinc-100 dark:bg-zinc-800 rounded-xl">
+                                            <Server className="w-6 h-6 text-zinc-600 dark:text-zinc-400" />
+                                        </div>
+                                        <h2 className="text-3xl font-bold text-zinc-800 dark:text-zinc-100">
+                                            Projects
+                                        </h2>
+                                    </div>
+                                    <Timeline items={PROJECTS_DATA} />
+                                </section>
+
+                                {/* Education Section */}
+                                <section id="education" className="scroll-mt-32">
+                                    <div className="flex items-center gap-4 mb-12">
+                                        <div className="p-2 bg-zinc-100 dark:bg-zinc-800 rounded-xl">
+                                            <BookOpen className="w-6 h-6 text-zinc-600 dark:text-zinc-400" />
+                                        </div>
+                                        <h2 className="text-3xl font-bold text-zinc-800 dark:text-zinc-100">
+                                            Education
+                                        </h2>
+                                    </div>
+                                    <Timeline items={EDUCATION_DATA} />
+                                </section>
+
+                                {/* Certificates, Achievements, Languages Grid */}
+                                <div id="certifications" className="scroll-mt-32 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 pb-12">
+                                    {/* Certificates Column */}
                                     <section>
                                         <div className="flex items-center gap-4 mb-6">
-                                            <div className="p-2 bg-amber-500/10 rounded-lg">
-                                                <Award className="w-6 h-6 text-amber-500" />
+                                            <div className="p-2 bg-teal-500/10 rounded-lg">
+                                                <Award className="w-6 h-6 text-teal-500" />
                                             </div>
                                             <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100">
-                                                Achievements
+                                                Certificates
                                             </h2>
                                         </div>
-                                        <ul className="space-y-4">
-                                            {ACHIEVEMENTS_DATA.map((item, idx) => (
+                                        <ul className="grid grid-cols-1 gap-4">
+                                            {CERTIFICATES_DATA.map((cert, idx) => (
                                                 <motion.li
                                                     key={idx}
-                                                    initial={{ opacity: 0, x: 20 }}
-                                                    whileInView={{ opacity: 1, x: 0 }}
-                                                    transition={{ delay: idx * 0.1 }}
-                                                    className="relative pl-6 before:absolute before:left-0 before:top-2 before:h-2 before:w-2 before:rounded-full before:bg-amber-500"
+                                                    whileHover={{ scale: 1.02, y: -2 }}
+                                                    className="group relative flex flex-col gap-2 bg-white dark:bg-zinc-800/60 p-5 rounded-2xl border border-zinc-200 dark:border-zinc-700/50 shadow-sm hover:shadow-md transition-all"
                                                 >
-                                                    <h3 className="font-semibold text-zinc-800 dark:text-zinc-200">{item.title}</h3>
-                                                    <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1 leading-relaxed">{item.description}</p>
+                                                    <div className="flex justify-between items-start">
+                                                        <span className="font-semibold text-zinc-800 dark:text-zinc-100 pr-4">{cert.title}</span>
+                                                        {cert.link !== '#' && (
+                                                            <a
+                                                                href={cert.link}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="text-zinc-400 hover:text-teal-500 transition-colors"
+                                                            >
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>
+                                                            </a>
+                                                        )}
+                                                    </div>
+                                                    <div className="h-1 w-12 bg-teal-500/30 rounded-full group-hover:w-full group-hover:bg-teal-500 transition-all duration-500" />
                                                 </motion.li>
                                             ))}
                                         </ul>
                                     </section>
 
-                                    {/* Languages */}
-                                    <section>
-                                        <div className="flex items-center gap-4 mb-6">
-                                            <div className="p-2 bg-indigo-500/10 rounded-lg">
-                                                <Globe className="w-6 h-6 text-indigo-500" />
+                                    {/* Achievements & Languages Column */}
+                                    <div className="space-y-12">
+                                        {/* Achievements */}
+                                        <section>
+                                            <div className="flex items-center gap-4 mb-6">
+                                                <div className="p-2 bg-amber-500/10 rounded-lg">
+                                                    <Award className="w-6 h-6 text-amber-500" />
+                                                </div>
+                                                <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100">
+                                                    Achievements
+                                                </h2>
                                             </div>
-                                            <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100">
-                                                Languages
-                                            </h2>
-                                        </div>
-                                        <ul className="space-y-6">
-                                            {[
-                                                { ...LANGUAGES_DATA[0], percent: 85, color: 'bg-indigo-500' }, // English
-                                                { ...LANGUAGES_DATA[1], percent: 40, color: 'bg-pink-500' },   // Japanese
-                                                { ...LANGUAGES_DATA[2], percent: 100, color: 'bg-emerald-500' } // Urdu
-                                            ].map((lang, idx) => (
-                                                <li key={idx}>
-                                                    <div className="flex justify-between items-end mb-2">
-                                                        <span className="font-medium text-zinc-800 dark:text-zinc-200">{lang.language}</span>
-                                                        <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">{lang.proficiency}</span>
-                                                    </div>
-                                                    <div className="h-2 w-full bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
-                                                        <motion.div
-                                                            initial={{ width: 0 }}
-                                                            whileInView={{ width: `${lang.percent}%` }}
-                                                            transition={{ duration: 1, ease: "easeOut" }}
-                                                            className={`h-full ${lang.color} rounded-full`}
-                                                        />
-                                                    </div>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </section>
+                                            <ul className="space-y-4">
+                                                {ACHIEVEMENTS_DATA.map((item, idx) => (
+                                                    <motion.li
+                                                        key={idx}
+                                                        initial={{ opacity: 0, x: 20 }}
+                                                        whileInView={{ opacity: 1, x: 0 }}
+                                                        transition={{ delay: idx * 0.1 }}
+                                                        className="relative pl-6 before:absolute before:left-0 before:top-2 before:h-2 before:w-2 before:rounded-full before:bg-amber-500"
+                                                    >
+                                                        <h3 className="font-semibold text-zinc-800 dark:text-zinc-200">{item.title}</h3>
+                                                        <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1 leading-relaxed">{item.description}</p>
+                                                    </motion.li>
+                                                ))}
+                                            </ul>
+                                        </section>
+
+                                        {/* Languages */}
+                                        <section>
+                                            <div className="flex items-center gap-4 mb-6">
+                                                <div className="p-2 bg-indigo-500/10 rounded-lg">
+                                                    <Globe className="w-6 h-6 text-indigo-500" />
+                                                </div>
+                                                <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100">
+                                                    Languages
+                                                </h2>
+                                            </div>
+                                            <ul className="space-y-6">
+                                                {[
+                                                    { ...LANGUAGES_DATA[0], percent: 85, color: 'bg-indigo-500' }, // English
+                                                    { ...LANGUAGES_DATA[1], percent: 40, color: 'bg-pink-500' },   // Japanese
+                                                    { ...LANGUAGES_DATA[2], percent: 100, color: 'bg-emerald-500' } // Urdu
+                                                ].map((lang, idx) => (
+                                                    <li key={idx}>
+                                                        <div className="flex justify-between items-end mb-2">
+                                                            <span className="font-medium text-zinc-800 dark:text-zinc-200">{lang.language}</span>
+                                                            <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">{lang.proficiency}</span>
+                                                        </div>
+                                                        <div className="h-2 w-full bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
+                                                            <motion.div
+                                                                initial={{ width: 0 }}
+                                                                whileInView={{ width: `${lang.percent}%` }}
+                                                                transition={{ duration: 1, ease: "easeOut" }}
+                                                                className={`h-full ${lang.color} rounded-full`}
+                                                            />
+                                                        </div>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </section>
+                                    </div>
                                 </div>
                             </div>
                         </motion.div>

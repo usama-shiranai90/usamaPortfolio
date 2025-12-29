@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import Link from 'next/link';
 import logo from 'p/images/logo.png';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Github, Linkedin, Mail, FileText, Share2, Twitter, Globe, Send, Bookmark } from 'lucide-react';
@@ -17,10 +18,10 @@ const socialLinks = [
 ];
 
 const navItems = [
-    { label: 'About', href: '#about' },
-    { label: 'Experience', href: '#experience' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'About', href: '/#about' },
+    { label: 'Experience', href: '/#experience' },
+    { label: 'Projects', href: '/#projects' },
+    { label: 'Contact', href: '/#contact' },
 ];
 
 // Animation Variants
@@ -72,7 +73,7 @@ export function Sidebar() {
                 whileTap={{ scale: 0.95 }}
                 transition={{ duration: 0.3 }}
             >
-                <a href="/" className="block relative w-16 h-16 flex items-center justify-center">
+                <Link href="/" className="block relative w-16 h-16 flex items-center justify-center">
                     {/* Masked Logo for Color Control */}
                     <div
                         className="w-full h-full transition-colors duration-300"
@@ -88,7 +89,7 @@ export function Sidebar() {
                             backgroundColor: accent.value
                         }}
                     />
-                </a>
+                </Link>
             </motion.div>
 
             {/* 2. Navigation Section with Scientific Vertical Line */}
@@ -103,12 +104,12 @@ export function Sidebar() {
                     <div className="flex flex-row gap-4 [writing-mode:vertical-lr] rotate-180 items-center">
                         {[...navItems].reverse().map((item, i) => (
                             <motion.div key={item.label} variants={itemVariants} custom={i} className="relative group">
-                                <a
+                                <Link
                                     href={item.href}
                                     className="relative text-[10px] font-body font-bold tracking-[0.25em] text-theme-text opacity-50 hover:text-cyan-accent hover:opacity-100 transition-all uppercase py-4 px-2 no-underline flex items-center justify-center bg-theme-bg/80 backdrop-blur-sm border border-transparent hover:border-cyan-accent/30 rounded-full"
                                 >
                                     {item.label}
-                                </a>
+                                </Link>
                                 {/* Hover Dot Indicator */}
                                 <span
                                     className="absolute -right-4 top-1/2 -translate-y-1/2 w-1 h-1 bg-cyan-accent rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
@@ -168,31 +169,53 @@ export function Sidebar() {
                                     bg-theme-card/95 backdrop-blur-xl 
                                     border border-theme-text/10 rounded-xl shadow-2xl overflow-hidden
                                 ">
-                                    {socialLinks.map((link, index) => (
-                                        <motion.a
-                                            key={link.label}
-                                            href={link.href}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            initial={{ opacity: 0, scale: 0 }}
-                                            animate={{ opacity: 1, scale: 1 }}
-                                            transition={{ delay: 0.1 + index * 0.05 }}
-                                            className="
-                                                relative group/icon p-2 rounded-lg 
-                                                text-theme-text/60 
-                                                hover:text-cyan-accent hover:bg-theme-text/5 
-                                                transition-all duration-200
-                                            "
-                                        >
-                                            <link.icon size={18} strokeWidth={1.5} />
-
-                                            {/* Tooltip */}
+                                    {socialLinks.map((link, index) => {
+                                        const isInternal = link.href.startsWith('/');
+                                        const commonClasses = `
+                                            relative group/icon p-2 rounded-lg 
+                                            text-theme-text/60 
+                                            hover:text-cyan-accent hover:bg-theme-text/5 
+                                            transition-all duration-200 block
+                                        `;
+                                        const tooltip = (
                                             <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-cyan-accent text-theme-bg text-[9px] font-bold tracking-widest uppercase opacity-0 group-hover/icon:opacity-100 transition-all duration-200 pointer-events-none rounded whitespace-nowrap shadow-lg">
                                                 {link.label}
                                                 <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-[1px] border-4 border-transparent border-t-cyan-accent" />
                                             </div>
-                                        </motion.a>
-                                    ))}
+                                        );
+
+                                        if (isInternal) {
+                                            return (
+                                                <motion.div
+                                                    key={link.label}
+                                                    initial={{ opacity: 0, scale: 0 }}
+                                                    animate={{ opacity: 1, scale: 1 }}
+                                                    transition={{ delay: 0.1 + index * 0.05 }}
+                                                >
+                                                    <Link href={link.href} className={commonClasses}>
+                                                        <link.icon size={18} strokeWidth={1.5} />
+                                                        {tooltip}
+                                                    </Link>
+                                                </motion.div>
+                                            );
+                                        }
+
+                                        return (
+                                            <motion.a
+                                                key={link.label}
+                                                href={link.href}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                initial={{ opacity: 0, scale: 0 }}
+                                                animate={{ opacity: 1, scale: 1 }}
+                                                transition={{ delay: 0.1 + index * 0.05 }}
+                                                className={commonClasses}
+                                            >
+                                                <link.icon size={18} strokeWidth={1.5} />
+                                                {tooltip}
+                                            </motion.a>
+                                        );
+                                    })}
                                 </div>
                             </motion.div>
                         )}

@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
+import { OneEyeOwl } from "@/components/ui/OneEyeOwl";
 
 export function LoadingScreen() {
     const [progress, setProgress] = useState(0);
@@ -13,7 +14,7 @@ export function LoadingScreen() {
     const canvasRef = useRef(null);
 
     useEffect(() => {
-        const duration = 2500; // 2.5s total load
+        const duration = 3000; // 3.0s total load
         const startTime = Date.now();
 
         const interval = setInterval(() => {
@@ -109,23 +110,13 @@ export function LoadingScreen() {
             {/* Central Content */}
             <div className="relative z-10 flex flex-col items-center justify-center w-full max-w-md px-6">
 
-                {/* Logo / Symbol */}
-                <div className="relative mb-12">
-                    <div className="absolute inset-0 bg-cyan-accent blur-2xl opacity-20 animate-pulse" />
-                    <motion.div
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 20, ease: "linear", repeat: Infinity }}
-                        className="w-24 h-24 border border-cyan-accent/30 rounded-full flex items-center justify-center relative"
-                    >
-                        <div className="absolute top-0 left-1/2 -ml-0.5 w-1 h-2 bg-cyan-accent/50" />
-                        <div className="absolute bottom-0 left-1/2 -ml-0.5 w-1 h-2 bg-cyan-accent/50" />
-                        <div className="absolute left-0 top-1/2 -mt-0.5 h-1 w-2 bg-cyan-accent/50" />
-                        <div className="absolute right-0 top-1/2 -mt-0.5 h-1 w-2 bg-cyan-accent/50" />
-                    </motion.div>
+                {/* Custom One Eye Owl Logo Animation */}
+                <div className="relative mb-8">
+                    <OneEyeOwl className="w-48 h-48 md:w-64 md:h-64" color="#14b8a6" />
 
-                    {/* Inner Symbol */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="font-mono text-xl md:text-2xl font-bold text-cyan-accent tracking-tighter">
+                    {/* Floating Percentage Indicator */}
+                    <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-[#030303]/80 backdrop-blur px-3 py-1 rounded-full border border-teal-500/30">
+                        <span className="font-mono text-xl font-bold text-teal-400 tracking-tighter">
                             {Math.floor(progress)}%
                         </span>
                     </div>
