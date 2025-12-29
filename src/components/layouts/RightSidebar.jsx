@@ -53,6 +53,7 @@ const itemVariants = {
 
 export function RightSidebar() {
     const [hovered, setHovered] = useState(null);
+    const [isSidebarHovered, setIsSidebarHovered] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
     const sidebarRef = useRef(null);
 
@@ -86,12 +87,26 @@ export function RightSidebar() {
                 className="w-[1px] bg-gradient-to-b from-transparent via-cyan-accent/20 to-transparent absolute top-0"
             />
 
-            <div className="flex flex-col gap-4 pointer-events-auto z-10 relative">
+            <div
+                className="flex flex-col items-center transition-all duration-500 ease-out pointer-events-auto z-10 relative mb-4"
+                onMouseEnter={() => setIsSidebarHovered(true)}
+                onMouseLeave={() => setIsSidebarHovered(false)}
+            >
                 {mainTools.map((Tool, i) => (
                     <motion.div
                         key={i}
                         variants={itemVariants}
-                        whileHover={{ scale: 1.2, x: -5 }}
+                        animate={{
+                            marginBottom: isSidebarHovered ? 16 : -24, // Smoothly animate spacing
+                            scale: isSidebarHovered ? 1 : 1 - (i * 0.05), // Depth scaling
+                            zIndex: mainTools.length - i, // Maintain stack order
+                        }}
+                        transition={{
+                            duration: 0.5,
+                            ease: [0.23, 1, 0.32, 1], // "Quart Out" - Silky smooth
+                            delay: isSidebarHovered ? i * 0.04 : 0 // Subtle ripple
+                        }}
+                        whileHover={{ scale: 1.2, x: -5, zIndex: 100, transition: { duration: 0.2 } }}
                         onMouseEnter={() => setHovered(i)}
                         onMouseLeave={() => setHovered(null)}
                         className={`
@@ -110,7 +125,7 @@ export function RightSidebar() {
 
                         {/* Tooltip */}
                         <AnimatePresence>
-                            {hovered === i && (
+                            {(hovered === i && isSidebarHovered) && (
                                 <motion.div
                                     initial={{ opacity: 0, x: 20, scale: 0.8 }}
                                     animate={{ opacity: 1, x: 0, scale: 1 }}
@@ -127,7 +142,9 @@ export function RightSidebar() {
                         </AnimatePresence>
                     </motion.div>
                 ))}
+            </div>
 
+            <div className="flex flex-col gap-4 mt-5 pointer-events-auto z-10 relative">
                 {/* Expand Button */}
                 <motion.div
                     variants={itemVariants}

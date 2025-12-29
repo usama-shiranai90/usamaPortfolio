@@ -51,9 +51,17 @@ export function Timeline({ items }) {
                             <h4 className="text-3xl font-bold font-heading text-theme-text mb-4 group-hover:text-cyan-accent transition-colors duration-300">
                                 {item.role}
                             </h4>
-                            <p className="text-theme-text/60 leading-relaxed font-light text-lg mb-6 max-w-lg">
-                                {item.description}
-                            </p>
+                            {Array.isArray(item.description) ? (
+                                <ul className="list-disc pl-5 space-y-2 text-theme-text/60 font-light text-lg mb-6 max-w-lg">
+                                    {item.description.map((point, idx) => (
+                                        <li key={idx}>{point}</li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p className="text-theme-text/60 leading-relaxed font-light text-lg mb-6 max-w-lg">
+                                    {item.description}
+                                </p>
+                            )}
 
                             <div className={`flex flex-wrap gap-3 ${index % 2 === 0 ? "md:justify-end" : "md:justify-start"}`}>
                                 {item.tags?.map((tag) => (

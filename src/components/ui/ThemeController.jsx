@@ -1,9 +1,52 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Palette, Moon, Sun, X, Monitor, Github, Grid, Network, Sparkles, Maximize2, Cpu, Ghost, Snowflake, Disc, BookOpen, Terminal, BrainCircuit, Ruler, Binary, Microscope, Languages } from 'lucide-react';
 import { useTheme, accents, backgroundStyles } from '@/context/ThemeContext';
+
+const DraggableScroll = ({ children, className, style }) => {
+    const ref = useRef(null);
+    const [isDragging, setIsDragging] = useState(false);
+    const [startX, setStartX] = useState(0);
+    const [scrollLeft, setScrollLeft] = useState(0);
+
+    const onMouseDown = (e) => {
+        setIsDragging(true);
+        setStartX(e.pageX - ref.current.offsetLeft);
+        setScrollLeft(ref.current.scrollLeft);
+    };
+
+    const onMouseLeave = () => {
+        setIsDragging(false);
+    };
+
+    const onMouseUp = () => {
+        setIsDragging(false);
+    };
+
+    const onMouseMove = (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - ref.current.offsetLeft;
+        const walk = (x - startX) * 2; // scroll-fast
+        ref.current.scrollLeft = scrollLeft - walk;
+    };
+
+    return (
+        <div
+            ref={ref}
+            className={`${className} cursor-grab active:cursor-grabbing`}
+            style={style}
+            onMouseDown={onMouseDown}
+            onMouseLeave={onMouseLeave}
+            onMouseUp={onMouseUp}
+            onMouseMove={onMouseMove}
+        >
+            {children}
+        </div>
+    );
+};
 
 export function ThemeController() {
     const [isOpen, setIsOpen] = useState(false);
@@ -113,8 +156,8 @@ export function ThemeController() {
                                             key={lang}
                                             onClick={() => setLanguage(lang)}
                                             className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${language === lang
-                                                    ? `${isDark ? 'bg-zinc-800 text-white shadow-lg shadow-black/20' : 'bg-white text-black shadow-sm'} `
-                                                    : `${subTextColor} opacity-50 hover:opacity-100 hover:bg-white/5`
+                                                ? `${isDark ? 'bg-zinc-800 text-white shadow-lg shadow-black/20' : 'bg-white text-black shadow-sm'} `
+                                                : `${subTextColor} opacity-50 hover:opacity-100 hover:bg-white/5`
                                                 }`}
                                         >
                                             <span className="text-xs uppercase tracking-wider">{lang === 'en' ? 'English' : '日本語'}</span>
@@ -131,11 +174,17 @@ export function ThemeController() {
                                     <div className={`absolute left-0 top-0 bottom-0 w-4 z-10 bg-gradient-to-r ${isDark ? 'from-[#0a0a0a]/90' : 'from-white/90'} to-transparent pointer-events-none`} />
                                     <div className={`absolute right-0 top-0 bottom-0 w-4 z-10 bg-gradient-to-l ${isDark ? 'from-[#0a0a0a]/90' : 'from-white/90'} to-transparent pointer-events-none`} />
 
-                                    <div className="flex gap-2 overflow-x-auto pb-4 -mb-4 px-4 scrollbar-none [&::-webkit-scrollbar]:hidden"
-                                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                                    <DraggableScroll
+                                        className="flex gap-2 overflow-x-auto pb-4 -mb-4 px-4 scrollbar-none [&::-webkit-scrollbar]:hidden"
+                                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                                    >
                                         {themeOptions.map(({ id, icon: Icon, label }) => (
                                             <motion.button
                                                 key={id}
+                                                // Prevent click if dragging happens inside the wrapper logic, 
+                                                // but for simplicity we rely on 'pointer-events-none' class toggle if needed, or just standard behavior.
+                                                // React events fire on MouseUp. If we dragged, we don't want to trigger.
+                                                // But usually a small drag is okay.
                                                 onClick={() => setThemeMode(id)}
                                                 whileHover={{ scale: 1.05 }}
                                                 whileTap={{ scale: 0.95 }}
@@ -150,7 +199,7 @@ export function ThemeController() {
                                                 <span className="capitalize whitespace-nowrap">{label}</span>
                                             </motion.button>
                                         ))}
-                                    </div>
+                                    </DraggableScroll>
                                 </div>
                             </div>
 
@@ -162,7 +211,7 @@ export function ThemeController() {
                                     <div className={`absolute left-0 top-0 bottom-0 w-4 z-10 bg-gradient-to-r ${isDark ? 'from-[#0a0a0a]/90' : 'from-white/90'} to-transparent pointer-events-none`} />
                                     <div className={`absolute right-0 top-0 bottom-0 w-4 z-10 bg-gradient-to-l ${isDark ? 'from-[#0a0a0a]/90' : 'from-white/90'} to-transparent pointer-events-none`} />
 
-                                    <div
+                                    <DraggableScroll
                                         className="flex gap-3 overflow-x-auto pb-6 -mb-6 px-4 snap-x [&::-webkit-scrollbar]:hidden"
                                         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                                     >
@@ -232,7 +281,7 @@ export function ThemeController() {
                                                 </div>
                                             </motion.button>
                                         ))}
-                                    </div>
+                                    </DraggableScroll>
                                 </div>
                             </div>
 
@@ -244,7 +293,7 @@ export function ThemeController() {
                                     <div className={`absolute left-0 top-0 bottom-0 w-4 z-10 bg-gradient-to-r ${isDark ? 'from-[#0a0a0a]/90' : 'from-white/90'} to-transparent pointer-events-none`} />
                                     <div className={`absolute right-0 top-0 bottom-0 w-4 z-10 bg-gradient-to-l ${isDark ? 'from-[#0a0a0a]/90' : 'from-white/90'} to-transparent pointer-events-none`} />
 
-                                    <div
+                                    <DraggableScroll
                                         className="flex gap-3 overflow-x-auto pb-4 -mb-4 px-4 scrollbar-none [&::-webkit-scrollbar]:hidden"
                                         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                                     >
@@ -276,7 +325,7 @@ export function ThemeController() {
                                                 </div>
                                             </motion.button>
                                         ))}
-                                    </div>
+                                    </DraggableScroll>
                                 </div>
                             </div>
                         </div>

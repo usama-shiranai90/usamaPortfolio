@@ -313,11 +313,11 @@ export default function HomePageLayout() {
                         </section>
 
                         {/* About Section */}
-                        <section id="about" className="min-h-screen snap-start flex flex-col justify-center max-w-5xl mx-auto w-full px-4 md:px-8">
+                        <section id="about" className="min-h-screen snap-start flex flex-col justify-center max-w-5xl mx-auto w-full px-4 md:px-8 py-24">
                             <motion.h2
                                 initial={{ opacity: 0, x: -20 }}
                                 whileInView={{ opacity: 1, x: 0 }}
-                                className="text-4xl md:text-5xl font-bold font-heading text-theme-text mb-12"
+                                className="text-3xl md:text-5xl font-bold font-heading text-theme-text mb-8 md:mb-12"
                             >
                                 {t.about.title} <span className="text-cyan-accent">{t.about.highlight}</span>
                             </motion.h2>
@@ -425,7 +425,7 @@ export default function HomePageLayout() {
                             <motion.h2
                                 initial={{ opacity: 0, x: -20 }}
                                 whileInView={{ opacity: 1, x: 0 }}
-                                className="text-4xl md:text-5xl font-bold font-heading text-theme-text mb-12"
+                                className="text-3xl md:text-5xl font-bold font-heading text-theme-text mb-8 md:mb-12"
                             >
                                 {t.research.title} <span className="text-cyan-accent">{t.research.highlight}</span>
                             </motion.h2>
@@ -460,7 +460,7 @@ export default function HomePageLayout() {
                                 <motion.h2
                                     initial={{ opacity: 0, x: -20 }}
                                     whileInView={{ opacity: 1, x: 0 }}
-                                    className="text-4xl md:text-5xl font-bold font-heading text-theme-text">
+                                    className="text-3xl md:text-5xl font-bold font-heading text-theme-text">
                                     {t.projects.title} <span className="text-cyan-accent">{t.projects.highlight}</span>
                                 </motion.h2>
 
@@ -496,11 +496,11 @@ export default function HomePageLayout() {
                         </section>
 
                         {/* Skills Section */}
-                        <section id="skills" className="min-h-screen snap-start flex flex-col justify-center max-w-7xl mx-auto w-full px-4 md:px-8">
+                        <section id="skills" className="min-h-screen snap-start flex flex-col justify-center max-w-7xl mx-auto w-full px-4 md:px-8 py-24">
                             <motion.h2
                                 initial={{ opacity: 0, x: -20 }}
                                 whileInView={{ opacity: 1, x: 0 }}
-                                className="text-4xl md:text-5xl font-bold font-heading text-theme-text mb-12"
+                                className="text-3xl md:text-5xl font-bold font-heading text-theme-text mb-8 md:mb-12"
                             >
                                 {t.skills.title} <span className="text-cyan-accent">{t.skills.highlight}</span>
                             </motion.h2>
@@ -508,17 +508,17 @@ export default function HomePageLayout() {
                         </section>
 
                         {/* Experience Section */}
-                        <section id="experience" className="min-h-screen snap-start flex flex-col justify-center max-w-5xl mx-auto w-full px-4 md:px-8">
-                            <h2 className="text-4xl md:text-5xl font-bold font-heading text-theme-text mb-16">{t.experience.title} <span className="text-cyan-accent">{t.experience.highlight}</span></h2>
+                        <section id="experience" className="min-h-screen snap-start flex flex-col justify-center max-w-5xl mx-auto w-full px-4 md:px-8 py-24">
+                            <h2 className="text-3xl md:text-5xl font-bold font-heading text-theme-text mb-8 md:mb-16">{t.experience.title} <span className="text-cyan-accent">{t.experience.highlight}</span></h2>
                             <Timeline items={experiences} />
                         </section>
 
                         {/* Contact Section */}
-                        <section id="contact" className="min-h-screen snap-start flex flex-col justify-center max-w-7xl mx-auto w-full px-4 md:px-8 pb-32">
+                        <section id="contact" className="min-h-screen snap-start flex flex-col justify-center max-w-7xl mx-auto w-full px-4 md:px-8 py-24 pb-32">
                             <div className="bg-gradient-to-br from-theme-text/5 to-transparent p-8 md:p-12 rounded-3xl border border-theme-text/10">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                                     <div>
-                                        <h2 className="text-4xl md:text-5xl font-bold font-heading text-theme-text mb-6">{t.contact.title}</h2>
+                                        <h2 className="text-3xl md:text-5xl font-bold font-heading text-theme-text mb-6">{t.contact.title}</h2>
                                         <p className="text-theme-text/60 mb-8">
                                             {t.contact.desc}
                                         </p>

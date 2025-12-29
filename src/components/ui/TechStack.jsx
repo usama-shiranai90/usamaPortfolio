@@ -22,10 +22,12 @@ const skills = {
     }
 };
 
-export function TechStack() {
+export function TechStack({ data }) {
+    const skillsToRender = data || skills;
+
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {Object.entries(skills).map(([category, { icon: Icon, items }], index) => (
+            {Object.entries(skillsToRender).map(([category, { icon: Icon, items }], index) => (
                 <motion.div
                     key={category}
                     initial={{ opacity: 0, scale: 0.95 }}
@@ -35,7 +37,7 @@ export function TechStack() {
                 >
                     <div className="flex items-center gap-3 mb-6">
                         <div className="p-2 rounded-lg bg-cyan-accent/10 text-cyan-accent group-hover:scale-110 transition-transform">
-                            <Icon size={24} />
+                            {Icon && <Icon size={24} />}
                         </div>
                         <h3 className="text-lg font-bold font-heading text-theme-text">{category}</h3>
                     </div>
