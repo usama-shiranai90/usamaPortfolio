@@ -94,26 +94,45 @@ export function ThemeController() {
 
     return (
         <div className="fixed right-4 top-4 md:right-6 md:top-6 z-[60] flex flex-col items-end gap-4 pointer-events-none">
-            {/* Enhanced Floating Trigger Button */}
-            <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setIsOpen(!isOpen)}
-                className={`
-                    pointer-events-auto
-                    w-12 h-12 rounded-xl flex items-center justify-center 
-                    backdrop-blur-xl border shadow-2xl transition-all duration-300
-                    ${isOpen
-                        ? 'bg-zinc-900 border-cyan-accent text-cyan-accent rotate-90'
-                        : isDark ? 'bg-zinc-900/60 border-white/10 text-white/70 hover:bg-zinc-800 hover:border-white/30 hover:text-white'
-                            : 'bg-white/60 border-black/10 text-zinc-700 hover:bg-white hover:text-black'}
-                `}
-                style={{
-                    boxShadow: isOpen ? `0 0 20px -5px ${accent.value}` : '0 10px 30px -10px rgba(0,0,0,0.1)'
-                }}
-            >
-                {isOpen ? <X size={20} /> : <Cpu size={22} />}
-            </motion.button>
+            <div className="flex items-center gap-3">
+                {/* Command Palette Trigger - Smaller & Left */}
+                <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => window.dispatchEvent(new CustomEvent('open-command-menu'))}
+                    className={`
+                        pointer-events-auto
+                        w-8 h-8 rounded-lg flex items-center justify-center 
+                        backdrop-blur-xl border shadow-lg transition-all duration-300
+                        ${isDark ? 'bg-zinc-900/60 border-white/10 text-white/50 hover:text-white hover:bg-zinc-800'
+                            : 'bg-white/60 border-black/10 text-zinc-500 hover:text-zinc-900 hover:bg-white'}
+                    `}
+                    title="Command Palette (Cmd+K)"
+                >
+                    <span className="text-[10px] font-mono font-bold">⌘</span>
+                </motion.button>
+
+                {/* Enhanced Floating Trigger Button */}
+                <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setIsOpen(!isOpen)}
+                    className={`
+                        pointer-events-auto
+                        w-12 h-12 rounded-xl flex items-center justify-center 
+                        backdrop-blur-xl border shadow-2xl transition-all duration-300
+                        ${isOpen
+                            ? 'bg-zinc-900 border-cyan-accent text-cyan-accent rotate-90'
+                            : isDark ? 'bg-zinc-900/60 border-white/10 text-white/70 hover:bg-zinc-800 hover:border-white/30 hover:text-white'
+                                : 'bg-white/60 border-black/10 text-zinc-700 hover:bg-white hover:text-black'}
+                    `}
+                    style={{
+                        boxShadow: isOpen ? `0 0 20px -5px ${accent.value}` : '0 10px 30px -10px rgba(0,0,0,0.1)'
+                    }}
+                >
+                    {isOpen ? <X size={20} /> : <Cpu size={22} />}
+                </motion.button>
+            </div>
 
             <AnimatePresence>
                 {isOpen && (
