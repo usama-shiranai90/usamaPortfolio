@@ -80,7 +80,7 @@ export default function RootLayout({ children }) {
         <Providers>
           <ThemeController />
           <CommandMenu />
-          <div className="flex w-full">
+          <div className="-flex w-full">
             <Layout>{children}</Layout>
           </div>
         </Providers>

@@ -107,6 +107,9 @@ export function CommandMenu() {
                                     <CommandItem icon={Code} onSelect={() => runCommand(() => router.push("/#projects"))}>
                                         /projects
                                     </CommandItem>
+                                    <CommandItem icon={Monitor} onSelect={() => runCommand(() => router.push("/guestbook"))}>
+                                        /guestbook
+                                    </CommandItem>
                                 </Command.Group>
 
                                 <Command.Group heading="PROJECTS" className="text-[10px] text-zinc-400 dark:text-zinc-500 font-mono uppercase tracking-widest mb-2 px-2 mt-2">
