@@ -14,6 +14,7 @@ import { Timeline } from '@/components/ui/Timeline';
 import { useTheme } from '@/context/ThemeContext';
 import { translations } from '@/utils/translations';
 import { OneEyeOwl } from '@/components/ui/OneEyeOwl';
+import { ContactTerminal } from '@/components/ui/ContactTerminal';
 import { AlertTriangle, X } from 'lucide-react';
 import avatar_1 from '/public/images/avatars/avatar_1.jpg';
 
@@ -227,7 +228,7 @@ export default function HomePageLayout() {
                                         <div className="absolute inset-0 bg-theme-text translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                                         <span className="relative group-hover:text-theme-bg transition-colors">{t.buttons.resume}</span>
                                     </a>
-                                    <a href="#projects" className="group px-8 py-3 border border-theme-text/20 text-theme-text font-bold font-body text-sm hover:border-cyan-accent transition-colors flex items-center gap-2">
+                                    <a href="/research" className="group px-8 py-3 border border-theme-text/20 text-theme-text font-bold font-body text-sm hover:border-cyan-accent transition-colors flex items-center gap-2">
                                         <span>{t.buttons.research}</span>
                                         <span className="group-hover:translate-x-1 transition-transform">→</span>
                                     </a>
@@ -440,29 +441,7 @@ export default function HomePageLayout() {
 
                         {/* Contact Section */}
                         <section id="contact" className="min-h-screen snap-start flex flex-col justify-center max-w-7xl mx-auto w-full px-4 md:px-8 py-24 pb-32">
-                            <div className="bg-gradient-to-br from-theme-text/5 to-transparent p-8 md:p-12 rounded-3xl border border-theme-text/10">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                                    <div>
-                                        <h2 className="text-3xl md:text-5xl font-bold font-heading text-theme-text mb-6">{t.contact.title}</h2>
-                                        <p className="text-theme-text/60 mb-8">
-                                            {t.contact.desc}
-                                        </p>
-                                        {/* <a href="mailto:john@example.com" className="text-2xl font-bold font-heading text-cyan-accent hover:underline">
-                                            john@example.com
-                                        </a> */}
-                                    </div>
-                                    <form className="space-y-4">
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <input type="text" placeholder={t.contact.form.name} className="w-full px-4 py-3 bg-theme-card/50 border border-theme-text/10 rounded-lg focus:border-cyan-accent focus:outline-none text-theme-text font-body transition-colors" />
-                                            <input type="email" placeholder={t.contact.form.email} className="w-full px-4 py-3 bg-theme-card/50 border border-theme-text/10 rounded-lg focus:border-cyan-accent focus:outline-none text-theme-text font-body transition-colors" />
-                                        </div>
-                                        <textarea placeholder={t.contact.form.message} rows="4" className="w-full px-4 py-3 bg-theme-card/50 border border-theme-text/10 rounded-lg focus:border-cyan-accent focus:outline-none text-theme-text font-body transition-colors"></textarea>
-                                        <button type="submit" className="px-8 py-3 bg-cyan-accent text-theme-bg font-bold font-body rounded-lg hover:bg-cyan-400 transition-colors w-full">
-                                            {t.contact.form.send}
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
+                            <ContactTerminal t={t} />
                         </section>
                     </div>
                 </motion.div>

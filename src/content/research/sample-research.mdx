@@ -1,0 +1,53 @@
+---
+title: "Large Language Models in Healthcare: A Mathematical Context"
+publishedAt: "2024-12-30"
+summary: "Exploring the transformer architecture and its application in medical diagnosis, featuring mathematical breakdowns and implementation examples."
+tags: ["AI", "Healthcare", "Transformers", "Math"]
+author: "Usama Bukhari"
+---
+
+# Introduction
+
+Large Language Models (LLMs) have revolutionized the way we process sequential data. In healthcare, this means better **predictive diagnosis** and **patient triage**.
+
+## The Attention Mechanism
+
+At the core of the transformer is the self-attention mechanism, defined as:
+
+$$
+\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+$$
+
+Where:
+- $Q$ is the Query matrix
+- $K$ is the Key matrix
+- $V$ is the Value matrix
+- $d_k$ is the dimension of the keys
+
+This allows the model to weigh the importance of different tokens in a sequence <Citation id="vaswani2017" index="1" title="Attention Is All You Need" authors="Vaswani et al." journal="NEURIPS 2017" />.
+
+## Python Implementation
+
+Here is a simplified self-attention implementation in PyTorch:
+
+```python
+import torch
+import torch.nn.functional as F
+
+def scaled_dot_product_attention(query, key, value):
+    d_k = query.size(-1)
+    scores = torch.matmul(query, key.transpose(-2, -1)) / torch.sqrt(torch.tensor(d_k, dtype=torch.float32))
+    attention_weights = F.softmax(scores, dim=-1)
+    return torch.matmul(attention_weights, value)
+```
+
+## Clinical Application
+
+When applied to Electronic Health Records (EHR), we treat patient history as a sequence of events $E = \{e_1, e_2, ..., e_n\}$. The probability of the next event (diagnosis) is modeled as:
+
+$$
+P(e_{t+1} | e_1, ..., e_t) = \text{softmax}(W h_t + b)
+$$
+
+This probabilistic approach helps in early detection of anomalies <Citation id="rajkomar2018" index="2" title="Scalable and accurate deep learning with electronic health records" authors="Rajkomar et al." journal="Nature Digital Medicine" />.
+
