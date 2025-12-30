@@ -11,6 +11,7 @@ import { Code, Database, Terminal, Layers, Cloud, BookOpen, Award, Globe, Briefc
 
 import { Timeline } from '@/components/ui/Timeline'
 import { TechStack } from '@/components/ui/TechStack'
+import { Rirekisho } from '@/components/ui/Rirekisho'
 
 import resumeImage1 from 'p/images/resume/Syed Usama Bukhari Resume_Page_1.png'
 import resumeImage2 from 'p/images/resume/Syed Usama Bukhari Resume_Page_2.png'
@@ -26,6 +27,11 @@ const PDF_TABS = [
 const VIEW_MODES = [
     { id: 'interactive', label: 'Interactive', icon: Layers },
     { id: 'pdf', label: 'PDF View', icon: BookOpen },
+]
+
+const INTERACTIVE_TABS = [
+    { id: 'english', label: 'English Resume' },
+    { id: 'japanese', label: 'Japanese Resume (履歴書)' },
 ]
 
 
@@ -209,13 +215,54 @@ const LANGUAGES_DATA = [
     { language: "Urdu", proficiency: "Native" },
 ]
 
+const DATA_JP = {
+    profile: {
+        name: "Syed Usama Bukhari",
+        furigana: "サイド ウサマ ブカリ",
+        dob: "1999年 5月 10日", // Assuming roughly based on graduation
+        age: "25",
+        gender: "男",
+        postalCode: "819-0395",
+        address: "福岡県福岡市西区元岡 744 (九州大学 伊都キャンパス)",
+        addressFurigana: "ふくおかけん ふくおかし にしく もとおか",
+        phone: "080-xxxx-xxxx",
+        email: "hub@one-eye-owl.res",
+        pr: "データ集約型およびヘルスケア指向のアプリケーション構築経験を持つソフトウェアエンジニア。バックエンド、ウェブ、データエンジニアリングスタックに精通。Laravel、.NET、最新のJavaScriptフレームワーク、Pythonを使用した本番機能の開発経験あり。現在は九州大学 ソーシャルテックラボにて、医療データ分析、ETLパイプライン(Airflow, dbt)、FHIR相互運用性の研究に従事。学習ヘルスシステム(LHS)内でのRAGを用いた処方最適化を研究中。"
+    },
+    education: [
+        { year: "2018", month: "9", content: "Foundation University (パキスタン) 入学" },
+        { year: "2022", month: "8", content: "Foundation University (ソフトウェア工学) 卒業 GPA: 3.5+" },
+        { year: "2024", month: "4", content: "九州大学 統合新領域学府 研究生 入学" },
+        { year: "2024", month: "4", content: "現在に至る (博士課程進学予定)" }
+    ],
+    experience: [
+        { year: "2022", month: "8", content: "Immentia (Software Developer) 入社" },
+        { year: "2023", month: "1", content: "Immentia 退社" },
+        { year: "2023", month: "2", content: "CareCloud (Software Engineer) 入社" },
+        { year: "2023", month: "9", content: "CareCloud 退社" },
+        { year: "2023", month: "11", content: "Reboot Era Technologies (Backend Developer) 入社" },
+        { year: "2025", month: "1", content: "Reboot Era Technologies 退社" },
+        { year: "2025", month: "10", content: "九州大学 ティーチングアシスタント (データ分析講義担当) 着任" }
+    ],
+    licenses: [
+        { year: "2022", month: "8", content: "Bachelor of Computer Software Engineering 取得" },
+        { year: "2023", month: "", content: "Certified Data Scientist Associate (DataCamp)" },
+        { year: "2024", month: "", content: "JLPT N4 レレベル (基礎会話)" },
+        { year: "2024", month: "", content: "TOEIC 860点" },
+    ],
+    skills: "言語: Java, Python, PHP, JavaScript/TypeScript\nフレームワーク: Spring Boot, Laravel, React, Next.js, Django\nインフラ/ツール: Docker, Kubernetes, AWS, GCP, Git\nデータベース: MySQL, PostgreSQL, ElasticSearch",
+    requests: "職務内容: ソフトウェアエンジニア、データエンジニア、または研究開発職を希望します。\n勤務地: 福岡県内 または リモートワーク可\n\n貴社の規定に従います。"
+};
+
 
 export default function Resume() {
     const [viewMode, setViewMode] = useState('interactive')
+    const [activeInteractiveTab, setActiveInteractiveTab] = useState(INTERACTIVE_TABS[0].id)
     const [activePdfTab, setActivePdfTab] = useState(PDF_TABS[0].id)
     const [zoomLevel, setZoomLevel] = useState(1);
 
     const currentPdfTab = PDF_TABS.find((tab) => tab.id === activePdfTab)
+    const currentInteractiveDownload = PDF_TABS.find((tab) => tab.id === activeInteractiveTab)
 
     const handlePrint = () => {
         window.print()
@@ -268,7 +315,7 @@ export default function Resume() {
                     </div>
 
                     {/* Action Buttons (Only for Interactive) */}
-                    {viewMode === 'interactive' && (
+                    {/* {viewMode === 'interactive' && (
                         <motion.div
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
@@ -291,7 +338,7 @@ export default function Resume() {
                                 <Printer className="w-4 h-4 group-hover:scale-110 transition-transform" />
                             </Button>
                         </motion.div>
-                    )}
+                    )} */}
                 </div>
             </header>
 
@@ -304,204 +351,293 @@ export default function Resume() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -20 }}
                             transition={{ duration: 0.4 }}
-                            className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16"
+                            className="space-y-8"
                         >
-                            {/* Sticky Navigation Sidebar */}
-                            <aside className="hidden lg:block lg:col-span-3">
-                                <nav className="sticky top-24 space-y-2">
-                                    <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-4 pl-3">Contents</p>
-                                    {[
-                                        { id: 'summary', label: 'Summary', icon: FileText },
-                                        { id: 'skills', label: 'Skills', icon: Layers },
-                                        { id: 'experience', label: 'Experience', icon: Briefcase },
-                                        { id: 'projects', label: 'Projects', icon: Server },
-                                        { id: 'education', label: 'Education', icon: BookOpen },
-                                        { id: 'certifications', label: 'Certifications', icon: Award },
-                                    ].map((item) => (
-                                        <a
-                                            key={item.id}
-                                            href={`#${item.id}`}
-                                            className="group flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-teal-500 dark:hover:text-teal-400 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 rounded-lg transition-all"
+                            {/* Interactive Tab Switcher & Actions */}
+                            <div className="flex flex-col md:flex-row justify-between items-center gap-4 bg-zinc-50 dark:bg-zinc-900/50 p-2 rounded-2xl border border-zinc-100 dark:border-zinc-800/50">
+                                <div className="flex p-1">
+                                    {INTERACTIVE_TABS.map((tab) => (
+                                        <button
+                                            key={tab.id}
+                                            onClick={() => setActiveInteractiveTab(tab.id)}
+                                            className={clsx(
+                                                'relative rounded-xl px-6 py-2 text-sm font-medium transition-all duration-200',
+                                                activeInteractiveTab === tab.id
+                                                    ? 'text-zinc-900 dark:text-zinc-100 bg-white dark:bg-zinc-700 shadow-md ring-1 ring-zinc-200 dark:ring-zinc-600'
+                                                    : 'text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200 hover:bg-zinc-200/50 dark:hover:bg-zinc-800'
+                                            )}
                                         >
-                                            <item.icon className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity" />
-                                            {item.label}
-                                        </a>
+                                            {tab.label}
+                                        </button>
                                     ))}
-                                </nav>
-                            </aside>
+                                </div>
 
-                            {/* Main Content Area */}
-                            <div className="lg:col-span-9 space-y-24">
-                                {/* Summary Section */}
-                                <section id="summary" className="scroll-mt-32">
-                                    <div className="relative bg-gradient-to-br from-teal-500/5 via-zinc-50 to-white dark:from-teal-500/10 dark:via-zinc-900/50 dark:to-zinc-900 p-8 rounded-3xl border border-teal-100 dark:border-teal-500/20 shadow-sm">
-                                        <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100 mb-6 flex items-center gap-3">
-                                            <div className="p-2 bg-teal-500 rounded-xl text-white shadow-lg shadow-teal-500/20">
-                                                <FileText className="w-5 h-5" />
-                                            </div>
-                                            Professional Summary
-                                        </h2>
-                                        <p className="text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed font-light">
-                                            {SUMMARY}
-                                        </p>
-                                    </div>
-                                </section>
+                                <div className="flex items-center gap-2 pr-2">
+                                    <Button
+                                        href={currentInteractiveDownload?.download}
+                                        download={currentInteractiveDownload?.filename}
+                                        variant="outline"
+                                        className="h-9 px-4 text-xs font-medium gap-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-700"
+                                    >
+                                        <Download className="w-3.5 h-3.5" />
 
-                                {/* Skills Section */}
-                                <section id="skills" className="scroll-mt-32">
-                                    <div className="flex items-center gap-4 mb-8">
-                                        <div className="h-px bg-zinc-200 dark:bg-zinc-800 flex-1" />
-                                        <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100 flex items-center gap-2">
-                                            <span className="text-teal-500">#</span> Technical Skills
-                                        </h2>
-                                        <div className="h-px bg-zinc-200 dark:bg-zinc-800 flex-1" />
-                                    </div>
-                                    <div className="bg-zinc-50 dark:bg-zinc-900/50 rounded-3xl p-6 border border-zinc-100 dark:border-zinc-800/50">
-                                        <TechStack data={SKILLS_DATA} />
-                                    </div>
-                                </section>
+                                    </Button>
+                                    <Button
+                                        onClick={handlePrint}
+                                        variant="outline"
+                                        className="h-9 px-4 text-xs font-medium gap-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-700"
+                                    >
+                                        <Printer className="w-3.5 h-3.5" />
 
-                                {/* Experience Section */}
-                                <section id="experience" className="scroll-mt-32">
-                                    <div className="flex items-center gap-4 mb-12">
-                                        <div className="p-2 bg-zinc-100 dark:bg-zinc-800 rounded-xl">
-                                            <Briefcase className="w-6 h-6 text-zinc-600 dark:text-zinc-400" />
-                                        </div>
-                                        <h2 className="text-3xl font-bold text-zinc-800 dark:text-zinc-100">
-                                            Experience
-                                        </h2>
-                                    </div>
-                                    <Timeline items={EXPERIENCE_DATA} />
-                                </section>
-
-                                {/* Projects Section */}
-                                <section id="projects" className="scroll-mt-32">
-                                    <div className="flex items-center gap-4 mb-12">
-                                        <div className="p-2 bg-zinc-100 dark:bg-zinc-800 rounded-xl">
-                                            <Server className="w-6 h-6 text-zinc-600 dark:text-zinc-400" />
-                                        </div>
-                                        <h2 className="text-3xl font-bold text-zinc-800 dark:text-zinc-100">
-                                            Projects
-                                        </h2>
-                                    </div>
-                                    <Timeline items={PROJECTS_DATA} />
-                                </section>
-
-                                {/* Education Section */}
-                                <section id="education" className="scroll-mt-32">
-                                    <div className="flex items-center gap-4 mb-12">
-                                        <div className="p-2 bg-zinc-100 dark:bg-zinc-800 rounded-xl">
-                                            <BookOpen className="w-6 h-6 text-zinc-600 dark:text-zinc-400" />
-                                        </div>
-                                        <h2 className="text-3xl font-bold text-zinc-800 dark:text-zinc-100">
-                                            Education
-                                        </h2>
-                                    </div>
-                                    <Timeline items={EDUCATION_DATA} />
-                                </section>
-
-                                {/* Certificates, Achievements, Languages Grid */}
-                                <div id="certifications" className="scroll-mt-32 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 pb-12">
-                                    {/* Certificates Column */}
-                                    <section>
-                                        <div className="flex items-center gap-4 mb-6">
-                                            <div className="p-2 bg-teal-500/10 rounded-lg">
-                                                <Award className="w-6 h-6 text-teal-500" />
-                                            </div>
-                                            <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100">
-                                                Certificates
-                                            </h2>
-                                        </div>
-                                        <ul className="grid grid-cols-1 gap-4">
-                                            {CERTIFICATES_DATA.map((cert, idx) => (
-                                                <motion.li
-                                                    key={idx}
-                                                    whileHover={{ scale: 1.02, y: -2 }}
-                                                    className="group relative flex flex-col gap-2 bg-white dark:bg-zinc-800/60 p-5 rounded-2xl border border-zinc-200 dark:border-zinc-700/50 shadow-sm hover:shadow-md transition-all"
-                                                >
-                                                    <div className="flex justify-between items-start">
-                                                        <span className="font-semibold text-zinc-800 dark:text-zinc-100 pr-4">{cert.title}</span>
-                                                        {cert.link !== '#' && (
-                                                            <a
-                                                                href={cert.link}
-                                                                target="_blank"
-                                                                rel="noopener noreferrer"
-                                                                className="text-zinc-400 hover:text-teal-500 transition-colors"
-                                                            >
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>
-                                                            </a>
-                                                        )}
-                                                    </div>
-                                                    <div className="h-1 w-12 bg-teal-500/30 rounded-full group-hover:w-full group-hover:bg-teal-500 transition-all duration-500" />
-                                                </motion.li>
-                                            ))}
-                                        </ul>
-                                    </section>
-
-                                    {/* Achievements & Languages Column */}
-                                    <div className="space-y-12">
-                                        {/* Achievements */}
-                                        <section>
-                                            <div className="flex items-center gap-4 mb-6">
-                                                <div className="p-2 bg-amber-500/10 rounded-lg">
-                                                    <Award className="w-6 h-6 text-amber-500" />
-                                                </div>
-                                                <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100">
-                                                    Achievements
-                                                </h2>
-                                            </div>
-                                            <ul className="space-y-4">
-                                                {ACHIEVEMENTS_DATA.map((item, idx) => (
-                                                    <motion.li
-                                                        key={idx}
-                                                        initial={{ opacity: 0, x: 20 }}
-                                                        whileInView={{ opacity: 1, x: 0 }}
-                                                        transition={{ delay: idx * 0.1 }}
-                                                        className="relative pl-6 before:absolute before:left-0 before:top-2 before:h-2 before:w-2 before:rounded-full before:bg-amber-500"
-                                                    >
-                                                        <h3 className="font-semibold text-zinc-800 dark:text-zinc-200">{item.title}</h3>
-                                                        <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1 leading-relaxed">{item.description}</p>
-                                                    </motion.li>
-                                                ))}
-                                            </ul>
-                                        </section>
-
-                                        {/* Languages */}
-                                        <section>
-                                            <div className="flex items-center gap-4 mb-6">
-                                                <div className="p-2 bg-indigo-500/10 rounded-lg">
-                                                    <Globe className="w-6 h-6 text-indigo-500" />
-                                                </div>
-                                                <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100">
-                                                    Languages
-                                                </h2>
-                                            </div>
-                                            <ul className="space-y-6">
-                                                {[
-                                                    { ...LANGUAGES_DATA[0], percent: 85, color: 'bg-indigo-500' }, // English
-                                                    { ...LANGUAGES_DATA[1], percent: 40, color: 'bg-pink-500' },   // Japanese
-                                                    { ...LANGUAGES_DATA[2], percent: 100, color: 'bg-emerald-500' } // Urdu
-                                                ].map((lang, idx) => (
-                                                    <li key={idx}>
-                                                        <div className="flex justify-between items-end mb-2">
-                                                            <span className="font-medium text-zinc-800 dark:text-zinc-200">{lang.language}</span>
-                                                            <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">{lang.proficiency}</span>
-                                                        </div>
-                                                        <div className="h-2 w-full bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
-                                                            <motion.div
-                                                                initial={{ width: 0 }}
-                                                                whileInView={{ width: `${lang.percent}%` }}
-                                                                transition={{ duration: 1, ease: "easeOut" }}
-                                                                className={`h-full ${lang.color} rounded-full`}
-                                                            />
-                                                        </div>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </section>
-                                    </div>
+                                    </Button>
                                 </div>
                             </div>
+
+                            {activeInteractiveTab === 'english' ? (
+                                <motion.div
+                                    key="english-interactive"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ duration: 0.3 }}
+                                    className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16"
+                                >
+                                    {/* Sticky Navigation Sidebar */}
+                                    <aside className="hidden lg:block lg:col-span-3">
+                                        <nav className="sticky top-24 space-y-2">
+                                            <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-4 pl-3">Contents</p>
+                                            {[
+                                                { id: 'summary', label: 'Summary', icon: FileText },
+                                                { id: 'skills', label: 'Skills', icon: Layers },
+                                                { id: 'experience', label: 'Experience', icon: Briefcase },
+                                                { id: 'projects', label: 'Projects', icon: Server },
+                                                { id: 'education', label: 'Education', icon: BookOpen },
+                                                { id: 'certifications', label: 'Certifications', icon: Award },
+                                            ].map((item) => (
+                                                <a
+                                                    key={item.id}
+                                                    href={`#${item.id}`}
+                                                    className="group flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-teal-500 dark:hover:text-teal-400 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 rounded-lg transition-all"
+                                                >
+                                                    <item.icon className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity" />
+                                                    {item.label}
+                                                </a>
+                                            ))}
+                                        </nav>
+                                    </aside>
+
+                                    {/* Main Content Area */}
+                                    <div className="lg:col-span-9 space-y-24">
+                                        {/* Summary Section */}
+                                        <section id="summary" className="scroll-mt-32">
+                                            <div className="relative bg-gradient-to-br from-teal-500/5 via-zinc-50 to-white dark:from-teal-500/10 dark:via-zinc-900/50 dark:to-zinc-900 p-8 rounded-3xl border border-teal-100 dark:border-teal-500/20 shadow-sm">
+                                                <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100 mb-6 flex items-center gap-3">
+                                                    <div className="p-2 bg-teal-500 rounded-xl text-white shadow-lg shadow-teal-500/20">
+                                                        <FileText className="w-5 h-5" />
+                                                    </div>
+                                                    Professional Summary
+                                                </h2>
+                                                <p className="text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed font-light">
+                                                    {SUMMARY}
+                                                </p>
+                                            </div>
+                                        </section>
+
+                                        {/* Skills Section */}
+                                        <section id="skills" className="scroll-mt-32">
+                                            <div className="flex items-center gap-4 mb-8">
+                                                <div className="h-px bg-zinc-200 dark:bg-zinc-800 flex-1" />
+                                                <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100 flex items-center gap-2">
+                                                    <span className="text-teal-500">#</span> Technical Skills
+                                                </h2>
+                                                <div className="h-px bg-zinc-200 dark:bg-zinc-800 flex-1" />
+                                            </div>
+                                            <div className="bg-zinc-50 dark:bg-zinc-900/50 rounded-3xl p-6 border border-zinc-100 dark:border-zinc-800/50">
+                                                <TechStack data={SKILLS_DATA} />
+                                            </div>
+                                        </section>
+
+                                        {/* Experience Section */}
+                                        <section id="experience" className="scroll-mt-32">
+                                            <div className="flex items-center gap-4 mb-12">
+                                                <div className="p-2 bg-zinc-100 dark:bg-zinc-800 rounded-xl">
+                                                    <Briefcase className="w-6 h-6 text-zinc-600 dark:text-zinc-400" />
+                                                </div>
+                                                <h2 className="text-3xl font-bold text-zinc-800 dark:text-zinc-100">
+                                                    Experience
+                                                </h2>
+                                            </div>
+                                            <Timeline items={EXPERIENCE_DATA} />
+                                        </section>
+
+                                        {/* Projects Section */}
+                                        <section id="projects" className="scroll-mt-32">
+                                            <div className="flex items-center gap-4 mb-12">
+                                                <div className="p-2 bg-zinc-100 dark:bg-zinc-800 rounded-xl">
+                                                    <Server className="w-6 h-6 text-zinc-600 dark:text-zinc-400" />
+                                                </div>
+                                                <h2 className="text-3xl font-bold text-zinc-800 dark:text-zinc-100">
+                                                    Projects
+                                                </h2>
+                                            </div>
+                                            <Timeline items={PROJECTS_DATA} />
+                                        </section>
+
+                                        {/* Education Section */}
+                                        <section id="education" className="scroll-mt-32">
+                                            <div className="flex items-center gap-4 mb-12">
+                                                <div className="p-2 bg-zinc-100 dark:bg-zinc-800 rounded-xl">
+                                                    <BookOpen className="w-6 h-6 text-zinc-600 dark:text-zinc-400" />
+                                                </div>
+                                                <h2 className="text-3xl font-bold text-zinc-800 dark:text-zinc-100">
+                                                    Education
+                                                </h2>
+                                            </div>
+                                            <Timeline items={EDUCATION_DATA} />
+                                        </section>
+
+                                        {/* Certificates, Achievements, Languages Grid */}
+                                        <div id="certifications" className="scroll-mt-32 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 pb-12">
+                                            {/* Certificates Column */}
+                                            <section>
+                                                <div className="flex items-center gap-4 mb-6">
+                                                    <div className="p-2 bg-teal-500/10 rounded-lg">
+                                                        <Award className="w-6 h-6 text-teal-500" />
+                                                    </div>
+                                                    <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100">
+                                                        Certificates
+                                                    </h2>
+                                                </div>
+                                                <ul className="grid grid-cols-1 gap-4">
+                                                    {CERTIFICATES_DATA.map((cert, idx) => (
+                                                        <motion.li
+                                                            key={idx}
+                                                            whileHover={{ scale: 1.02, y: -2 }}
+                                                            className="group relative flex flex-col gap-2 bg-white dark:bg-zinc-800/60 p-5 rounded-2xl border border-zinc-200 dark:border-zinc-700/50 shadow-sm hover:shadow-md transition-all"
+                                                        >
+                                                            <div className="flex justify-between items-start">
+                                                                <span className="font-semibold text-zinc-800 dark:text-zinc-100 pr-4">{cert.title}</span>
+                                                                {cert.link !== '#' && (
+                                                                    <a
+                                                                        href={cert.link}
+                                                                        target="_blank"
+                                                                        rel="noopener noreferrer"
+                                                                        className="text-zinc-400 hover:text-teal-500 transition-colors"
+                                                                    >
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>
+                                                                    </a>
+                                                                )}
+                                                            </div>
+                                                            <div className="h-1 w-12 bg-teal-500/30 rounded-full group-hover:w-full group-hover:bg-teal-500 transition-all duration-500" />
+                                                        </motion.li>
+                                                    ))}
+                                                </ul>
+                                            </section>
+
+                                            {/* Achievements & Languages Column */}
+                                            <div className="space-y-12">
+                                                {/* Achievements */}
+                                                <section>
+                                                    <div className="flex items-center gap-4 mb-6">
+                                                        <div className="p-2 bg-amber-500/10 rounded-lg">
+                                                            <Award className="w-6 h-6 text-amber-500" />
+                                                        </div>
+                                                        <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100">
+                                                            Achievements
+                                                        </h2>
+                                                    </div>
+                                                    <ul className="space-y-4">
+                                                        {ACHIEVEMENTS_DATA.map((item, idx) => (
+                                                            <motion.li
+                                                                key={idx}
+                                                                initial={{ opacity: 0, x: 20 }}
+                                                                whileInView={{ opacity: 1, x: 0 }}
+                                                                transition={{ delay: idx * 0.1 }}
+                                                                className="relative pl-6 before:absolute before:left-0 before:top-2 before:h-2 before:w-2 before:rounded-full before:bg-amber-500"
+                                                            >
+                                                                <h3 className="font-semibold text-zinc-800 dark:text-zinc-200">{item.title}</h3>
+                                                                <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1 leading-relaxed">{item.description}</p>
+                                                            </motion.li>
+                                                        ))}
+                                                    </ul>
+                                                </section>
+
+                                                {/* Languages */}
+                                                <section>
+                                                    <div className="flex items-center gap-4 mb-6">
+                                                        <div className="p-2 bg-indigo-500/10 rounded-lg">
+                                                            <Globe className="w-6 h-6 text-indigo-500" />
+                                                        </div>
+                                                        <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100">
+                                                            Languages
+                                                        </h2>
+                                                    </div>
+                                                    <ul className="space-y-6">
+                                                        {[
+                                                            { ...LANGUAGES_DATA[0], percent: 85, color: 'bg-indigo-500' }, // English
+                                                            { ...LANGUAGES_DATA[1], percent: 40, color: 'bg-pink-500' },   // Japanese
+                                                            { ...LANGUAGES_DATA[2], percent: 100, color: 'bg-emerald-500' } // Urdu
+                                                        ].map((lang, idx) => (
+                                                            <li key={idx}>
+                                                                <div className="flex justify-between items-end mb-2">
+                                                                    <span className="font-medium text-zinc-800 dark:text-zinc-200">{lang.language}</span>
+                                                                    <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">{lang.proficiency}</span>
+                                                                </div>
+                                                                <div className="h-2 w-full bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
+                                                                    <motion.div
+                                                                        initial={{ width: 0 }}
+                                                                        whileInView={{ width: `${lang.percent}%` }}
+                                                                        transition={{ duration: 1, ease: "easeOut" }}
+                                                                        className={`h-full ${lang.color} rounded-full`}
+                                                                    />
+                                                                </div>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </section>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            ) : (
+                                <motion.div
+                                    key="japanese-interactive"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ duration: 0.3 }}
+                                    className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16"
+                                >
+                                    {/* Sticky Navigation Sidebar (Japanese) */}
+                                    <aside className="hidden lg:block lg:col-span-3">
+                                        <nav className="sticky top-24 space-y-2">
+                                            <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-4 pl-3">目次 (Contents)</p>
+                                            {[
+                                                { id: 'basic-info', label: '基本情報 (Basic Info)', icon: FileText },
+                                                { id: 'history', label: '学歴・職歴 (History)', icon: Briefcase },
+                                                { id: 'licenses', label: '免許・資格 (Licenses)', icon: Award },
+                                                { id: 'pr-skills', label: 'PR・スキル (PR/Skills)', icon: Layers },
+                                            ].map((item) => (
+                                                <a
+                                                    key={item.id}
+                                                    href={`#${item.id}`}
+                                                    className="group flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-teal-500 dark:hover:text-teal-400 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 rounded-lg transition-all"
+                                                >
+                                                    <item.icon className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity" />
+                                                    {item.label}
+                                                </a>
+                                            ))}
+                                        </nav>
+                                    </aside>
+
+                                    {/* Main Content Area */}
+                                    <div className="lg:col-span-9">
+                                        <div className="flex justify-center xl:justify-start">
+                                            <div className="w-full max-w-[210mm]">
+                                                <Rirekisho data={DATA_JP} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            )}
                         </motion.div>
                     )}
 
@@ -611,9 +747,10 @@ export default function Resume() {
                             </div>
                         </motion.div>
                     )}
+
                 </AnimatePresence>
-            </div>
-        </Container>
+            </div >
+        </Container >
     )
 }
 
