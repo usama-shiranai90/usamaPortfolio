@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import logo from 'p/images/logo.png';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Github, Linkedin, Mail, FileText, Share2, Twitter, Globe, Send, Bookmark } from 'lucide-react';
+import { Github, Linkedin, Mail, FileText, Share2, Twitter, Globe, Send, Bookmark, CreditCard } from 'lucide-react';
 import { useTheme } from '@/context/ThemeContext';
 
 const socialLinks = [
@@ -14,6 +14,7 @@ const socialLinks = [
     { icon: Bookmark, href: 'https://medium.com/@syedusama78', label: 'Medium' },
     { icon: Globe, href: 'https://scholar.google.com/citations?user=n5GPnEIAAAAJ&hl=en', label: 'Scholar' },
     { icon: FileText, href: '/resume', label: 'Resume' },
+    { icon: CreditCard, href: '/meishi', label: 'Meishi' },
     { icon: Send, href: 'mailto:john@example.com', label: 'Contact' },
 ];
 
