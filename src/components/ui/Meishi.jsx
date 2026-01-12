@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { QrCode, Mail, MapPin, Phone, Globe, Smartphone } from 'lucide-react';
+import Image from 'next/image';
 import { useTheme } from '@/context/ThemeContext';
 
 export function Meishi({ data }) {
@@ -179,12 +180,14 @@ export function Meishi({ data }) {
                                         <p className="text-[8px] uppercase tracking-widest text-[#888] mb-1">Portfolio</p>
                                         <p className="text-[9px] font-bold" style={{ color: activeColor }}>{website}</p>
                                     </div>
-                                    <div className="p-1 bg-white rounded-sm border border-zinc-100">
+                                    <div className="p-1 bg-white rounded-sm border border-zinc-100 relative w-12 h-12">
                                         {/* Dynamic QR Code */}
-                                        <img
+                                        <Image
                                             src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://${website}&color=${activeColor.replace('#', '')}&bgcolor=ffffff`}
                                             alt="QR Code"
-                                            className="w-12 h-12 mix-blend-multiply opacity-90"
+                                            fill
+                                            className="mix-blend-multiply opacity-90 object-contain"
+                                            unoptimized
                                         />
                                     </div>
                                 </div>

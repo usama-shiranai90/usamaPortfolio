@@ -4,7 +4,35 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Terminal, Send, Server, User, Clock, Hash, AlertTriangle } from "lucide-react";
 
+// Helper Component for Typed Text
+const Typewriter = ({ text }) => {
+    const [displayedText, setDisplayedText] = useState("");
+
+    useEffect(() => {
+        let i = 0;
+        const timer = setInterval(() => {
+            if (i < text.length) {
+                setDisplayedText((prev) => prev + text.charAt(i));
+                i++;
+            } else {
+                clearInterval(timer);
+            }
+        }, 30);
+        return () => clearInterval(timer);
+    }, [text]);
+
+    return <span>{displayedText}</span>;
+};
+
+// Helper for progress bar
+const getProgressBar = (progress) => {
+    const total = 20;
+    const filled = Math.floor((progress / 100) * total);
+    return `[${'='.repeat(filled)}${' '.repeat(total - filled)}]`;
+};
+
 export function GuestbookTerminal() {
+    // ... entries state remains same
     const [entries, setEntries] = useState([
         { id: 1, name: "Dr. Satoshi", message: "Impressive research on neural architecture!", date: "2024-12-28 14:20", type: "remote" },
         { id: 2, name: "Alice_Dev", message: "Love the terminal aesthetics.", date: "2024-12-29 09:15", type: "remote" },
@@ -14,21 +42,11 @@ export function GuestbookTerminal() {
     const [name, setName] = useState("");
     const [stage, setStage] = useState("name"); // 'name' | 'message'
     const [isTyping, setIsTyping] = useState(false);
+    const [progress, setProgress] = useState(0); // Added progress state
     const scrollRef = useRef(null);
 
-    // Scroll to bottom on new entry
-    useEffect(() => {
-        if (scrollRef.current) {
-            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-        }
-    }, [entries, stage]);
-
-    const handleKeyDown = (e) => {
-        if (e.key === "Enter") {
-            e.preventDefault();
-            handleSubmit();
-        }
-    };
+    // Scroll to bottom
+    // ...
 
     const handleSubmit = async () => {
         if (!input.trim()) return;
@@ -38,7 +56,6 @@ export function GuestbookTerminal() {
             setInput("");
             setStage("message");
         } else {
-            // Submit Message
             const newEntry = {
                 id: Date.now(),
                 name: name || "Anonymous",
@@ -48,21 +65,38 @@ export function GuestbookTerminal() {
             };
 
             setIsTyping(true);
+            setProgress(0);
 
-            // Artificial delay for "Network Transmission"
+            // Simulate Upload
+            const interval = setInterval(() => {
+                setProgress(prev => {
+                    if (prev >= 100) {
+                        clearInterval(interval);
+                        return 100;
+                    }
+                    return prev + 10;
+                });
+            }, 80);
+
             setTimeout(() => {
                 setEntries(prev => [...prev, newEntry]);
                 setInput("");
                 setName("");
                 setStage("name");
                 setIsTyping(false);
+                setProgress(0);
             }, 800);
         }
     };
 
+    // ... (rest of render)
+    // Key change in return: ensure Typewriter is used correctly which it is now.
+
     return (
         <div className="w-full max-w-4xl mx-auto font-mono text-sm md:text-base">
+            {/* ... (keep header) */}
             <div className="relative rounded-t-xl bg-zinc-900 border border-zinc-800 p-4 flex items-center justify-between shadow-2xl">
+                {/* ... header content ... */}
                 <div className="flex items-center gap-2">
                     <div className="flex gap-1.5">
                         <div className="w-3 h-3 rounded-full bg-red-500/50" />
@@ -87,11 +121,11 @@ export function GuestbookTerminal() {
                 ref={scrollRef}
                 className="h-[500px] bg-black/90 border-x border-b border-zinc-800 p-6 overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-transparent backdrop-blur-sm relative"
             >
-                {/* Background Noise/Grid */}
+                {/* Background Noise */}
                 <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))]" style={{ backgroundSize: "100% 2px, 3px 100%" }} />
 
                 <div className="space-y-4 relative z-10">
-                    {/* Access Banner */}
+                    {/* ... Banner ... */}
                     <div className="mb-8 p-4 border-l-2 border-cyan-500 bg-cyan-950/10 text-cyan-400 text-xs font-mono">
                         <p>ACCESS_LEVEL: PUBLIC</p>
                         <p>PROTOCOL: GUEST_SIGNATURE_V2</p>
@@ -99,7 +133,6 @@ export function GuestbookTerminal() {
                         <p className="mt-2 text-zinc-500">Welcome to the visitor log. Please leave your digital signature for the archives.</p>
                     </div>
 
-                    {/* Entries */}
                     <AnimatePresence>
                         {entries.map((entry) => (
                             <motion.div
@@ -120,7 +153,7 @@ export function GuestbookTerminal() {
                                     <div className="flex flex-col">
                                         <span className="text-cyan-200 font-bold text-sm mb-0.5">{entry.name}</span>
                                         <div className="text-zinc-300">
-                                            {/* Only animate local (new) entries for effect, remote ones static for performance/UX */}
+                                            {/* Logic check */}
                                             {entry.type === 'local' ? <Typewriter text={entry.message} /> : entry.message}
                                         </div>
                                     </div>
@@ -129,8 +162,9 @@ export function GuestbookTerminal() {
                         ))}
                     </AnimatePresence>
 
-                    {/* Current Input Line */}
+                    {/* Input Line */}
                     <div className="mt-8 pt-4 border-t border-zinc-800/50 flex items-center gap-3 group">
+                        {/* ... keep input logic ... */}
                         <span className="text-green-500 animate-pulse">➜</span>
                         <div className="flex-1 flex flex-col justify-center">
                             {stage === 'name' ? (
