@@ -48,6 +48,13 @@ export function GuestbookTerminal() {
     // Scroll to bottom
     // ...
 
+    const handleKeyDown = (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            handleSubmit();
+        }
+    };
+
     const handleSubmit = async () => {
         if (!input.trim()) return;
 
