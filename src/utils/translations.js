@@ -14,7 +14,8 @@ export const translations = {
         },
         buttons: {
             resume: "DOWNLOAD_RESUME",
-            research: "VIEW_RESEARCH_DATA"
+            research: "VIEW_RESEARCH_DATA",
+            meishi: "DIGITAL_CARD"
         },
         about: {
             title: "About",
@@ -88,7 +89,8 @@ export const translations = {
         },
         buttons: {
             resume: "履歴書をダウンロード",
-            research: "研究データを見る"
+            research: "研究データを見る",
+            meishi: "デジタル名刺"
         },
         about: {
             title: "私に",

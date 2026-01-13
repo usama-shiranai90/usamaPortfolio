@@ -67,50 +67,60 @@ export function Meishi({ data }) {
 
                             {/* Header: Logo & Company */}
                             <div className="flex items-start justify-between">
-                                <div className="space-y-2">
-                                    <div className="flex items-center gap-3">
-                                        {/* Abstract Logo Mark (Kyushu U Style) */}
-                                        <div className="w-8 h-8 text-white flex items-center justify-center rounded-sm" style={{ backgroundColor: activeColor }}>
-                                            <span className="font-serif font-black text-xs tracking-tighter leading-none mt-[2px]">九州<br />大学</span>
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-4">
+                                        {/* Official Logo */}
+                                        <div className="relative w-12 h-12 shrink-0">
+                                            <Image
+                                                src="/images/kyushu.1.png"
+                                                alt="Kyushu University"
+                                                fill
+                                                className="object-contain"
+                                                unoptimized
+                                            />
                                         </div>
-                                        <div className="flex flex-col">
-                                            <h2 className="text-sm font-serif font-bold text-[#1a1a1a] tracking-widest">{companyJp}</h2>
-                                            <p className="text-[10px] font-serif text-[#4a4a4a] tracking-wider">{departmentJp}</p>
+                                        <div className="flex flex-col border-l border-zinc-200 pl-4 py-0.5">
+                                            <h2 className="text-sm font-serif font-bold text-[#1a1a1a] tracking-[0.15em] leading-tight">{companyJp}</h2>
+                                            <p className="text-[10px] font-serif text-[#555] tracking-wider leading-tight mt-0.5">{departmentJp}</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             {/* Center: Name Block */}
-                            <div className="flex-1 flex flex-col justify-center items-center mr-8">
+                            <div className="flex-1 flex flex-col justify-center items-center mt-2">
                                 <div className="text-center w-full">
-                                    <p className="text-[10px] text-[#555] tracking-[0.2em] mb-3 block font-serif">{titleJp}</p>
-                                    <div className="relative inline-block border-b pb-4 mb-2" style={{ borderColor: `${activeColor}33` }}>
-                                        <div className="flex items-baseline justify-center gap-1">
-                                            <h1 className="text-4xl font-serif font-medium text-[#111] tracking-[0.15em] whitespace-nowrap">
+                                    <p className="text-[10px] text-[#666] tracking-[0.2em] mb-4 block font-serif uppercase">{titleJp}</p>
+                                    <div className="relative inline-block pb-6">
+                                        <div className="flex items-end justify-center gap-3">
+                                            <h1 className="text-4xl font-serif font-medium text-[#1a1a1a] tracking-[0.2em] whitespace-nowrap leading-none">
                                                 {name.split(' ')[0]}
                                             </h1>
-                                            <span className="text-xl font-serif font-light text-[#333] tracking-[0.1em] ml-2">
+                                            <span className="text-2xl font-serif font-light text-[#444] tracking-[0.15em] leading-none mb-[2px]">
                                                 {name.split(' ').slice(1).join(' ')}
                                             </span>
                                         </div>
-                                        <p className="absolute -top-3 w-full text-center text-[9px] text-[#666] tracking-widest font-serif">{furigana}</p>
+                                        {/* Underline with Accent Color */}
+                                        <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-current to-transparent opacity-30" style={{ color: activeColor }} />
+                                        <p className="absolute -top-4 w-full text-center text-[9px] text-[#888] tracking-[0.15em] font-serif">{furigana}</p>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Footer: Address & Contact (Bottom Left aligned typically for minimal cards) */}
-                            <div className="flex justify-between items-end border-t border-zinc-100 pt-3">
-                                <div className="text-[9px] font-serif leading-loose text-[#444] tracking-wide">
+                            {/* Footer: Address & Contact */}
+                            <div className="flex justify-between items-end border-t border-zinc-100 pt-3 mt-auto">
+                                <div className="text-[9px] font-serif leading-loose text-[#555] tracking-wide">
                                     <p>〒{postalCode} {address}</p>
                                     <div className="flex gap-4">
-                                        <span className="flex items-center gap-1"><span style={{ color: activeColor }}>Tel</span> {phone}</span>
-                                        <span className="flex items-center gap-1"><span style={{ color: activeColor }}>E-mail</span> {email}</span>
+                                        <span className="flex items-center gap-1.5 group text-[#555]">
+                                            <Phone size={10} style={{ color: activeColor }} />
+                                            {phone}
+                                        </span>
+                                        <span className="flex items-center gap-1.5 group text-[#555]">
+                                            <Mail size={10} style={{ color: activeColor }} />
+                                            {email}
+                                        </span>
                                     </div>
-                                </div>
-                                <div className="opacity-0">
-                                    {/* Spacer */}
-                                    Logo
                                 </div>
                             </div>
                         </div>
@@ -137,21 +147,24 @@ export function Meishi({ data }) {
                             <div className="flex justify-between items-start">
                                 <div>
                                     <h3
-                                        className="text-xs font-bold uppercase tracking-[0.15em] mb-1"
+                                        className="text-sm font-bold uppercase tracking-[0.15em] mb-1 leading-none"
                                         style={{ color: activeColor }}
                                     >
                                         {company}
                                     </h3>
-                                    <p className="text-[10px] text-[#555] tracking-wide font-serif italic">
+                                    <p className="text-[10px] text-[#666] tracking-wider font-serif italic">
                                         {department}
                                     </p>
                                 </div>
-                                {/* Simple Logo Mark */}
-                                <div
-                                    className="w-6 h-6 border rounded-full flex items-center justify-center"
-                                    style={{ borderColor: activeColor, color: activeColor }}
-                                >
-                                    <span className="font-serif font-bold text-[8px]">KU</span>
+                                {/* Official Logo Small */}
+                                <div className="relative w-8 h-8 opacity-80 mix-blend-multiply">
+                                    <Image
+                                        src="/images/kyushu.1.png"
+                                        alt="KU Logo"
+                                        fill
+                                        className="object-contain"
+                                        unoptimized
+                                    />
                                 </div>
                             </div>
 
@@ -167,11 +180,16 @@ export function Meishi({ data }) {
                             {/* Footer: English Address & Links */}
                             <div className="flex justify-between items-end mt-auto">
                                 <div className="space-y-1 text-[9px] font-medium tracking-wide text-[#555] font-sans">
-                                    <p className="leading-relaxed">{addressEn}</p>
-                                    <p>819-0395 JAPAN</p>
-                                    <div className="pt-2 flex flex-col gap-0.5 opacity-80">
-                                        <p>{email}</p>
-                                        <p>{phone}</p>
+                                    <p className="leading-relaxed whitespace-pre-line">{addressEn}</p>
+                                    <div className="pt-2 flex flex-col gap-1 opacity-80">
+                                        <div className="flex items-center gap-1.5">
+                                            <Mail size={9} strokeWidth={2} />
+                                            <p>{email}</p>
+                                        </div>
+                                        <div className="flex items-center gap-1.5">
+                                            <Phone size={9} strokeWidth={2} />
+                                            <p>{phone}</p>
+                                        </div>
                                     </div>
                                 </div>
 

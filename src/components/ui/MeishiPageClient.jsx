@@ -18,12 +18,12 @@ const MEISHI_DATA = {
     department: "SocialTech Lab",
     departmentJp: "ソーシャルテックラボ",
     postalCode: "819-0395",
-    address: "福岡県福岡市西区元岡744",
-    addressEn: "744 Motooka, Nishi-ku, Fukuoka",
+    address: "福岡県福岡市西区元岡744 ウエスト2号館 648",
+    addressEn: "W2-648, Ito Campus, Kyushu University\n744 Moto’oka, Nishi-Ku, Fukuoka 819-0395\nJapan",
     building: "ウエスト2号館",
-    phone: "080-3982-1234",
-    email: "hub@one-eye-owl.res",
-    website: "one-eye-owl.res"
+    phone: "070-92##-####",
+    email: "bukhari.453@s.kyushu-u.ac.jp",
+    website: "usamabukhari.netlify.app"
 };
 
 export default function MeishiPageClient() {

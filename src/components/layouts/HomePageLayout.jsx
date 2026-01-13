@@ -15,7 +15,7 @@ import { useTheme } from '@/context/ThemeContext';
 import { translations } from '@/utils/translations';
 import { OneEyeOwl } from '@/components/ui/OneEyeOwl';
 import { ContactTerminal } from '@/components/ui/ContactTerminal';
-import { AlertTriangle, X } from 'lucide-react';
+import { AlertTriangle, X, CreditCard } from 'lucide-react';
 import avatar_1 from '/public/images/avatars/avatar_1.jpg';
 
 import { projects, publications } from '@/utils/data';
@@ -224,14 +224,18 @@ export default function HomePageLayout() {
                                     initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}
                                     className="flex flex-wrap gap-4 pt-4"
                                 >
-                                    <a href="/resume" className="group relative px-8 py-3 bg-cyan-accent text-theme-bg font-bold font-body text-sm overflow-hidden">
+                                    <Link href="/resume" className="group relative px-8 py-3 bg-cyan-accent text-theme-bg font-bold font-body text-sm overflow-hidden">
                                         <div className="absolute inset-0 bg-theme-text translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                                         <span className="relative group-hover:text-theme-bg transition-colors">{t.buttons.resume}</span>
-                                    </a>
-                                    <a href="/research" className="group px-8 py-3 border border-theme-text/20 text-theme-text font-bold font-body text-sm hover:border-cyan-accent transition-colors flex items-center gap-2">
+                                    </Link>
+                                    <Link href="/research" className="group px-8 py-3 border border-theme-text/20 text-theme-text font-bold font-body text-sm hover:border-cyan-accent transition-colors flex items-center gap-2">
                                         <span>{t.buttons.research}</span>
                                         <span className="group-hover:translate-x-1 transition-transform">→</span>
-                                    </a>
+                                    </Link>
+                                    <Link href="/meishi" className="group px-8 py-3 border border-theme-text/20 text-theme-text font-bold font-body text-sm hover:border-cyan-accent transition-colors flex items-center gap-2">
+                                        <span>{t.buttons.meishi}</span>
+                                        <CreditCard size={16} className="group-hover:text-cyan-accent transition-colors" />
+                                    </Link>
                                 </motion.div>
                             </motion.div>
                         </section>
