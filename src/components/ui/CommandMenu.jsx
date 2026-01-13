@@ -6,7 +6,8 @@ import { Command } from "cmdk";
 import { motion, AnimatePresence } from "framer-motion";
 import {
     Search, FileText, Home, Monitor, Moon, Sun, Laptop,
-    Github, Code, FlaskConical, Command as CommandIcon
+    Github, Code, FlaskConical, Command as CommandIcon,
+    CreditCard, Mail, Printer, Globe, Twitter, Linkedin
 } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
 import { projects, publications } from "@/utils/data";
@@ -99,7 +100,16 @@ export function CommandMenu() {
                                         /home
                                     </CommandItem>
                                     <CommandItem icon={FileText} onSelect={() => runCommand(() => router.push("/resume"))}>
-                                        /resume
+                                        /resume <span className="opacity-50 ml-2 text-[10px] lowercase">(rirekisho)</span>
+                                    </CommandItem>
+                                    <CommandItem icon={FileText} onSelect={() => runCommand(() => router.push("/keirekisho"))}>
+                                        /keirekisho <span className="opacity-50 ml-2 text-[10px] lowercase">(dossier)</span>
+                                    </CommandItem>
+                                    <CommandItem icon={CreditCard} onSelect={() => runCommand(() => router.push("/meishi"))}>
+                                        /meishi <span className="opacity-50 ml-2 text-[10px] lowercase">(card)</span>
+                                    </CommandItem>
+                                    <CommandItem icon={Monitor} onSelect={() => runCommand(() => router.push("/guestbook"))}>
+                                        /guestbook <span className="opacity-50 ml-2 text-[10px] lowercase">(log)</span>
                                     </CommandItem>
                                     <CommandItem icon={FlaskConical} onSelect={() => runCommand(() => router.push("/#research"))}>
                                         /research
@@ -107,33 +117,33 @@ export function CommandMenu() {
                                     <CommandItem icon={Code} onSelect={() => runCommand(() => router.push("/#projects"))}>
                                         /projects
                                     </CommandItem>
-                                    <CommandItem icon={Monitor} onSelect={() => runCommand(() => router.push("/guestbook"))}>
-                                        /guestbook
+                                </Command.Group>
+
+                                <Command.Group heading="QUICK ACTIONS" className="text-[10px] text-zinc-400 dark:text-zinc-500 font-mono uppercase tracking-widest mb-2 px-2 mt-2">
+                                    <CommandItem icon={Mail} onSelect={() => runCommand(() => {
+                                        navigator.clipboard.writeText("bukhari.453@s.kyushu-u.ac.jp");
+                                        // Ideally show a toast here, but simple alert or silent copy is fine for now
+                                    })}>
+                                        copy_email()
+                                    </CommandItem>
+                                    <CommandItem icon={Printer} onSelect={() => runCommand(() => window.print())}>
+                                        print_page()
                                     </CommandItem>
                                 </Command.Group>
 
-                                <Command.Group heading="PROJECTS" className="text-[10px] text-zinc-400 dark:text-zinc-500 font-mono uppercase tracking-widest mb-2 px-2 mt-2">
-                                    {projects.map((project) => (
-                                        <CommandItem
-                                            key={project.title}
-                                            icon={Code}
-                                            onSelect={() => runCommand(() => router.push("/#projects"))}
-                                        >
-                                            {project.title}
-                                        </CommandItem>
-                                    ))}
-                                </Command.Group>
-
-                                <Command.Group heading="PUBLICATIONS" className="text-[10px] text-zinc-400 dark:text-zinc-500 font-mono uppercase tracking-widest mb-2 px-2 mt-2">
-                                    {publications.map((pub) => (
-                                        <CommandItem
-                                            key={pub.title}
-                                            icon={FlaskConical}
-                                            onSelect={() => runCommand(() => router.push("/#research"))}
-                                        >
-                                            <span className="truncate">{pub.title}</span>
-                                        </CommandItem>
-                                    ))}
+                                <Command.Group heading="CONNECT" className="text-[10px] text-zinc-400 dark:text-zinc-500 font-mono uppercase tracking-widest mb-2 px-2 mt-2">
+                                    <CommandItem icon={Github} onSelect={() => runCommand(() => window.open('https://github.com/usama-shiranai90', '_blank'))}>
+                                        github
+                                    </CommandItem>
+                                    <CommandItem icon={Linkedin} onSelect={() => runCommand(() => window.open('https://www.linkedin.com/in/syed-usama-bukhari-0a6373175', '_blank'))}>
+                                        linkedin
+                                    </CommandItem>
+                                    <CommandItem icon={Globe} onSelect={() => runCommand(() => window.open('https://scholar.google.com/citations?user=n5GPnEIAAAAJ&hl=en', '_blank'))}>
+                                        google_scholar
+                                    </CommandItem>
+                                    <CommandItem icon={Twitter} onSelect={() => runCommand(() => window.open('https://twitter.com/_oneeyeowl', '_blank'))}>
+                                        twitter <span className="opacity-50 ml-2 text-[10px] lowercase">(@_oneeyeowl)</span>
+                                    </CommandItem>
                                 </Command.Group>
 
                                 <Command.Group heading="SYSTEM THEME" className="text-[10px] text-zinc-400 dark:text-zinc-500 font-mono uppercase tracking-widest mb-2 px-2 mt-2">

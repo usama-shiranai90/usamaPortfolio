@@ -118,9 +118,12 @@ END:VCARD`;
                 </div>
 
                 {/* Main Stage: The Card */}
-                <div className="w-full flex justify-center mb-8 md:mb-16 perspective-container relative px-4">
-                    {/* Capture Target */}
-                    <div id="meishi-container" className="p-4 rounded-xl">
+                <div className="w-full flex justify-center mb-8 md:mb-16 relative px-4">
+                    {/* Capture Target with constrained layout bounds to prevent 'ghost' overflow from scaling */}
+                    <div
+                        id="meishi-container"
+                        className="relative flex items-center justify-center w-[340px] h-[220px] sm:w-[500px] sm:h-[320px] md:w-[600px] md:h-[400px] lg:w-auto lg:h-auto p-4 rounded-xl"
+                    >
                         <div className="scale-[0.55] sm:scale-[0.7] md:scale-[0.85] lg:scale-100 transition-transform duration-500 hover:scale-[0.57] sm:hover:scale-[0.72] md:hover:scale-[0.87] lg:hover:scale-[1.02] origin-center">
                             {/* Bind to Global Accent */}
                             <Meishi data={{ ...MEISHI_DATA, color: accent.value }} />
@@ -130,7 +133,7 @@ END:VCARD`;
                     {/* Floating Action for Capture (Mobile optimized position) */}
                     <button
                         onClick={handleDownloadImage}
-                        className="absolute right-4 top-4 lg:right-20 lg:top-10 p-3 bg-[var(--theme-card)] text-[var(--theme-text)] rounded-full shadow-lg hover:scale-110 transition-transform border border-zinc-100 dark:border-zinc-700 tooltip-trigger z-20"
+                        className="absolute right-4 top-0 lg:right-20 lg:top-10 p-3 bg-[var(--theme-card)] text-[var(--theme-text)] rounded-full shadow-lg hover:scale-110 transition-transform border border-zinc-100 dark:border-zinc-700 tooltip-trigger z-20"
                         title="Download as Image"
                     >
                         <Camera size={20} />
@@ -138,10 +141,10 @@ END:VCARD`;
                 </div>
 
                 {/* Controls & Actions */}
-                <div className="w-full max-w-md mx-auto grid gap-4 relative z-20">
+                <div className="w-full max-w-[90vw] md:max-w-md mx-auto grid gap-3 md:gap-4 relative z-20">
                     <button
                         onClick={generateVCard}
-                        className="w-full group relative flex items-center justify-center gap-4 py-4 bg-[var(--theme-text)] text-[var(--theme-bg)] rounded-sm shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transition-all duration-300 overflow-hidden"
+                        className="w-full group relative flex items-center justify-center gap-4 py-3 md:py-4 bg-[var(--theme-text)] text-[var(--theme-bg)] rounded-sm shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transition-all duration-300 overflow-hidden"
                     >
                         <div
                             className="absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300"
@@ -151,29 +154,29 @@ END:VCARD`;
                         <span className="relative z-10 text-xs font-bold tracking-[0.2em] uppercase">Save to Contacts</span>
                     </button>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-3 md:gap-4">
                         <button
                             onClick={handleCopyEmail}
-                            className="flex items-center justify-center gap-3 py-3 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-sm hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors group"
+                            className="flex items-center justify-center gap-2 md:gap-3 py-3 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-sm hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors group"
                         >
                             {copied ? <Check size={16} className="text-green-600" /> : <Copy size={16} className="text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-colors" />}
-                            <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-zinc-600 dark:text-zinc-300">
+                            <span className="text-[9px] md:text-[10px] font-bold tracking-[0.1em] md:tracking-[0.15em] uppercase text-zinc-600 dark:text-zinc-300 whitespace-nowrap">
                                 {copied ? "Copied" : "Copy Email"}
                             </span>
                         </button>
                         <button
                             onClick={handleShare}
-                            className="flex items-center justify-center gap-3 py-3 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-sm hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors group"
+                            className="flex items-center justify-center gap-2 md:gap-3 py-3 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-sm hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors group"
                         >
                             <Share2 size={16} className="text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-colors" />
-                            <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-zinc-600 dark:text-zinc-300">
+                            <span className="text-[9px] md:text-[10px] font-bold tracking-[0.1em] md:tracking-[0.15em] uppercase text-zinc-600 dark:text-zinc-300">
                                 Share
                             </span>
                         </button>
                     </div>
 
-                    <div className="mt-8 text-center">
-                        <p className="text-[10px] text-zinc-400 dark:text-zinc-600 tracking-widest uppercase">
+                    <div className="mt-4 md:mt-8 text-center">
+                        <p className="text-[9px] md:text-[10px] text-zinc-400 dark:text-zinc-600 tracking-widest uppercase">
                             Kyushu University &bull; Fukuoka, Japan
                         </p>
                     </div>
@@ -182,8 +185,8 @@ END:VCARD`;
                 {/* --- Japanese Cultural Elements --- */}
 
                 {/* 1. Vertical Philosophy Section (Genkou Youshi / Manuscript Style) */}
-                <div className="xl:absolute xl:top-1/2 xl:-translate-y-1/2 xl:left-16 z-10 my-16 xl:my-0 w-full xl:w-auto flex justify-center xl:block">
-                    <div className="relative p-6 bg-[#fffdf5] text-zinc-800 shadow-xl border border-zinc-200 dark:border-zinc-700/50 rounded-sm">
+                <div className="flex justify-center xl:block xl:absolute xl:top-1/2 xl:-translate-y-1/2 xl:left-16 z-10 mt-24 mb-16 xl:my-0 w-full xl:w-auto">
+                    <div className="relative p-6 bg-[#fffdf5] text-zinc-800 shadow-xl border border-zinc-200 dark:border-zinc-700/50 rounded-sm max-w-[90vw] xl:max-w-none mx-auto xl:mx-0">
 
                         {/* Genkou Youshi Grid Background */}
                         <div className="absolute inset-0 z-0 pointer-events-none opacity-20"
@@ -196,12 +199,12 @@ END:VCARD`;
                             }}
                         />
 
-                        <div className="relative z-10 flex xl:flex-row flex-col gap-8 items-center xl:[writing-mode:vertical-rl]">
-                            <div className="space-y-4 font-serif">
-                                <h2 className="text-2xl font-bold tracking-[0.3em] leading-loose text-center xl:text-right border-b xl:border-b-0 xl:border-l border-zinc-300 pb-4 xl:pb-0 xl:pl-4">
+                        <div className="relative z-10 flex flex-col xl:flex-row gap-8 items-center xl:[writing-mode:vertical-rl]">
+                            <div className="space-y-4 font-serif flex flex-col items-center xl:block">
+                                <h2 className="text-xl md:text-2xl font-bold tracking-[0.3em] leading-loose text-center xl:text-right border-b xl:border-b-0 xl:border-l border-zinc-300 pb-4 xl:pb-0 xl:pl-4 w-full xl:w-auto">
                                     研究理念
                                 </h2>
-                                <p className="text-lg font-medium tracking-[0.25em] leading-[3rem] whitespace-nowrap">
+                                <p className="text-base md:text-lg font-medium tracking-[0.25em] leading-[2rem] md:leading-[3rem] whitespace-normal xl:whitespace-nowrap text-center xl:text-left">
                                     AIと人間性の<br className="xl:hidden" />交差点を探求する
                                 </p>
                             </div>
@@ -219,7 +222,7 @@ END:VCARD`;
                 </div>
 
                 {/* 2. Omikuji Widget */}
-                <div className="mt-24 w-full flex justify-center">
+                <div className="mt-12 xl:mt-24 w-full flex justify-center pb-20">
                     <div className="max-w-md w-full">
                         <Omikuji />
                     </div>
