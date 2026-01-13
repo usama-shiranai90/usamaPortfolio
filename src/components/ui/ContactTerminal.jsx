@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Terminal, Loader2, CheckCircle, AlertCircle, Copy, Mail, MapPin } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
+import { Hanko } from "./Hanko";
 
 const TerminalLine = ({ text, delay = 0, type = "info", accent }) => (
     <motion.div
@@ -182,7 +183,30 @@ export function ContactTerminal({ t }) {
                     </div>
                     {/* Right Column: Interactive Form */}
                     <div className="p-6 md:p-10 flex flex-col justify-center relative bg-gradient-to-b from-zinc-900/10 to-transparent">
-                        <form onSubmit={handleSubmit} className="space-y-6">
+                        <form onSubmit={handleSubmit} className="space-y-6 relative">
+                            {/* Success Stamp Overlay */}
+                            <AnimatePresence>
+                                {status === 'success' && (
+                                    <motion.div
+                                        initial={{ opacity: 0, scale: 2, rotate: -20 }}
+                                        animate={{ opacity: 1, scale: 1, rotate: -15 }}
+                                        exit={{ opacity: 0 }}
+                                        className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none bg-zinc-900/5 backdrop-blur-[1px]"
+                                    >
+                                        <div className="relative">
+                                            <Hanko text="受領" color="#d00" className="text-[120px] md:text-[160px] opacity-90 mix-blend-multiply dark:mix-blend-normal" />
+                                            <motion.span
+                                                initial={{ opacity: 0, y: 10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                transition={{ delay: 0.5 }}
+                                                className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-red-600 font-mono text-xs tracking-widest uppercase font-bold bg-white/50 px-2 py-1 rounded"
+                                            >
+                                                RECEIVED
+                                            </motion.span>
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
 
                             <div className="space-y-4">
                                 <FormInput

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { QrCode, Mail, MapPin, Phone, Globe, Smartphone } from 'lucide-react';
 import Image from 'next/image';
 import { useTheme } from '@/context/ThemeContext';
+import { Hanko } from './Hanko';
 
 export function Meishi({ data }) {
     const [isFlipped, setIsFlipped] = useState(false);
@@ -99,6 +100,10 @@ export function Meishi({ data }) {
                                             <span className="text-2xl font-serif font-light text-[#444] tracking-[0.15em] leading-none mb-[2px]">
                                                 {name.split(' ').slice(1).join(' ')}
                                             </span>
+                                            {/* Name Seal (Hanko) */}
+                                            <div className="absolute -right-12 top-0 bottom-0 flex items-center">
+                                                <Hanko text="ウサマ" className="text-4xl text-[#d00] opacity-80 mix-blend-multiply" />
+                                            </div>
                                         </div>
                                         {/* Underline with Accent Color */}
                                         <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-current to-transparent opacity-30" style={{ color: activeColor }} />

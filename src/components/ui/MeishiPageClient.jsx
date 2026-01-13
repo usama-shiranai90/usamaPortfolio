@@ -6,6 +6,7 @@ import { Meishi } from '@/components/ui/Meishi';
 import { useTheme } from '@/context/ThemeContext';
 import { toPng } from 'html-to-image';
 import { Download, Share2, Copy, Check, Camera } from 'lucide-react';
+import { Omikuji } from '@/components/ui/Omikuji';
 
 // Data for the Meishi
 const MEISHI_DATA = {
@@ -117,19 +118,19 @@ END:VCARD`;
                 </div>
 
                 {/* Main Stage: The Card */}
-                <div className="w-full flex justify-center mb-16 perspective-container relative">
+                <div className="w-full flex justify-center mb-8 md:mb-16 perspective-container relative px-4">
                     {/* Capture Target */}
                     <div id="meishi-container" className="p-4 rounded-xl">
-                        <div className="scale-[0.85] sm:scale-100 transition-transform duration-500 hover:scale-[1.02]">
+                        <div className="scale-[0.55] sm:scale-[0.7] md:scale-[0.85] lg:scale-100 transition-transform duration-500 hover:scale-[0.57] sm:hover:scale-[0.72] md:hover:scale-[0.87] lg:hover:scale-[1.02] origin-center">
                             {/* Bind to Global Accent */}
                             <Meishi data={{ ...MEISHI_DATA, color: accent.value }} />
                         </div>
                     </div>
 
-                    {/* Floating Action for Capture */}
+                    {/* Floating Action for Capture (Mobile optimized position) */}
                     <button
                         onClick={handleDownloadImage}
-                        className="absolute right-0 top-0 lg:right-20 lg:top-10 p-3 bg-[var(--theme-card)] text-[var(--theme-text)] rounded-full shadow-lg hover:scale-110 transition-transform border border-zinc-100 dark:border-zinc-700 tooltip-trigger"
+                        className="absolute right-4 top-4 lg:right-20 lg:top-10 p-3 bg-[var(--theme-card)] text-[var(--theme-text)] rounded-full shadow-lg hover:scale-110 transition-transform border border-zinc-100 dark:border-zinc-700 tooltip-trigger z-20"
                         title="Download as Image"
                     >
                         <Camera size={20} />
@@ -137,7 +138,7 @@ END:VCARD`;
                 </div>
 
                 {/* Controls & Actions */}
-                <div className="w-full max-w-md mx-auto grid gap-4 relative">
+                <div className="w-full max-w-md mx-auto grid gap-4 relative z-20">
                     <button
                         onClick={generateVCard}
                         className="w-full group relative flex items-center justify-center gap-4 py-4 bg-[var(--theme-text)] text-[var(--theme-bg)] rounded-sm shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transition-all duration-300 overflow-hidden"
@@ -175,6 +176,52 @@ END:VCARD`;
                         <p className="text-[10px] text-zinc-400 dark:text-zinc-600 tracking-widest uppercase">
                             Kyushu University &bull; Fukuoka, Japan
                         </p>
+                    </div>
+                </div>
+
+                {/* --- Japanese Cultural Elements --- */}
+
+                {/* 1. Vertical Philosophy Section (Genkou Youshi / Manuscript Style) */}
+                <div className="xl:absolute xl:top-1/2 xl:-translate-y-1/2 xl:left-16 z-10 my-16 xl:my-0 w-full xl:w-auto flex justify-center xl:block">
+                    <div className="relative p-6 bg-[#fffdf5] text-zinc-800 shadow-xl border border-zinc-200 dark:border-zinc-700/50 rounded-sm">
+
+                        {/* Genkou Youshi Grid Background */}
+                        <div className="absolute inset-0 z-0 pointer-events-none opacity-20"
+                            style={{
+                                backgroundImage: `
+                                     linear-gradient(to right, #d4d4d4 1px, transparent 1px),
+                                     linear-gradient(to bottom, #d4d4d4 1px, transparent 1px)
+                                 `,
+                                backgroundSize: '40px 40px'
+                            }}
+                        />
+
+                        <div className="relative z-10 flex xl:flex-row flex-col gap-8 items-center xl:[writing-mode:vertical-rl]">
+                            <div className="space-y-4 font-serif">
+                                <h2 className="text-2xl font-bold tracking-[0.3em] leading-loose text-center xl:text-right border-b xl:border-b-0 xl:border-l border-zinc-300 pb-4 xl:pb-0 xl:pl-4">
+                                    研究理念
+                                </h2>
+                                <p className="text-lg font-medium tracking-[0.25em] leading-[3rem] whitespace-nowrap">
+                                    AIと人間性の<br className="xl:hidden" />交差点を探求する
+                                </p>
+                            </div>
+
+                            {/* Hanko Seal */}
+                            <div className="mt-4 xl:mt-0 opacity-90 mix-blend-multiply">
+                                <div className="border-2 border-[#d00] rounded-full p-0.5 inline-block">
+                                    <div className="border border-[#d00] rounded-full w-12 h-12 flex items-center justify-center bg-[#d00] text-[#fffdf5] font-serif font-bold text-xs shadow-sm">
+                                        研究
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* 2. Omikuji Widget */}
+                <div className="mt-24 w-full flex justify-center">
+                    <div className="max-w-md w-full">
+                        <Omikuji />
                     </div>
                 </div>
 

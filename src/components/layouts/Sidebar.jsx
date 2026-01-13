@@ -15,6 +15,7 @@ const socialLinks = [
     { icon: Globe, href: 'https://scholar.google.com/citations?user=n5GPnEIAAAAJ&hl=en', label: 'Scholar' },
     { icon: FileText, href: '/resume', label: 'Resume' },
     { icon: CreditCard, href: '/meishi', label: 'Meishi' },
+    { icon: FileText, href: '/keirekisho', label: 'Keirekisho' },
     { icon: Send, href: 'mailto:john@example.com', label: 'Contact' },
 ];
 
