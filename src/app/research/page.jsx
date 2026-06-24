@@ -7,6 +7,15 @@ import { Calendar, Tag } from 'lucide-react';
 export const metadata = {
     title: 'Research & Articles',
     description: 'Deep dives into AI, Healthcare, and Software Engineering.',
+    openGraph: {
+        title: 'Research & Articles - Usama Bukhari',
+        description: 'Deep dives into AI, Healthcare, and Software Engineering.',
+        url: 'https://usamabukhari.com/research',
+        type: 'website',
+    },
+    alternates: {
+        canonical: 'https://usamabukhari.com/research',
+    },
 };
 
 export default async function ResearchPage() {
@@ -17,10 +26,10 @@ export default async function ResearchPage() {
             <ScientificBackground />
             <Container className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <header className="mb-16 space-y-4">
-                    <h1 className="text-4xl md:text-6xl font-bold font-heading text-zinc-900 dark:text-white">
-                        Research <span className="text-cyan-500">Lab</span>
+                    <h1 className="text-4xl md:text-6xl font-bold font-heading text-theme-text">
+                        Research <span className="text-cyan-accent">Lab</span>
                     </h1>
-                    <p className="text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl font-light">
+                    <p className="text-xl text-theme-text/80 max-w-2xl font-light">
                         Technical explorations, mathematical models, and engineering journals from the intersection of AI and Healthcare.
                     </p>
                 </header>
@@ -32,7 +41,7 @@ export default async function ResearchPage() {
                             href={`/research/${post.slug}`}
                             className="group relative block h-full"
                         >
-                            <div className="absolute inset-0 bg-theme-card/50 backdrop-blur-sm border border-theme-text/10 rounded-xl transition-all duration-300 group-hover:border-cyan-accent/50 group-hover:shadow-[0_0_30px_rgba(34,211,238,0.1)] group-hover:-translate-y-1" />
+                            <div className="absolute inset-0 bg-theme-card/50 backdrop-blur-sm border border-theme-text/10 rounded-xl transition-all duration-300 group-hover:border-cyan-accent/50 group-hover:shadow-[0_0_30px_rgba(var(--theme-accent-rgb),0.1)] group-hover:-translate-y-1" />
 
                             <div className="relative p-6 h-full flex flex-col">
                                 <div className="flex flex-wrap gap-2 mb-4">

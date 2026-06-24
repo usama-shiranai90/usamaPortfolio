@@ -1,0 +1,248 @@
+%-------------------------
+% Resume in Latex
+% Author : Syed Usama Bukhari
+% License : MIT
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{geometry}
+
+% Page geometry
+\geometry{left=0.6in, top=0.6in, right=0.6in, bottom=0.6in}
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.15in}
+\addtolength{\evensidemargin}{-0.15in}
+\addtolength{\textwidth}{0.3in}
+\addtolength{\topmargin}{-0.15in}
+\addtolength{\textheight}{0.3in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large\bfseries
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small\textbf{#1} & #2 \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%-------------------------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+%----------HEADING----------
+\begin{center}
+    \textbf{\Huge \scshape Syed Usama Bukhari} \\ \vspace{5pt}
+    \small +81-80-XXXX-XXXX $|$ \href{mailto:hub@one-eye-owl.res}{\underline{hub@one-eye-owl.res}} $|$ 
+    \href{https://usamabukhari.com}{\underline{usamabukhari.com}} $|$
+    \href{https://linkedin.com/in/usama-bukhari}{\underline{linkedin.com/in/usama-bukhari}} $|$
+    \href{https://github.com/usama-shiranai90}{\underline{github.com/usama-shiranai90}} \\
+    \small Fukuoka, Japan
+\end{center}
+
+%-----------SUMMARY-----------
+\section{Summary}
+\small{
+  Software Engineer with experience building data-intensive, healthcare-oriented applications across backend, web, and data engineering stacks. I have shipped production features using Laravel, .NET, modern JavaScript frameworks, and Python, and have hands-on project experience in Java. Actively strengthening skills in the Java ecosystem (JavaSE, Vaadin, Spring Boot) through clinical and Portable Health Clinic (PHC)–related projects. Research student at Kyushu University focusing on ETL pipelines (Airflow, dbt, Snowflake), FHIR-based interoperability, and analytics for real-world clinical data. Currently researching trajectory-aware polypharmacy patients using Retrieval Augmented Generation within learning health systems (LHS), with a focus on delivering scalable, interoperable, and clinician-friendly solutions.
+}
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Kyushu University}{Fukuoka, Japan}
+      {Teaching Assistant (TA)}{Oct. 2025 -- Present}
+      \resumeItemListStart
+        \resumeItem{Supported graduate courses in Data Analytics and Assembly Language.}
+        \resumeItem{Managed Moodle LMS: uploaded materials, tracked progress, and resolved technical issues.}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Addo AI}{Singapore (Remote)}
+      {Data Engineer Intern}{Jun. 2026 -- Aug. 2026}
+      \resumeItemListStart
+        \resumeItem{Designed and optimized ETL pipelines and data processing workflows using Python and SQL.}
+        \resumeItem{Collaborated on data modeling and warehouse maintenance for analytical queries.}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Reboot Era Technologies}{Lahore, Pakistan (Remote)}
+      {Backend Developer}{Nov. 2023 -- Jan. 2025}
+      \resumeItemListStart
+        \resumeItem{Designed and developed RESTful and GraphQL APIs with JWT/OAuth2 authentication using Laravel 8 and MySQL for in-house platforms (CRM portal, analytics dashboard).}
+        \resumeItem{Implemented Redis with Laravel Horizon job queues for asynchronous tasks like bulk emails and PDF generation.}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {CareCloud}{New Jersey, USA (Remote/On-site)}
+      {Software Engineer}{Feb. 2023 -- Sep. 2023}
+      \resumeItemListStart
+        \resumeItem{Enhanced search functionality by integrating the Elastic Stack, enabling dynamic searches based on singular and multi-conditions instead of prefix matching.}
+        \resumeItem{Designed prompt engineering for GPT and Vertex AI to generate medical summaries.}
+        \resumeItem{Containerized services using Docker and assisted in Helm-based Kubernetes deployment pipelines for healthcare modules.}
+        \resumeItem{Modernized back-end operations by optimizing user interfaces with .NET and Angular Material.}
+        \resumeItem{Collaborated cross-functionally using Git and CI/CD tools with DevOps team to ensure smooth workflows and maintain high code quality.}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Immentia}{Islamabad, Pakistan}
+      {Software Developer}{Aug. 2022 -- Jan. 2023}
+      \resumeItemListStart
+        \resumeItem{Developed matchmaking features, user profiling, and real-time communication for an Islamic matchmaking app.}
+        \resumeItem{Built a Content Management System (CMS) with multimedia support and search engine optimization (SEO).}
+        \resumeItem{Performed sentiment analysis on customer feedback using Python to enhance service quality.}
+        \resumeItem{Used Git for version control in a team setting to manage collaborative development and ensure code integrity.}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Kyushu University}{Fukuoka, Japan}
+      {Research Student}{Apr. 2024 -- Present}
+      \resumeItemListStart
+        \resumeItem{Conducting research on Retrieval Augmented Generation for medical prescriptions and learning health systems.}
+        \resumeItem{Collaborating with Kyushu University Hospital to improve health data analysis and decision-making tools.}
+        \resumeItem{Developing advanced courses in machine learning, natural language processing, and healthcare informatics.}
+      \resumeItemListEnd
+    \resumeSubheading
+      {Foundation University}{Islamabad, Pakistan}
+      {Bachelor of Computer Software Engineering}{Aug. 2018 -- Aug. 2022}
+      \resumeItemListStart
+        \resumeItem{Graduated with a 3.5+ CGPA; coursework included Software Engineering, Database Management, and Software Architecture.}
+        \resumeItem{Completed a capstone project on a healthcare management system focused on user-friendly interfaces and robust back-end architecture.}
+        \resumeItem{Participated in software development competitions, earning recognition for innovative solutions.}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+
+%-----------PROJECTS-----------
+\section{Projects}
+  \resumeSubHeadingListStart
+
+    \resumeProjectHeading
+      {\textbf{Portable Health Clinic (PHC) 2.0} $|$ \emph{React, Tailwind, Django, PostgreSQL, FHIR, JavaEE}}{}
+      \resumeItemListStart
+        \resumeItem{Designed and implemented a scalable back-end using Django and PostgreSQL for secure medical record management.}
+        \resumeItem{Modernized UI/UX with React and Tailwind, enhancing clinician workflow and usability.}
+        \resumeItem{Developed a dynamic prescription generation module integrated with live medication databases for dosage accuracy.}
+        \resumeItem{Integrated ICD-10/11 code sets using a NoSQL search engine for efficient disease code retrieval.}
+        \resumeItem{Implemented Zoom API for doctor-patient teleconsultations with real-time scheduling.}
+      \resumeItemListEnd
+
+    \resumeProjectHeading
+      {\textbf{PHC FHIR Adapter} $|$ \emph{Java 17, Spring Boot, JPA, PostgreSQL, Swagger, JUnit}}{}
+      \resumeItemListStart
+        \resumeItem{Modeled core PHC tables using Spring Data JPA and designed REST endpoints for FHIR Patient and Observation resources.}
+        \resumeItem{Implemented Java mapping logic to transform legacy records into standardized FHIR R4-shaped JSON.}
+        \resumeItem{Added Swagger documentation and unit tests (JUnit + MockMvc) to demonstrate clean API contracts.}
+      \resumeItemListEnd
+
+    \resumeProjectHeading
+      {\textbf{TalkEHR} $|$ \emph{.NET, SQL Server, Angular, REST APIs, TypeScript}}{}
+      \resumeItemListStart
+        \resumeItem{Implemented advanced query optimization strategies and indexing techniques to improve SQL performance and reduce latency.}
+        \resumeItem{Migrated legacy AngularJS components to current versions to boost maintainability and performance.}
+        \resumeItem{Performed unit testing to ensure system stability.}
+      \resumeItemListEnd
+
+    \resumeProjectHeading
+      {\textbf{LLM-Powered Medical Summary Generator} $|$ \emph{Vertex AI, Python, FastAPI, Prompt Engineering}}{}
+      \resumeItemListStart
+        \resumeItem{Developed prompt templates fine-tuned for medical language understanding and hallucination mitigation.}
+        \resumeItem{Developed a mask layer for patient privacy and HIPAA regulation in collaboration with the medical team.}
+        \resumeItem{Deployed and tested summaries on anonymized EHR data with active feedback loops from clinical staff.}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+
+%-----------TECHNICAL SKILLS-----------
+\section{Technical Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Programming Languages}{: JavaSE, JavaEE, Python, PHP, JavaScript, TypeScript} \\
+     \textbf{Frameworks}{: Spring Boot, Vaadin, Laravel, Django, FastAPI, React, Next.js, Angular} \\
+     \textbf{Technologies \& Tools}{: Docker, Kubernetes, Helm, NumPy, Pandas, Matplotlib, Elastic Stack, Git, Jira, CI/CD} \\
+     \textbf{Databases}{: MySQL, PostgreSQL, Microsoft SQL Server, Oracle, Elasticsearch, Firebase} \\
+     \textbf{Cloud \& DevOps}{: GCP (GKE, Vertex AI), AWS (EC2, S3, Lambda), GitHub Actions} \\
+     \textbf{Methodologies}{: Agile, TDD, ITIL}
+    }}
+ \end{itemize}
+
+
+%-----------CERTIFICATIONS & ACHIEVEMENTS-----------
+\section{Certifications \& Achievements}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Certifications}{: Certified Data Scientist Associate (DataCamp), Certified Data Scientist with Python} \\
+     \textbf{Achievements}{: FUSST Open House -- 3rd Position, Volunteer Thesis Contribution (University of Hull)} \\
+     \textbf{Languages}{: English (Business Proficiency, TOEIC 860), Japanese (Basic Conversational, JLPT N4), Urdu (Native)}
+    }}
+ \end{itemize}
+
+\end{document}

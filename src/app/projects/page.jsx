@@ -43,6 +43,24 @@ const projects = [
         link: { href: '#', label: 'github.com' },
         logo: logoOpenShuttle,
     },
+    {
+        name: 'Dawakhana',
+        description: 'Herbal Multi-model data annotation and collection platform.',
+        link: { href: 'https://github.com/usama-shiranai90', label: 'github.com' },
+        logo: logoPlanetaria,
+    },
+    {
+        name: 'Lab Sync',
+        description: 'Smart lab operations and research tracking platform centralizing progress reports, schedules, attendance, task assignments, and inventory. Deployed at Social Tech Lab, Kyushu University.',
+        link: { href: 'https://github.com/usama-shiranai90', label: 'github.com' },
+        logo: logoCosmos,
+    },
+    {
+        name: 'ConferenceTracker',
+        description: 'Academic conference tracker organizing draft development, feedback cycles, and deadlines.',
+        link: { href: 'https://github.com/usama-shiranai90', label: 'github.com' },
+        logo: logoOpenShuttle,
+    },
 ]
 
 function LinkIcon(props) {
@@ -62,6 +80,11 @@ export const metadata = {
     openGraph: {
         title: 'Projects - Usama Bukhari',
         description: 'Explore web applications, AI research, and open source contributions by Usama Bukhari.',
+        url: 'https://usamabukhari.com/projects',
+        type: 'website',
+    },
+    alternates: {
+        canonical: 'https://usamabukhari.com/projects',
     },
 }
 
@@ -90,7 +113,7 @@ export default function Projects() {
                             <Card.Link href={project.link.href}>{project.name}</Card.Link>
                         </h2>
                         <Card.Description>{project.description}</Card.Description>
-                        <p className="relative z-10 mt-6 flex text-sm font-medium text-zinc-400 transition group-hover:text-teal-500 dark:text-zinc-200">
+                        <p className="relative z-10 mt-6 flex text-sm font-medium text-zinc-400 transition group-hover:text-cyan-accent dark:text-zinc-200">
                             <LinkIcon className="h-6 w-6 flex-none" />
                             <span className="ml-2">{project.link.label}</span>
                         </p>

@@ -148,7 +148,7 @@ export function GuestbookTerminal() {
                 <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))]" style={{ backgroundSize: "100% 2px, 3px 100%" }} />
 
                 <div className="relative z-10 p-6">
-                    <div className="mb-8 p-4 border-l-2 border-cyan-500 bg-cyan-950/10 text-cyan-400 text-xs font-mono">
+                    <div className="mb-8 p-4 border-l-2 border-cyan-accent bg-cyan-accent/10 text-cyan-accent text-xs font-mono">
                         <p>ACCESS_LEVEL: PUBLIC</p>
                         <p>PROTOCOL: GUEST_EMA_V1</p>
                         <p>ENCRYPTION: NONE</p>
@@ -204,7 +204,7 @@ export function GuestbookTerminal() {
                         <div className="flex-1 flex flex-col justify-center">
                             {stage === 'name' ? (
                                 <div className="flex items-center gap-2">
-                                    <span className="text-cyan-500 text-xs uppercase tracking-wider whitespace-nowrap bg-cyan-950/30 px-2 py-0.5 rounded">Identity</span>
+                                    <span className="text-cyan-accent text-xs uppercase tracking-wider whitespace-nowrap bg-cyan-accent/10 px-2 py-0.5 rounded">Identity</span>
                                     <input
                                         type="text"
                                         value={input}

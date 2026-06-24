@@ -30,6 +30,11 @@ export const metadata = {
   openGraph: {
     title: 'Speaking - Usama Bukhari',
     description: 'Conference talks, podcast interviews, and public speaking events.',
+    url: 'https://usamabukhari.com/speaking',
+    type: 'website',
+  },
+  alternates: {
+    canonical: 'https://usamabukhari.com/speaking',
   },
 }
 

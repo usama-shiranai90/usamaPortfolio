@@ -33,6 +33,13 @@ const experiences = [
         tags: ["Machine Learning", "Python", "Research"]
     },
     {
+        company: "Addo AI",
+        role: "Data Engineer Intern",
+        period: "June 2026 - Aug 2026",
+        description: "Designed and optimized ETL pipelines and data processing workflows for analytical queries.",
+        tags: ["Data Engineering", "ETL", "Python", "SQL"]
+    },
+    {
         company: "Carecloud",
         role: "Software Engineer",
         period: "Feb 2023 - Sept 2023",

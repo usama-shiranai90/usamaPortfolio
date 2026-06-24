@@ -1,12 +1,12 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Container } from '@/components/ui/Container'
 import { Button } from "@/components/ui/Button"
 import { motion, AnimatePresence } from 'framer-motion'
 import clsx from 'clsx'
-import { Code, Database, Terminal, Layers, Cloud, BookOpen, Award, Globe, Briefcase, FileText, Cpu, Server, Download, Printer } from "lucide-react";
+import { Code, Database, Terminal, Layers, Cloud, BookOpen, Award, Globe, Briefcase, FileText, Cpu, Server, Download, Printer, ExternalLink } from "lucide-react";
 
 
 import { Timeline } from '@/components/ui/Timeline'
@@ -27,6 +27,7 @@ const PDF_TABS = [
 const VIEW_MODES = [
     { id: 'interactive', label: 'Interactive', icon: Layers },
     { id: 'pdf', label: 'PDF View', icon: BookOpen },
+    { id: 'latex', label: 'LaTeX / Overleaf', icon: FileText },
 ]
 
 const INTERACTIVE_TABS = [
@@ -74,6 +75,16 @@ const EXPERIENCE_DATA = [
             "Managed Moodle LMS: uploaded materials, tracked progress, and resolved technical issues."
         ],
         tags: ["Data Analytics", "Education", "LMS"]
+    },
+    {
+        period: "June 2026 - August 2026",
+        company: "Addo AI, Singapore (Remote)",
+        role: "Data Engineer Intern",
+        description: [
+            "Designed and optimized ETL pipelines and data processing workflows.",
+            "Collaborated on data modeling and warehouse maintenance for analytical queries."
+        ],
+        tags: ["Data Engineering", "ETL", "Python", "SQL"]
     },
     {
         period: "November 2023 - January 2025",
@@ -193,6 +204,36 @@ const PROJECTS_DATA = [
             "Built report-based features (daily admission reports, doctor-wise appointment summaries) with dynamic filtering."
         ],
         tags: ["Java", "Vaadin", "SQL", "MVC"]
+    },
+    {
+        period: "Research Project",
+        company: "SocialTech Lab",
+        role: "Dawakhana",
+        description: [
+            "Developed Dawakhana, a multi-modal data annotation and collection platform for herbal medicine research.",
+            "Designed labeling schemas and tools for annotating botanical images and herbal compounds."
+        ],
+        tags: ["Data Collection", "Data Annotation", "AI/ML", "Python"]
+    },
+    {
+        period: "SocialTech Lab",
+        company: "Kyushu University",
+        role: "Lab Sync",
+        description: [
+            "Centralized progress reports, schedules, attendance, task assignments, announcements, events, and inventory into a unified system.",
+            "Deployed the first version at the Social Tech Lab, Kyushu University.",
+            "Validating system with active users to plan mobile support and customizable modules for other departments."
+        ],
+        tags: ["React", "Lab Management", "Collaboration", "Productivity"]
+    },
+    {
+        period: "Personal Project",
+        company: "Academic Tools",
+        role: "ConferenceTracker",
+        description: [
+            "Created ConferenceTracker to organize academic conference submission cycles, tracking draft statuses, reviews, and submission deadlines."
+        ],
+        tags: ["Next.js", "React", "Academic tools"]
     }
 ]
 
@@ -241,6 +282,8 @@ const DATA_JP = {
         { year: "2023", month: "2", content: "CareCloud (Software Engineer) 入社" },
         { year: "2023", month: "9", content: "CareCloud 退社" },
         { year: "2023", month: "11", content: "Reboot Era Technologies (Backend Developer) 入社" },
+        { year: "2026", month: "6", content: "Addo AI (Data Engineer Intern) インターン開始" },
+        { year: "2024", month: "8", content: "Addo AI インターン修了" },
         { year: "2025", month: "1", content: "Reboot Era Technologies 退社" },
         { year: "2025", month: "10", content: "九州大学 ティーチングアシスタント (データ分析講義担当) 着任" }
     ],
@@ -260,6 +303,21 @@ export default function Resume() {
     const [activeInteractiveTab, setActiveInteractiveTab] = useState(INTERACTIVE_TABS[0].id)
     const [activePdfTab, setActivePdfTab] = useState(PDF_TABS[0].id)
     const [zoomLevel, setZoomLevel] = useState(1);
+    const [selectedTexTemplate, setSelectedTexTemplate] = useState('infrastructure')
+    const [latexCode, setLatexCode] = useState('')
+
+    useEffect(() => {
+        if (viewMode === 'latex') {
+            const fileToFetch = selectedTexTemplate === 'general' 
+                ? '/docs/UsamaBukhari-Resume.tex' 
+                : '/docs/UsamaBukhari-Infrastructure-Resume.tex';
+            
+            fetch(fileToFetch)
+                .then(res => res.text())
+                .then(text => setLatexCode(text))
+                .catch(err => console.error("Error loading LaTeX source:", err));
+        }
+    }, [viewMode, selectedTexTemplate])
 
     const currentPdfTab = PDF_TABS.find((tab) => tab.id === activePdfTab)
     const currentInteractiveDownload = PDF_TABS.find((tab) => tab.id === activeInteractiveTab)
@@ -276,18 +334,18 @@ export default function Resume() {
         <Container className="mt-16 sm:mt-32">
             {/* Page Header */}
             <header className="max-w-2xl mx-auto lg:max-w-none flex flex-col items-center text-center mb-16 print:hidden">
-                <h1 className="text-4xl font-extrabold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl lg:text-6xl">
-                    <span className="block text-teal-500 text-lg font-mono font-medium tracking-wider mb-2 uppercase">Curriculum Vitae</span>
+                <h1 className="text-4xl font-extrabold tracking-tight text-theme-text sm:text-5xl lg:text-6xl">
+                    <span className="block text-cyan-accent text-lg font-mono font-medium tracking-wider mb-2 uppercase">Curriculum Vitae</span>
                     Syed Usama Bukhari
                 </h1>
-                <p className="mt-4 text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl">
+                <p className="mt-4 text-xl text-theme-text/80 max-w-2xl">
                     Software Engineer & Data Science Researcher building scalable, healthcare-oriented solutions.
                 </p>
 
                 {/* Controls Toolbar */}
                 <div className="mt-8 flex flex-col flex-wrap items-center justify-center gap-4">
                     {/* View Mode Switcher */}
-                    <div className="flex space-x-1 rounded-full bg-zinc-100 p-1 dark:bg-zinc-800/50 shadow-sm border border-zinc-200 dark:border-zinc-700/50">
+                    <div className="flex space-x-1 rounded-full bg-theme-card p-1 shadow-sm border border-theme-text/10">
                         {VIEW_MODES.map((mode) => (
                             <button
                                 key={mode.id}
@@ -295,14 +353,14 @@ export default function Resume() {
                                 className={clsx(
                                     'relative flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-medium transition-colors focus-visible:outline-2',
                                     viewMode === mode.id
-                                        ? 'text-zinc-900 dark:text-zinc-100'
-                                        : 'text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200'
+                                        ? 'text-theme-text'
+                                        : 'text-theme-text/50 hover:text-theme-text'
                                 )}>
 
                                 {viewMode === mode.id && (
                                     <motion.div
                                         layoutId="active-view-pill"
-                                        className="absolute inset-0 bg-white shadow-sm ring-1 ring-zinc-900/5 dark:bg-zinc-700 dark:ring-white/10 rounded-full"
+                                        className="absolute inset-0 bg-theme-bg shadow-sm border border-theme-text/10 rounded-full"
                                         transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
                                     />
                                 )}
@@ -354,7 +412,7 @@ export default function Resume() {
                             className="space-y-8"
                         >
                             {/* Interactive Tab Switcher & Actions */}
-                            <div className="flex flex-col md:flex-row justify-between items-center gap-4 bg-zinc-50 dark:bg-zinc-900/50 p-2 rounded-2xl border border-zinc-100 dark:border-zinc-800/50">
+                            <div className="flex flex-col md:flex-row justify-between items-center gap-4 bg-theme-card p-2 rounded-2xl border border-theme-text/10">
                                 <div className="flex p-1">
                                     {INTERACTIVE_TABS.map((tab) => (
                                         <button
@@ -363,8 +421,8 @@ export default function Resume() {
                                             className={clsx(
                                                 'relative rounded-xl px-6 py-2 text-sm font-medium transition-all duration-200',
                                                 activeInteractiveTab === tab.id
-                                                    ? 'text-zinc-900 dark:text-zinc-100 bg-white dark:bg-zinc-700 shadow-md ring-1 ring-zinc-200 dark:ring-zinc-600'
-                                                    : 'text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200 hover:bg-zinc-200/50 dark:hover:bg-zinc-800'
+                                                    ? 'text-theme-text bg-theme-bg shadow-md border border-theme-text/10'
+                                                    : 'text-theme-text/50 hover:text-theme-text hover:bg-theme-text/5'
                                             )}
                                         >
                                             {tab.label}
@@ -376,16 +434,16 @@ export default function Resume() {
                                     <Button
                                         href={currentInteractiveDownload?.download}
                                         download={currentInteractiveDownload?.filename}
-                                        variant="outline"
-                                        className="h-9 px-4 text-xs font-medium gap-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-700"
+                                        variant="secondary"
+                                        className="h-9 px-4 text-xs font-medium gap-2"
                                     >
                                         <Download className="w-3.5 h-3.5" />
 
                                     </Button>
                                     <Button
                                         onClick={handlePrint}
-                                        variant="outline"
-                                        className="h-9 px-4 text-xs font-medium gap-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-700"
+                                        variant="secondary"
+                                        className="h-9 px-4 text-xs font-medium gap-2"
                                     >
                                         <Printer className="w-3.5 h-3.5" />
 
@@ -416,7 +474,7 @@ export default function Resume() {
                                                 <a
                                                     key={item.id}
                                                     href={`#${item.id}`}
-                                                    className="group flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-teal-500 dark:hover:text-teal-400 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 rounded-lg transition-all"
+                                                    className="group flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-cyan-accent dark:hover:text-cyan-accent hover:bg-zinc-50 dark:hover:bg-zinc-800/50 rounded-lg transition-all"
                                                 >
                                                     <item.icon className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity" />
                                                     {item.label}
@@ -429,9 +487,9 @@ export default function Resume() {
                                     <div className="lg:col-span-9 space-y-24">
                                         {/* Summary Section */}
                                         <section id="summary" className="scroll-mt-32">
-                                            <div className="relative bg-gradient-to-br from-teal-500/5 via-zinc-50 to-white dark:from-teal-500/10 dark:via-zinc-900/50 dark:to-zinc-900 p-8 rounded-3xl border border-teal-100 dark:border-teal-500/20 shadow-sm">
+                                            <div className="relative bg-gradient-to-br from-cyan-accent/5 via-zinc-50 to-white dark:from-cyan-accent/10 dark:via-zinc-900/50 dark:to-zinc-900 p-8 rounded-3xl border border-cyan-accent/10 dark:border-cyan-accent/20 shadow-sm">
                                                 <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100 mb-6 flex items-center gap-3">
-                                                    <div className="p-2 bg-teal-500 rounded-xl text-white shadow-lg shadow-teal-500/20">
+                                                    <div className="p-2 bg-cyan-accent rounded-xl text-white shadow-lg shadow-cyan-accent/20">
                                                         <FileText className="w-5 h-5" />
                                                     </div>
                                                     Professional Summary
@@ -447,7 +505,7 @@ export default function Resume() {
                                             <div className="flex items-center gap-4 mb-8">
                                                 <div className="h-px bg-zinc-200 dark:bg-zinc-800 flex-1" />
                                                 <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100 flex items-center gap-2">
-                                                    <span className="text-teal-500">#</span> Technical Skills
+                                                    <span className="text-cyan-accent">#</span> Technical Skills
                                                 </h2>
                                                 <div className="h-px bg-zinc-200 dark:bg-zinc-800 flex-1" />
                                             </div>
@@ -500,9 +558,9 @@ export default function Resume() {
                                             {/* Certificates Column */}
                                             <section>
                                                 <div className="flex items-center gap-4 mb-6">
-                                                    <div className="p-2 bg-teal-500/10 rounded-lg">
-                                                        <Award className="w-6 h-6 text-teal-500" />
-                                                    </div>
+                                                     <div className="p-2 bg-cyan-accent/10 rounded-lg">
+                                                         <Award className="w-6 h-6 text-cyan-accent" />
+                                                     </div>
                                                     <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100">
                                                         Certificates
                                                     </h2>
@@ -521,13 +579,13 @@ export default function Resume() {
                                                                         href={cert.link}
                                                                         target="_blank"
                                                                         rel="noopener noreferrer"
-                                                                        className="text-zinc-400 hover:text-teal-500 transition-colors"
+                                                                        className="text-zinc-400 hover:text-cyan-accent transition-colors"
                                                                     >
                                                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>
                                                                     </a>
                                                                 )}
                                                             </div>
-                                                            <div className="h-1 w-12 bg-teal-500/30 rounded-full group-hover:w-full group-hover:bg-teal-500 transition-all duration-500" />
+                                                            <div className="h-1 w-12 bg-cyan-accent/30 rounded-full group-hover:w-full group-hover:bg-cyan-accent transition-all duration-500" />
                                                         </motion.li>
                                                     ))}
                                                 </ul>
@@ -619,7 +677,7 @@ export default function Resume() {
                                                 <a
                                                     key={item.id}
                                                     href={`#${item.id}`}
-                                                    className="group flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-teal-500 dark:hover:text-teal-400 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 rounded-lg transition-all"
+                                                    className="group flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-cyan-accent dark:hover:text-cyan-accent hover:bg-zinc-50 dark:hover:bg-zinc-800/50 rounded-lg transition-all"
                                                 >
                                                     <item.icon className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity" />
                                                     {item.label}
@@ -648,12 +706,12 @@ export default function Resume() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95 }}
                             transition={{ duration: 0.4 }}
-                            className="bg-zinc-100 dark:bg-black/40 rounded-3xl border border-zinc-200 dark:border-zinc-800 shadow-2xl relative"
+                            className="bg-theme-card/30 rounded-3xl border border-theme-text/10 shadow-2xl relative"
                         >
                             {/* PDF Viewer Toolbar */}
-                            <div className="sticky top-0 z-30 flex flex-col md:flex-row items-center justify-between gap-4 p-4 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800 rounded-t-3xl">
+                            <div className="sticky top-0 z-30 flex flex-col md:flex-row items-center justify-between gap-4 p-4 bg-theme-card/90 backdrop-blur-md border-b border-theme-text/10 rounded-t-3xl">
                                 {/* Left: Language Selector */}
-                                <div className="flex space-x-1 rounded-lg bg-zinc-100 p-1 dark:bg-zinc-800">
+                                <div className="flex space-x-1 rounded-lg bg-theme-bg p-1 border border-theme-text/10">
                                     {PDF_TABS.map((tab) => (
                                         <button
                                             key={tab.id}
@@ -661,8 +719,8 @@ export default function Resume() {
                                             className={clsx(
                                                 'relative rounded-md px-4 py-1.5 text-xs font-medium transition-colors',
                                                 activePdfTab === tab.id
-                                                    ? 'text-zinc-900 dark:text-zinc-100 bg-white dark:bg-zinc-700 shadow-sm'
-                                                    : 'text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200'
+                                                    ? 'text-theme-text bg-theme-card border border-theme-text/10 shadow-sm'
+                                                    : 'text-theme-text/50 hover:text-theme-text'
                                             )}
                                         >
                                             {tab.label}
@@ -671,21 +729,21 @@ export default function Resume() {
                                 </div>
 
                                 {/* Center: Zoom Controls */}
-                                <div className="flex items-center gap-2 bg-zinc-100 dark:bg-zinc-800 rounded-lg p-1">
+                                <div className="flex items-center gap-2 bg-theme-bg rounded-lg p-1 border border-theme-text/10">
                                     <button
                                         onClick={handleZoomOut}
-                                        className="p-1.5 hover:bg-white dark:hover:bg-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 transition"
+                                        className="p-1.5 hover:bg-theme-card rounded-md text-theme-text/60 hover:text-theme-text transition"
                                         aria-label="Zoom Out"
                                         disabled={zoomLevel <= 0.5}
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><line x1="21" x2="16.65" y1="21" y2="16.65" /><line x1="8" x2="14" y1="11" y2="11" /></svg>
                                     </button>
-                                    <span className="text-xs font-mono font-medium text-zinc-600 dark:text-zinc-400 w-12 text-center">
+                                    <span className="text-xs font-mono font-medium text-theme-text/60 w-12 text-center">
                                         {Math.round(zoomLevel * 100)}%
                                     </span>
                                     <button
                                         onClick={handleZoomIn}
-                                        className="p-1.5 hover:bg-white dark:hover:bg-zinc-700 rounded-md text-zinc-600 dark:text-zinc-400 transition"
+                                        className="p-1.5 hover:bg-theme-card rounded-md text-theme-text/60 hover:text-theme-text transition"
                                         aria-label="Zoom In"
                                         disabled={zoomLevel >= 2.5}
                                     >
@@ -693,7 +751,7 @@ export default function Resume() {
                                     </button>
                                     <button
                                         onClick={handleResetZoom}
-                                        className="px-2 py-1.5 text-xs hover:bg-white dark:hover:bg-zinc-700 rounded-md text-zinc-500 dark:text-zinc-400 transition ml-1"
+                                        className="px-2 py-1.5 text-xs hover:bg-theme-card rounded-md text-theme-text/50 hover:text-theme-text transition ml-1"
                                     >
                                         Reset
                                     </button>
@@ -704,7 +762,7 @@ export default function Resume() {
                                     <a
                                         href={currentPdfTab.download}
                                         download={currentPdfTab.filename}
-                                        className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full text-zinc-600 dark:text-zinc-400 transition border border-transparent hover:border-zinc-200 dark:hover:border-zinc-700"
+                                        className="p-2 hover:bg-theme-card rounded-full text-theme-text/60 hover:text-theme-text transition border border-transparent hover:border-theme-text/10"
                                         title="Download PDF"
                                     >
                                         <Download className="w-4 h-4" />
@@ -713,7 +771,7 @@ export default function Resume() {
                                         href={currentPdfTab.download}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full text-zinc-600 dark:text-zinc-400 transition border border-transparent hover:border-zinc-200 dark:hover:border-zinc-700"
+                                        className="p-2 hover:bg-theme-card rounded-full text-theme-text/60 hover:text-theme-text transition border border-transparent hover:border-theme-text/10"
                                         title="Open in New Tab"
                                     >
                                         <BookOpen className="w-4 h-4" />
@@ -748,10 +806,411 @@ export default function Resume() {
                         </motion.div>
                     )}
 
+                    {viewMode === 'latex' && (
+                        <motion.div
+                            key="latex"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.95 }}
+                            transition={{ duration: 0.4 }}
+                            className="space-y-6 print:space-y-0"
+                        >
+                            {/* Toolbar (Hidden when printing) */}
+                            <div className="bg-theme-card/90 backdrop-blur-md border border-theme-text/10 rounded-2xl p-4 flex flex-col sm:flex-row justify-between items-center gap-4 print:hidden">
+                                {/* Left: Template Selector */}
+                                <div className="flex items-center gap-3">
+                                    <div className="p-2.5 bg-cyan-accent/10 text-cyan-accent rounded-xl">
+                                        <FileText className="w-5 h-5" />
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <div className="flex rounded-xl bg-theme-bg p-1 border border-theme-text/10">
+                                            {[
+                                                { id: 'infrastructure', label: 'Infrastructure CV' },
+                                                { id: 'general', label: 'Software Engineer CV' }
+                                            ].map(t => (
+                                                <button
+                                                    key={t.id}
+                                                    onClick={() => setSelectedTexTemplate(t.id)}
+                                                    className={clsx(
+                                                        'rounded-lg px-3.5 py-1.5 text-xs font-medium transition-all duration-200',
+                                                        selectedTexTemplate === t.id
+                                                            ? 'text-theme-text bg-theme-card border border-theme-text/10 shadow-sm'
+                                                            : 'text-theme-text/50 hover:text-theme-text'
+                                                    )}
+                                                >
+                                                    {t.label}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Right: Action Buttons */}
+                                <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto justify-end">
+                                    {/* Print Button */}
+                                    <button
+                                        onClick={handlePrint}
+                                        className="flex items-center justify-center h-9 px-4 rounded-xl text-xs font-semibold bg-cyan-accent hover:opacity-90 text-zinc-950 gap-2 transition-all shadow-sm"
+                                    >
+                                        <Printer className="w-3.5 h-3.5" />
+                                        <span>Print Resume</span>
+                                    </button>
+
+                                    {/* Open in Overleaf button */}
+                                    <Button
+                                        href={`https://www.overleaf.com/docs?snip_uri=${encodeURIComponent(
+                                            typeof window !== 'undefined'
+                                                ? `${window.location.origin}/docs/UsamaBukhari-${selectedTexTemplate === 'general' ? 'Resume' : 'Infrastructure-Resume'}.tex`
+                                                : `https://usamabukhari.com/docs/UsamaBukhari-${selectedTexTemplate === 'general' ? 'Resume' : 'Infrastructure-Resume'}.tex`
+                                        )}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        variant="secondary"
+                                        className="h-9 px-4 text-xs font-semibold gap-2 border-theme-text/10 hover:bg-theme-text/5 transition-all text-theme-text"
+                                    >
+                                        <ExternalLink className="w-3.5 h-3.5 text-cyan-accent" />
+                                        <span>Open in Overleaf</span>
+                                    </Button>
+
+                                    {/* Download */}
+                                    <a
+                                        href={`/docs/UsamaBukhari-${selectedTexTemplate === 'general' ? 'Resume' : 'Infrastructure-Resume'}.tex`}
+                                        download={`UsamaBukhari-${selectedTexTemplate === 'general' ? 'Resume' : 'Infrastructure-Resume'}.tex`}
+                                        className="flex items-center justify-center h-9 px-4 rounded-xl text-xs font-medium transition-all bg-theme-bg border border-theme-text/10 hover:bg-theme-card/85 text-theme-text gap-2 shadow-sm"
+                                    >
+                                        <Download className="w-3.5 h-3.5 text-theme-text/60" />
+                                        <span>Download .tex</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            {/* Rendered Resume Preview */}
+                            <div className="flex justify-center items-start print:block">
+                                <div className="w-full xl:overflow-y-auto print:overflow-visible bg-zinc-100/50 dark:bg-zinc-950/20 p-4 xl:p-8 rounded-3xl border border-theme-text/10 print:border-none print:bg-transparent print:p-0">
+                                    <LaTeXResumeRenderer latex={latexCode} />
+                                </div>
+                            </div>
+                        </motion.div>
+                    )}
+
                 </AnimatePresence>
             </div >
         </Container >
     )
+}
+
+function LaTeXResumeRenderer({ latex }) {
+    if (!latex) {
+        return (
+            <div className="flex flex-col items-center justify-center py-20 text-zinc-400 gap-4">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-accent"></div>
+                <p className="text-sm">Compiling LaTeX Document...</p>
+            </div>
+        );
+    }
+
+    let parsed;
+    try {
+        parsed = parseLaTeXDocument(latex);
+    } catch (err) {
+        return (
+            <div className="bg-red-500/10 text-red-400 p-6 rounded-xl border border-red-500/20 text-sm text-left">
+                <h4 className="font-bold mb-2">Compilation Error</h4>
+                <p>Failed to parse the LaTeX syntax. Please check for unclosed brackets or invalid tags.</p>
+                <pre className="mt-3 p-3 bg-black/30 rounded font-mono text-xs overflow-x-auto">{err.message}</pre>
+            </div>
+        );
+    }
+
+    if (parsed.error) {
+        return (
+            <div className="bg-amber-500/10 text-amber-400 p-6 rounded-xl border border-amber-500/20 text-sm text-left">
+                <h4 className="font-bold mb-2">Parser Warning</h4>
+                <p>{parsed.error}</p>
+            </div>
+        );
+    }
+
+    const { headerText, sections } = splitBody(parsed.body);
+
+    return (
+        <div className="bg-white text-zinc-900 shadow-xl border border-zinc-200/50 rounded-2xl p-6 sm:p-10 w-full max-w-[210mm] mx-auto print:shadow-none print:border-none print:p-0 print:m-0 print:max-w-none print:rounded-none min-h-[297mm] font-serif text-left antialiased">
+            {/* Render header */}
+            {renderHeader(headerText)}
+
+            {/* Render sections */}
+            <div className="space-y-5">
+                {sections.map((sec, i) => {
+                    if (!sec.content.trim()) return null;
+                    return (
+                        <div key={i} className="group">
+                            <h2 className="text-xs sm:text-sm font-bold tracking-wider uppercase text-zinc-900 border-b border-zinc-300 pb-0.5 mb-2 font-sans">
+                                {sec.title}
+                            </h2>
+                            {renderSectionContent(sec.content)}
+                        </div>
+                    );
+                })}
+            </div>
+        </div>
+    );
+}
+
+function findMatchingBrace(str, openBraceIdx) {
+    let depth = 1;
+    for (let i = openBraceIdx + 1; i < str.length; i++) {
+        if (str[i] === '{') {
+            depth++;
+        } else if (str[i] === '}') {
+            depth--;
+            if (depth === 0) {
+                return i;
+            }
+        }
+    }
+    return -1;
+}
+
+function parseLaTeXDocument(latex) {
+    // 1. Strip comments
+    let clean = latex.replace(/^[ \t]*%.*$/gm, '');
+    clean = clean.replace(/([^\\])%.*$/gm, '$1');
+
+    // 2. Extract newcommands
+    const newcommands = {};
+    let pos = 0;
+    
+    while (true) {
+        const index = clean.indexOf('\\newcommand', pos);
+        if (index === -1) break;
+        
+        const firstBraceIdx = clean.indexOf('{', index);
+        if (firstBraceIdx === -1) {
+            pos = index + 11;
+            continue;
+        }
+        
+        const cmdNameCloseIdx = findMatchingBrace(clean, firstBraceIdx);
+        if (cmdNameCloseIdx === -1) {
+            pos = firstBraceIdx + 1;
+            continue;
+        }
+        
+        const cmdNameWithSlash = clean.substring(firstBraceIdx + 1, cmdNameCloseIdx).trim();
+        const cmdName = cmdNameWithSlash.startsWith('\\') ? cmdNameWithSlash.substring(1) : cmdNameWithSlash;
+        
+        const defBraceIdx = clean.indexOf('{', cmdNameCloseIdx + 1);
+        if (defBraceIdx === -1) {
+            pos = cmdNameCloseIdx + 1;
+            continue;
+        }
+        
+        const defCloseIdx = findMatchingBrace(clean, defBraceIdx);
+        if (defCloseIdx === -1) {
+            pos = defBraceIdx + 1;
+            continue;
+        }
+        
+        const definition = clean.substring(defBraceIdx + 1, defCloseIdx);
+        newcommands[cmdName] = definition;
+        
+        pos = defCloseIdx + 1;
+    }
+
+    // 3. Extract and resolve body
+    const docStart = clean.indexOf('\\begin{document}');
+    const docEnd = clean.indexOf('\\end{document}');
+    if (docStart === -1 || docEnd === -1) {
+        return { error: 'Invalid LaTeX document: Could not find \\begin{document} and \\end{document}.' };
+    }
+    
+    let body = clean.substring(docStart + '\\begin{document}'.length, docEnd).trim();
+    
+    for (let pass = 0; pass < 3; pass++) {
+        Object.keys(newcommands).forEach(cmd => {
+            const def = newcommands[cmd];
+            const regex1 = new RegExp('\\{\\\\' + cmd + '\\}', 'g');
+            const regex2 = new RegExp('\\\\' + cmd + '\\b', 'g');
+            body = body.replace(regex1, def).replace(regex2, def);
+        });
+    }
+
+    return { body, newcommands };
+}
+
+function splitBody(body) {
+    const sectionRegex = /\\section\*?\{([^\}]+)\}/g;
+    const sections = [];
+    let lastIndex = 0;
+    let match;
+    let headerText = '';
+
+    while ((match = sectionRegex.exec(body)) !== null) {
+        const title = match[1];
+        const contentStart = sectionRegex.lastIndex;
+        
+        if (sections.length === 0) {
+            headerText = body.substring(0, match.index).trim();
+        } else {
+            sections[sections.length - 1].content = body.substring(lastIndex, match.index).trim();
+        }
+        
+        sections.push({ title, content: '' });
+        lastIndex = contentStart;
+    }
+
+    if (sections.length > 0) {
+        sections[sections.length - 1].content = body.substring(lastIndex).trim();
+    } else {
+        headerText = body;
+    }
+
+    return { headerText, sections };
+}
+
+function renderHeader(headerText) {
+    let cleanHeader = headerText
+        .replace(/\\begin\{center\}/g, '')
+        .replace(/\\end\{center\}/g, '');
+    
+    const lineBreakRegex = /\\\\(?:\[\d+pt\]|\[\d+mm\])?/g;
+    const lines = cleanHeader.split(lineBreakRegex);
+    
+    return (
+        <div className="flex flex-col items-center text-center space-y-1 mb-4 border-b border-zinc-200 pb-3">
+            {lines.map((line, i) => {
+                const trimmed = line.trim();
+                if (!trimmed) return null;
+                
+                const isName = trimmed.includes('Syed Usama Bukhari') || i === 0;
+                
+                return (
+                    <div 
+                        key={i} 
+                        className={clsx(
+                            "w-full text-zinc-800",
+                            isName ? "text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 font-sans" : "text-xs sm:text-sm font-medium opacity-90"
+                        )}
+                        dangerouslySetInnerHTML={{ __html: parseInlineLaTeX(trimmed) }}
+                    />
+                );
+            })}
+        </div>
+    );
+}
+
+function renderSectionContent(content) {
+    const listPlaceholders = [];
+    let processedText = content.replace(/\\begin\{itemize\}[\s\S]*?\\end\{itemize\}/g, (match) => {
+        const id = `__LIST_PLACEHOLDER_${listPlaceholders.length}__`;
+        listPlaceholders.push(match);
+        return id;
+    });
+
+    const blocks = processedText.split(/\r?\n\r?\n/);
+    
+    return (
+        <div className="space-y-2 font-serif text-left">
+            {blocks.map((block, index) => {
+                let trimmedBlock = block.trim();
+                if (!trimmedBlock) return null;
+
+                listPlaceholders.forEach((listHtml, i) => {
+                    const placeholder = `__LIST_PLACEHOLDER_${i}__`;
+                    if (trimmedBlock.includes(placeholder)) {
+                        trimmedBlock = trimmedBlock.replace(placeholder, listHtml);
+                    }
+                });
+
+                if (trimmedBlock.startsWith('\\begin{itemize}') || trimmedBlock.includes('\\begin{itemize}')) {
+                    return (
+                        <div 
+                            key={index} 
+                            dangerouslySetInnerHTML={{ __html: parseLists(trimmedBlock) }} 
+                        />
+                    );
+                }
+
+                const lines = trimmedBlock.split(/\\\\(?:\[\d+pt\])?/);
+                
+                return (
+                    <div key={index} className="w-full text-zinc-800 text-xs sm:text-sm leading-relaxed">
+                        {lines.map((line, lineIdx) => {
+                            const trimmedLine = line.trim();
+                            if (!trimmedLine) return null;
+
+                            if (trimmedLine.includes('\\hfill')) {
+                                const parts = trimmedLine.split('\\hfill');
+                                const left = parts[0].trim();
+                                const right = parts[1].trim();
+
+                                return (
+                                    <div key={lineIdx} className="flex flex-col sm:flex-row justify-between items-start sm:items-baseline w-full gap-1 mt-1 font-serif">
+                                        <span className="font-bold text-zinc-900" dangerouslySetInnerHTML={{ __html: parseInlineLaTeX(left) }} />
+                                        <span className="text-xs text-zinc-600 font-semibold" dangerouslySetInnerHTML={{ __html: parseInlineLaTeX(right) }} />
+                                    </div>
+                                );
+                            }
+
+                            return (
+                                <p 
+                                    key={lineIdx} 
+                                    className="mt-0.5"
+                                    dangerouslySetInnerHTML={{ __html: parseInlineLaTeX(trimmedLine) }} 
+                                />
+                            );
+                        })}
+                    </div>
+                );
+            })}
+        </div>
+    );
+}
+
+function parseLists(text) {
+    const itemizeRegex = /\\begin\{itemize\}(?:\[[^\]]*\])?([\s\S]*?)\\end\{itemize\}/g;
+    return text.replace(itemizeRegex, (match, listContent) => {
+        const items = listContent.split(/\\item/);
+        const listItemsHtml = items
+            .map(item => item.trim())
+            .filter(item => item.length > 0)
+            .map(item => `<li class="mt-0.5 text-xs sm:text-sm leading-relaxed text-zinc-700 relative pl-4 before:content-['•'] before:absolute before:left-0 before:text-zinc-500">${parseInlineLaTeX(item)}</li>`)
+            .join('\n');
+        return `<ul class="list-none my-0.5 space-y-0.5">${listItemsHtml}</ul>`;
+    });
+}
+
+function parseInlineLaTeX(text) {
+    let html = text;
+
+    html = html
+        .replace(/\\&/g, '&')
+        .replace(/\\_/g, '_')
+        .replace(/\\#/g, '#')
+        .replace(/\\%/g, '%')
+        .replace(/--/g, '–');
+
+    html = html.replace(/\\href\{([^\}]+)\}\{([^\}]+)\}/g, (match, url, linkText) => {
+        return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-cyan-700 hover:text-cyan-800 hover:underline font-medium inline-flex items-center gap-0.5">${linkText}</a>`;
+    });
+
+    html = html.replace(/\\textbf\{([^\}]+)\}/g, '<strong>$1</strong>');
+    html = html.replace(/\\textit\{([^\}]+)\}/g, '<em>$1</em>');
+    html = html.replace(/\\emph\{([^\}]+)\}/g, '<em class="text-zinc-700 font-medium">$1</em>');
+    html = html.replace(/\\texttt\{([^\}]+)\}/g, '<code class="bg-zinc-100 text-zinc-800 border border-zinc-200 px-1 py-0.5 rounded text-[11px] font-mono font-semibold">$1</code>');
+
+    html = html.replace(/\\(huge|Large|large|small|normalsize)\b/g, '');
+
+    html = html.replace(/\\faEnvelope\b/g, `<svg class="w-3 h-3 inline-block mr-1 align-middle text-zinc-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>`);
+    html = html.replace(/\\faPhone\b/g, `<svg class="w-3 h-3 inline-block mr-1 align-middle text-zinc-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>`);
+    html = html.replace(/\\faLinkedin\b/g, `<svg class="w-3.5 h-3.5 inline-block mr-0.5 align-middle text-zinc-600" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>`);
+    html = html.replace(/\\faGithub\b/g, `<svg class="w-3.5 h-3.5 inline-block mr-0.5 align-middle text-zinc-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>`);
+    html = html.replace(/\\faBriefcase\b/g, `<svg class="w-3.5 h-3.5 inline-block mr-0.5 align-middle text-zinc-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`);
+
+    html = html.replace(/\\hspace\{[^\}]+\}/g, '<span class="inline-block w-4"></span>');
+    html = html.replace(/~/g, '&nbsp;');
+
+    return html;
 }
 
 function ResumePageImage({ src, alt, priority = false }) {

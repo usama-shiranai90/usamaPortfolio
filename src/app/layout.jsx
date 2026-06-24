@@ -16,6 +16,11 @@ export const metadata = {
   keywords: ['Usama Bukhari', 'Software Engineer', 'Research Student', 'Kyushu University', 'Full Stack Developer', 'React', 'Next.js', 'AI', 'Japan'],
   authors: [{ name: 'Usama Bukhari' }],
   creator: 'Usama Bukhari',
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/icons/apple-touch-icon.png',
+  },
   openGraph: {
     title: 'Usama Bukhari - Software Engineer & Research Student',
     description: 'Portfolio and personal site of Usama Bukhari.',
@@ -25,10 +30,10 @@ export const metadata = {
     type: 'website',
     images: [
       {
-        url: '/images/og-image.png', // Assuming you might have one or I should verify/suggest it
+        url: '/images/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Usama Bukhari',
+        alt: 'Usama Bukhari - Software Engineer & Research Student',
       },
     ],
   },
@@ -36,7 +41,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Usama Bukhari',
     description: 'Software Engineer & Research Student at Kyushu University.',
-    creator: '@usamabukhari', // Placeholder, verify if possible but safe to leave generic or omit if unknown
+    creator: '@usamabukhari',
   },
   alternates: {
     types: {
@@ -80,7 +85,7 @@ export default function RootLayout({ children }) {
         <Providers>
           <ThemeController />
           <CommandMenu />
-          <div className="-flex w-full">
+          <div className="flex w-full">
             <Layout>{children}</Layout>
           </div>
         </Providers>

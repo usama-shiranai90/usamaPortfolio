@@ -84,22 +84,22 @@ export function Omikuji() {
                         key="result"
                         initial={{ opacity: 0, y: 20, rotateX: 90 }}
                         animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                        className="w-full max-w-sm bg-[#fffdf5] dark:bg-zinc-900 border-2 border-zinc-800 p-6 relative shadow-xl flex flex-col items-center text-center"
+                        className="w-full max-w-sm bg-theme-card border-2 border-zinc-800 p-6 relative shadow-xl flex flex-col items-center text-center"
                         style={{ borderColor: fortune.color }}
                     >
                         {/* Decorative Holes (Ticket style) */}
-                        <div className="absolute -left-2 top-1/2 w-4 h-4 bg-[var(--theme-bg)] rounded-full" />
-                        <div className="absolute -right-2 top-1/2 w-4 h-4 bg-[var(--theme-bg)] rounded-full" />
+                        <div className="absolute -left-2 top-1/2 w-4 h-4 bg-theme-bg rounded-full" />
+                        <div className="absolute -right-2 top-1/2 w-4 h-4 bg-theme-bg rounded-full" />
 
                         <div className="mb-4">
-                            <span className="text-xs font-mono text-zinc-400 uppercase tracking-widest">Result</span>
+                            <span className="text-xs font-mono text-theme-text/40 uppercase tracking-widest">Result</span>
                             <h2 className="text-5xl font-black font-serif my-2" style={{ color: fortune.color }}>{fortune.label}</h2>
-                            <p className="text-sm font-bold uppercase tracking-widest text-zinc-500">{fortune.reading} • {fortune.title}</p>
+                            <p className="text-sm font-bold uppercase tracking-widest text-theme-text/50">{fortune.reading} • {fortune.title}</p>
                         </div>
 
-                        <div className="w-full h-[1px] bg-zinc-200 my-4" />
+                        <div className="w-full h-[1px] bg-theme-text/10 my-4" />
 
-                        <p className="font-serif text-lg leading-relaxed text-zinc-700 dark:text-zinc-300 mb-6">
+                        <p className="font-serif text-lg leading-relaxed text-theme-text/80 mb-6">
                             "{fortune.text}"
                         </p>
 

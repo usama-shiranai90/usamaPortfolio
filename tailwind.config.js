@@ -66,16 +66,16 @@ module.exports = {
         theme: {
           bg: 'var(--theme-bg)',
           text: 'var(--theme-text)',
-          accent: 'var(--theme-accent)',
+          accent: 'rgba(var(--theme-accent-rgb), <alpha-value>)',
           card: 'var(--theme-card)',
         },
         // Aliases for backward compatibility (mapped to theme)
         dark: {
           bg: 'var(--theme-bg)',
           card: 'var(--theme-card)',
-          accent: 'var(--theme-accent)',
+          accent: 'rgba(var(--theme-accent-rgb), <alpha-value>)',
         },
-        'cyan-accent': 'var(--theme-accent)',
+        'cyan-accent': 'rgba(var(--theme-accent-rgb), <alpha-value>)',
       },
 
       backgroundImage: {

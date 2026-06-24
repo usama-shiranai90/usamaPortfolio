@@ -42,7 +42,7 @@ function ThemeToggle() {
                                 <Sun className="h-12 w-12" />
                             )}
                         </motion.div>
-                        <span className={"font-semibold text-teal-700"}>Owling</span>
+                        <span className={"font-semibold text-cyan-accent"}>Owling</span>
                     </motion.div>
                 )}
             </AnimatePresence>

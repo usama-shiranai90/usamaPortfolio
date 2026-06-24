@@ -41,17 +41,94 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
     const { frontMatter } = await getFileBySlug(params.slug);
+    const title = `${frontMatter.title} - Research by Usama Bukhari`;
+    const description = frontMatter.summary;
+    const url = `https://usamabukhari.com/research/${params.slug}`;
+
     return {
-        title: frontMatter.title,
-        description: frontMatter.summary,
+        title,
+        description,
+        openGraph: {
+            title,
+            description,
+            type: 'article',
+            publishedTime: frontMatter.publishedAt,
+            authors: [frontMatter.author || 'Usama Bukhari'],
+            url,
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title,
+            description,
+        },
+        alternates: {
+            canonical: url,
+        },
     };
 }
 
 export default async function BlogPost({ params }) {
     const { content, frontMatter } = await getFileBySlug(params.slug);
 
+    const jsonLd = [
+        {
+            '@context': 'https://schema.org',
+            '@type': 'ScholarlyArticle',
+            headline: frontMatter.title,
+            description: frontMatter.summary,
+            datePublished: frontMatter.publishedAt,
+            dateModified: frontMatter.publishedAt,
+            author: {
+                '@type': 'Person',
+                name: frontMatter.author || 'Usama Bukhari',
+                url: 'https://usamabukhari.com',
+            },
+            publisher: {
+                '@type': 'Organization',
+                name: 'Usama Bukhari',
+                logo: {
+                    '@type': 'ImageObject',
+                    url: 'https://usamabukhari.com/images/logo.png',
+                },
+            },
+            mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': `https://usamabukhari.com/research/${params.slug}`,
+            },
+            keywords: frontMatter.tags ? frontMatter.tags.join(', ') : '',
+        },
+        {
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+                {
+                    '@type': 'ListItem',
+                    position: 1,
+                    name: 'Home',
+                    item: 'https://usamabukhari.com',
+                },
+                {
+                    '@type': 'ListItem',
+                    position: 2,
+                    name: 'Research',
+                    item: 'https://usamabukhari.com/research',
+                },
+                {
+                    '@type': 'ListItem',
+                    position: 3,
+                    name: frontMatter.title,
+                    item: `https://usamabukhari.com/research/${params.slug}`,
+                },
+            ],
+        }
+    ];
+
     return (
         <div className="min-h-screen relative pt-24 pb-32">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <ScientificBackground />
 
             <Container className="max-w-4xl mx-auto relative z-10">
@@ -87,7 +164,7 @@ export default async function BlogPost({ params }) {
                     </div>
                 </header>
 
-                <article className="prose prose-invert prose-lg max-w-none">
+                <article className="prose dark:prose-invert prose-lg max-w-none">
                     <MDXRemote
                         source={content}
                         options={{

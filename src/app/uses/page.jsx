@@ -30,6 +30,11 @@ export const metadata = {
     openGraph: {
         title: 'Uses - Usama Bukhari',
         description: 'Tools, gear, and software recommended by Usama Bukhari.',
+        url: 'https://usamabukhari.com/uses',
+        type: 'website',
+    },
+    alternates: {
+        canonical: 'https://usamabukhari.com/uses',
     },
 }
 

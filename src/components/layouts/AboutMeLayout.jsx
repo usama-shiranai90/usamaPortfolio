@@ -12,7 +12,7 @@ const MotionDiv = dynamic(() => import('framer-motion').then(mod => mod.motion.d
 import { Container } from '@/components/ui/Container';
 import portraitImage from 'p/images/avatars/portrait.jpg';
 import { Button } from '@/components/ui/Button';
-import TypingEffect from "@/components/utilities/TypingEffect";
+
 
 function SocialLink({ className, href, children, icon: Icon }) {
     return (
@@ -24,9 +24,9 @@ function SocialLink({ className, href, children, icon: Icon }) {
         >
             <Link
                 href={href}
-                className="group flex text-sm font-medium text-zinc-800 transition hover:text-teal-500 dark:text-zinc-200 dark:hover:text-teal-500"
+                className="group flex text-sm font-medium text-zinc-800 transition hover:text-cyan-accent dark:text-zinc-200 dark:hover:text-cyan-accent"
             >
-                <Icon className="h-6 w-6 flex-none fill-zinc-500 transition group-hover:fill-teal-500" />
+                <Icon className="h-6 w-6 flex-none fill-zinc-500 transition group-hover:fill-cyan-accent" />
                 <span className="ml-4">{children}</span>
             </Link>
         </motion.li>
@@ -57,7 +57,7 @@ export default function AboutMeLayout() {
                 <motion.div className="lg:pl-20" initial={{ x: -50, opacity: 0 }} animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 0.6 }}>
                     <h2 className="owl-ni-title font-heading text-zinc-800 dark:text-zinc-100 mb-5">
-                        Who am <span className="text-shaddy-lx_MidnightGreenEagleGreen text-teal-500">I</span>?
+                        Who am <span className="text-cyan-accent">I</span>?
                     </h2>
                     <motion.div
                         className="max-w-xs px-2.5 lg:max-w-none"
@@ -76,27 +76,40 @@ export default function AboutMeLayout() {
                 <motion.div className="lg:order-first lg:row-span-2" initial={{ x: 50, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.6 }}>
                     <h1 className="text-4xl font-bold font-heading tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
-                        I’m <span className="text-teal-500 dark:text-teal-700 capitalize">Usama Bukhari</span>.
+                        I’m <span className="text-cyan-accent capitalize">Usama Bukhari</span>.
                     </h1>
                     <h2 className="text-2xl font-bold font-heading tracking-tight text-zinc-800 sm:text-3xl dark:text-zinc-100 capitalize">
                         A software engineer and research student at Kyushu University - Japan.
                     </h2>
 
-                    <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
-                        <p>
-                            <TypingEffect text={text1} speed={10} />
-                        </p>
-                        <p>
-                            <TypingEffect text={text2} speed={20} />
-                        </p>
-                        <p>
-                            <TypingEffect text={text3} speed={30} />
-                        </p>
-                        <p>
-                            <TypingEffect text={text4} speed={40} />
-                        </p>
-
-                    </div>
+                    <motion.div 
+                        className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400"
+                        variants={{
+                            hidden: { opacity: 0 },
+                            show: {
+                                opacity: 1,
+                                transition: {
+                                    staggerChildren: 0.15
+                                }
+                            }
+                        }}
+                        initial="hidden"
+                        whileInView="show"
+                        viewport={{ once: true }}
+                    >
+                        <motion.p variants={{ hidden: { opacity: 0, y: 15 }, show: { opacity: 1, y: 0 } }} className="leading-relaxed">
+                            {text1}
+                        </motion.p>
+                        <motion.p variants={{ hidden: { opacity: 0, y: 15 }, show: { opacity: 1, y: 0 } }} className="leading-relaxed">
+                            {text2}
+                        </motion.p>
+                        <motion.p variants={{ hidden: { opacity: 0, y: 15 }, show: { opacity: 1, y: 0 } }} className="leading-relaxed">
+                            {text3}
+                        </motion.p>
+                        <motion.p variants={{ hidden: { opacity: 0, y: 15 }, show: { opacity: 1, y: 0 } }} className="leading-relaxed">
+                            {text4}
+                        </motion.p>
+                    </motion.div>
                 </motion.div>
                 <motion.div className="lg:pl-20" initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                     transition={{ duration: 0.8 }}>

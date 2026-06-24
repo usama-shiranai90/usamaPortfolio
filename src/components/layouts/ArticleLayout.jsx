@@ -30,31 +30,57 @@ export function ArticleLayout({ article, children }) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'Article',
-            headline: article.title,
-            datePublished: article.date,
-            dateModified: article.date,
-            description: article.description,
-            author: {
-              '@type': 'Person',
-              name: 'Usama Bukhari',
-              url: 'https://usamabukhari.com',
-            },
-            publisher: {
-              '@type': 'Organization',
-              name: 'Usama Bukhari',
-              logo: {
-                '@type': 'ImageObject',
-                url: 'https://usamabukhari.com/images/logo.png',
+          __html: JSON.stringify([
+            {
+              '@context': 'https://schema.org',
+              '@type': 'Article',
+              headline: article.title,
+              datePublished: article.date,
+              dateModified: article.date,
+              description: article.description,
+              author: {
+                '@type': 'Person',
+                name: 'Usama Bukhari',
+                url: 'https://usamabukhari.com',
+              },
+              publisher: {
+                '@type': 'Organization',
+                name: 'Usama Bukhari',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://usamabukhari.com/images/logo.png',
+                },
+              },
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': `https://usamabukhari.com/articles/${article.slug}`,
               },
             },
-            mainEntityOfPage: {
-              '@type': 'WebPage',
-              '@id': `https://usamabukhari.com/articles/${article.slug}`,
-            },
-          }),
+            {
+              '@context': 'https://schema.org',
+              '@type': 'BreadcrumbList',
+              itemListElement: [
+                {
+                  '@type': 'ListItem',
+                  position: 1,
+                  name: 'Home',
+                  item: 'https://usamabukhari.com',
+                },
+                {
+                  '@type': 'ListItem',
+                  position: 2,
+                  name: 'Articles',
+                  item: 'https://usamabukhari.com/articles',
+                },
+                {
+                  '@type': 'ListItem',
+                  position: 3,
+                  name: article.title,
+                  item: `https://usamabukhari.com/articles/${article.slug}`,
+                },
+              ],
+            }
+          ]),
         }}
       />
       <div className="xl:relative">
@@ -64,21 +90,21 @@ export function ArticleLayout({ article, children }) {
               type="button"
               onClick={() => router.back()}
               aria-label="Go back to articles"
-              className="group mb-8 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 transition lg:absolute lg:-left-5 lg:-mt-2 lg:mb-0 xl:-top-1.5 xl:left-0 xl:mt-0 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0 dark:ring-white/10 dark:hover:border-zinc-700 dark:hover:ring-white/20"
+              className="group mb-8 flex h-10 w-10 items-center justify-center rounded-full bg-theme-card border border-theme-text/10 shadow-md transition-all duration-300 lg:absolute lg:-left-5 lg:-mt-2 lg:mb-0 xl:-top-1.5 xl:left-0 xl:mt-0 hover:border-cyan-accent hover:shadow-[0_0_15px_rgba(var(--theme-accent-rgb),0.2)]"
             >
-              <ArrowLeftIcon className="h-4 w-4 stroke-zinc-500 transition group-hover:stroke-zinc-700 dark:stroke-zinc-500 dark:group-hover:stroke-zinc-400" />
+              <ArrowLeftIcon className="h-4 w-4 stroke-theme-text/60 transition-colors duration-300 group-hover:stroke-cyan-accent" />
             </button>
           )}
           <article>
             <header className="flex flex-col">
-              <h1 className="mt-6 text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
+              <h1 className="mt-6 text-4xl font-bold tracking-tight text-theme-text sm:text-5xl">
                 {article.title}
               </h1>
               <time
                 dateTime={article.date}
-                className="order-first flex items-center text-base text-zinc-400 dark:text-zinc-500"
+                className="order-first flex items-center text-base text-theme-text/60"
               >
-                <span className="h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500" />
+                <span className="h-4 w-0.5 rounded-full bg-cyan-accent" />
                 <span className="ml-3">{formatDate(article.date)}</span>
               </time>
             </header>

@@ -121,7 +121,7 @@ export function Rirekisho({ data, photo }) {
                     </div>
                     <div className="flex-1 flex">
                         <div className="w-20 bg-zinc-50 dark:bg-zinc-800 border-r border-zinc-300 dark:border-zinc-700 p-2 flex items-center justify-center text-xs font-medium text-zinc-600 dark:text-zinc-400 print:border-black print:bg-gray-100 print:text-black">Email</div>
-                        <div className="flex-1 flex items-center px-2 text-sm font-mono text-[11px] truncate text-indigo-600 dark:text-indigo-400 print:text-black" style={{ color: !isDark ? undefined : accent.value }}>{profile.email}</div>
+                        <div className="flex-1 flex items-center px-2 text-sm font-mono text-[11px] truncate print:text-black" style={{ color: accent.value }}>{profile.email}</div>
                     </div>
                 </div>
             </div>

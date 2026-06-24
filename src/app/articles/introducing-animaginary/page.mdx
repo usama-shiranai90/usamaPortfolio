@@ -6,11 +6,28 @@ export const article = {
   title: 'Introducing Animaginary: High performance web animations',
   description:
     'When you’re building a website for a company as ambitious as Planetaria, you need to make an impression. I wanted people to visit our website and see animations that looked more realistic than reality itself.',
+  slug: 'introducing-animaginary',
 }
 
 export const metadata = {
   title: article.title,
   description: article.description,
+  openGraph: {
+    title: article.title,
+    description: article.description,
+    type: 'article',
+    url: `https://usamabukhari.com/articles/${article.slug}`,
+    publishedTime: article.date,
+    authors: ['Usama Bukhari'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: article.title,
+    description: article.description,
+  },
+  alternates: {
+    canonical: `https://usamabukhari.com/articles/${article.slug}`,
+  },
 }
 
 export default (props) => <ArticleLayout article={article} {...props} />

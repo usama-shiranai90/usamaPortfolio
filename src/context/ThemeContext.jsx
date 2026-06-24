@@ -125,6 +125,7 @@ export function ThemeProvider({ children }) {
 
         // Apply Accent
         root.style.setProperty('--theme-accent', accent.value);
+        root.style.setProperty('--theme-accent-rgb', accent.rgb);
 
         // Save preferences
         localStorage.setItem('themeMode', themeMode);

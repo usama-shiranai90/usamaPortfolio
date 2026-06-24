@@ -1,13 +1,17 @@
-
 export const metadata = {
-    title: 'Resume',
-    description: 'View the professional resume of Usama Bukhari, detailing experience in software engineering and research.',
+    title: 'Resume / CV',
+    description: 'Syed Usama Bukhari - Professional Curriculum Vitae. Software Engineer & Research Student.',
     openGraph: {
         title: 'Resume - Usama Bukhari',
-        description: 'Professional experience and education history of Usama Bukhari.',
+        description: 'Professional CV and credentials of Usama Bukhari, software engineer & researcher.',
+        url: 'https://usamabukhari.com/resume',
+        type: 'profile',
+    },
+    alternates: {
+        canonical: 'https://usamabukhari.com/resume',
     },
 }
 
 export default function ResumeLayout({ children }) {
-    return <>{children}</>
+    return children
 }

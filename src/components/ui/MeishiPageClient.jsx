@@ -157,19 +157,19 @@ END:VCARD`;
                     <div className="grid grid-cols-2 gap-3 md:gap-4">
                         <button
                             onClick={handleCopyEmail}
-                            className="flex items-center justify-center gap-2 md:gap-3 py-3 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-sm hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors group"
+                            className="flex items-center justify-center gap-2 md:gap-3 py-3 bg-theme-card border border-theme-text/10 rounded-sm hover:bg-theme-text/5 hover:border-cyan-accent/50 transition-all duration-200 group"
                         >
-                            {copied ? <Check size={16} className="text-green-600" /> : <Copy size={16} className="text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-colors" />}
-                            <span className="text-[9px] md:text-[10px] font-bold tracking-[0.1em] md:tracking-[0.15em] uppercase text-zinc-600 dark:text-zinc-300 whitespace-nowrap">
+                            {copied ? <Check size={16} className="text-green-500" /> : <Copy size={16} className="text-theme-text/40 group-hover:text-theme-text transition-colors" />}
+                            <span className="text-[9px] md:text-[10px] font-bold tracking-[0.1em] md:tracking-[0.15em] uppercase text-theme-text/80 whitespace-nowrap">
                                 {copied ? "Copied" : "Copy Email"}
                             </span>
                         </button>
                         <button
                             onClick={handleShare}
-                            className="flex items-center justify-center gap-2 md:gap-3 py-3 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-sm hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors group"
+                            className="flex items-center justify-center gap-2 md:gap-3 py-3 bg-theme-card border border-theme-text/10 rounded-sm hover:bg-theme-text/5 hover:border-cyan-accent/50 transition-all duration-200 group"
                         >
-                            <Share2 size={16} className="text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-colors" />
-                            <span className="text-[9px] md:text-[10px] font-bold tracking-[0.1em] md:tracking-[0.15em] uppercase text-zinc-600 dark:text-zinc-300">
+                            <Share2 size={16} className="text-theme-text/40 group-hover:text-theme-text transition-colors" />
+                            <span className="text-[9px] md:text-[10px] font-bold tracking-[0.1em] md:tracking-[0.15em] uppercase text-theme-text/80">
                                 Share
                             </span>
                         </button>
@@ -184,42 +184,6 @@ END:VCARD`;
 
                 {/* --- Japanese Cultural Elements --- */}
 
-                {/* 1. Vertical Philosophy Section (Genkou Youshi / Manuscript Style) */}
-                <div className="flex justify-center xl:block xl:absolute xl:top-1/2 xl:-translate-y-1/2 xl:left-16 z-10 mt-24 mb-16 xl:my-0 w-full xl:w-auto">
-                    <div className="relative p-6 bg-[#fffdf5] text-zinc-800 shadow-xl border border-zinc-200 dark:border-zinc-700/50 rounded-sm max-w-[90vw] xl:max-w-none mx-auto xl:mx-0">
-
-                        {/* Genkou Youshi Grid Background */}
-                        <div className="absolute inset-0 z-0 pointer-events-none opacity-20"
-                            style={{
-                                backgroundImage: `
-                                     linear-gradient(to right, #d4d4d4 1px, transparent 1px),
-                                     linear-gradient(to bottom, #d4d4d4 1px, transparent 1px)
-                                 `,
-                                backgroundSize: '40px 40px'
-                            }}
-                        />
-
-                        <div className="relative z-10 flex flex-col xl:flex-row gap-8 items-center xl:[writing-mode:vertical-rl]">
-                            <div className="space-y-4 font-serif flex flex-col items-center xl:block">
-                                <h2 className="text-xl md:text-2xl font-bold tracking-[0.3em] leading-loose text-center xl:text-right border-b xl:border-b-0 xl:border-l border-zinc-300 pb-4 xl:pb-0 xl:pl-4 w-full xl:w-auto">
-                                    研究理念
-                                </h2>
-                                <p className="text-base md:text-lg font-medium tracking-[0.25em] leading-[2rem] md:leading-[3rem] whitespace-normal xl:whitespace-nowrap text-center xl:text-left">
-                                    AIと人間性の<br className="xl:hidden" />交差点を探求する
-                                </p>
-                            </div>
-
-                            {/* Hanko Seal */}
-                            <div className="mt-4 xl:mt-0 opacity-90 mix-blend-multiply">
-                                <div className="border-2 border-[#d00] rounded-full p-0.5 inline-block">
-                                    <div className="border border-[#d00] rounded-full w-12 h-12 flex items-center justify-center bg-[#d00] text-[#fffdf5] font-serif font-bold text-xs shadow-sm">
-                                        研究
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 {/* 2. Omikuji Widget */}
                 <div className="mt-12 xl:mt-24 w-full flex justify-center pb-20">

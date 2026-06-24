@@ -39,6 +39,11 @@ export const metadata = {
   openGraph: {
     title: 'Articles - Usama Bukhari',
     description: 'Long-form thoughts on programming, AI, and software engineering.',
+    url: 'https://usamabukhari.com/articles',
+    type: 'website',
+  },
+  alternates: {
+    canonical: 'https://usamabukhari.com/articles',
   },
 }
 

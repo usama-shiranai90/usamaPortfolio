@@ -1,0 +1,216 @@
+\documentclass[a4paper,11pt]{article}
+
+%-------------------------------------------------------
+%                 PACKAGE IMPORTS
+%-------------------------------------------------------
+\usepackage{geometry}           % Page geometry
+\geometry{
+  left=1.5cm,
+  right=1.5cm,
+  top=1cm,
+  bottom=1cm
+}
+
+\usepackage{titlesec}           % Section title formatting
+\usepackage{tabularx}           % Table with adjustable width
+\usepackage{hyperref}           % Clickable hyperlinks
+\usepackage{fontawesome5}       % Font Awesome icons
+\usepackage{enumitem}           % Customize list environments
+\usepackage[T1]{fontenc}        % Ensure correct encoding
+\usepackage{lmodern}            % Latin Modern fonts
+\pdfgentounicode=1              % Make PDF text selectable & ATS-friendly
+
+\usepackage{marvosym}           % (Optional) Additional symbols
+\usepackage{setspace}           % (Optional) Fine-tune line spacing
+
+%-------------------------------------------------------
+%                 PAGE SETUP
+%-------------------------------------------------------
+\pagenumbering{gobble}          % No page numbers
+\setlength{\parindent}{0pt}     % No paragraph indentation
+\setlength{\parskip}{4pt}       % Space between paragraphs
+
+%-------------------------------------------------------
+%                 CUSTOM COMMANDS
+%-------------------------------------------------------
+\newcommand{\name}{\textbf{\huge Syed Usama Bukhari}}
+\newcommand{\jobtitle}{\textit{Server \& Software Engineer}}
+\newcommand{\contactinfo}{%
+    \href{mailto:syedusama78@gmail.com}{\faEnvelope\ syedusama78@gmail.com} \hspace{0.5cm}
+    \faPhone\ +81-070-9231-3137 \hspace{0.5cm}
+    \href{https://www.linkedin.com/in/syed-usama-bukhari-0a6373175/}{\faLinkedin\ LinkedIn} \hspace{0.5cm}
+    \href{https://github.com/usama-shiranai90}{\faGithub\ GitHub} \hspace{0.5cm}
+    \href{https://usamabukhari.netlify.app/}{\faBriefcase\ Portfolio}
+}
+
+% Section title formatting (with a horizontal rule)
+\titleformat{\section}{\large\scshape\raggedright}{}{0em}{}[\titrule]
+
+% For tighter bullets in certain lists
+% (Use noitemsep/nolistsep where needed)
+\setlist[itemize]{leftmargin=*}
+
+%-------------------------------------------------------
+%                 DOCUMENT START
+%-------------------------------------------------------
+\begin{document}
+
+%--------------------- HEADER -------------------------%
+\begin{center}
+    {\name} \\[5pt]
+    {\jobtitle} \\[10pt]
+    {\contactinfo}
+
+    {Fukuoka, Japan}
+    
+\end{center}
+
+%--------------------- SUMMARY ------------------------%
+\section*{Summary}
+Infrastructure-oriented engineer with hands-on experience in Linux systems administration, containerized environments, and backend systems supporting production workloads. Skilled in Python and Bash scripting for automation, system monitoring via the Elastic Stack, and managing CI/CD pipelines. Experienced in troubleshooting complex technical issues, root cause analysis, and maintaining high-availability services. Currently pursuing a PhD at Kyushu University with strong foundations in systems design, data engineering, and operational reliability. Eager to apply technical depth and operational discipline to AWS Data Center infrastructure.  
+
+%--------------------- SKILLS -------------------------%
+\section*{Technical Skills}
+\textbf{Operating Systems}: Linux, Ubuntu, Windows Server \\
+\textbf{Server \& Hardware}: Server hardware components, server rack concepts, containerized workloads \\
+\textbf{Networking}: TCP/IP, DNS, DHCP, OSI model, VPC, subnetting, REST APIs, basic switch/router concepts \\
+\textbf{Scripting \& Automation}: Python, Bash, GitHub Actions \\
+\textbf{Infrastructure \& DevOps}: Docker, Kubernetes, Helm, Elastic Stack (monitoring/logging), CI/CD pipelines \\
+\textbf{Cloud Platforms}: AWS (EC2, S3, Lambda -- actively learning via AWS Educate), GCP (GKE, Vertex AI) \\
+\textbf{Databases}: PostgreSQL, MySQL, MS SQL Server, Elasticsearch, Firebase \\
+\textbf{Ticketing \& Operations}: Jira, Agile/Scrum, root cause analysis \\
+\textbf{Other}: Data Structures, ETL Pipelines (Airflow, Snowflake), 5S workplace organization awareness
+
+
+%--------------------- EXPERIENCE ---------------------%
+\section*{Experience}
+\textbf{Software Engineer - Remote} \hfill \textit{Reboot Era Technologies, Lahore} \\
+\textit{November 2023 -- January 2025}
+\begin{itemize}[leftmargin=*, noitemsep, nolistsep]
+    \item Deployed and maintained production Linux server environments hosting RESTful and GraphQL APIs, ensuring service level agreements were met.
+    \item Configured and managed \textbf{Redis with Laravel Horizon} for job queue processing, monitored queue health and tuned for reliability.  
+    \item Performed on-call incident response for production outages, applying structured troubleshooting to minimize downtime.
+\end{itemize}
+
+\textbf{Software Engineer} \hfill \textit{CareCloud, New Jersey, United States} \\
+\textit{February 2023 -- September 2023}
+\begin{itemize}[leftmargin=*, noitemsep, nolistsep]
+    \item Deployed and operated the Elastic Stack for centralized logging and search across production systems, configured indices, monitored cluster health, and resolved ingestion bottlenecks.
+    \item Automated data processing workflows using Python, to reducing manual operational overhead through scripted pipelines.
+    \item Designed prompt engineering for GPT and Vertex AI to generate summaries and personalized recommendations.
+    \item Troubleshot backend system issues and documented root cause analyses to prevent recurrence, contribute.
+\end{itemize}
+
+\textbf{Software Engineer} \hfill \textit{Immentia, Islamabad, Pakistan} \\
+\textit{August 2022 -- January 2023}
+\begin{itemize}[leftmargin=*, noitemsep, nolistsep]
+    \item Developed matchmaking features, user profiling, and real-time communication for an Islamic matchmaking app.
+    \item Built a CMS with multimedia support and SEO optimization.
+    \item Performed sentiment analysis on customer feedback using Python to improve service quality.
+\end{itemize}
+
+\textbf{Android Development Intern} \hfill \textit{Devsiom Technologies, Islamabad, Pakistan} \\
+\textit{August 2021 -- October 2021}
+\begin{itemize}[leftmargin=*, noitemsep, nolistsep]
+    \item Developed a health tracking app with SQLite and Google authentication to monitor activities and diet.
+\end{itemize}
+
+% --------------------- EDUCATION ----------------------%
+
+\section*{Education}
+
+\textbf{PhD (Doctor of Philosophy)} \hfill \textit{Kyushu University, Fukuoka, Japan} \\
+\textit{October 2025 -- Present}
+\begin{itemize}[leftmargin=*, noitemsep, nolistsep]
+    \item An \textbf{Learning Health System (LHS)} that integrates unstructured clinical data with structured EHR databases.
+    \item Applying \textbf{Explainable AI (XAI)} techniques to ensure LLM-generated medical insights are transparent, traceable, and aligned with clinical gold standards.
+    \item Applying system design principles for fault-tolerant, scalable data processing pipelines used in real-world hospital environments.
+\end{itemize}
+
+
+\textbf{Research Student} \hfill \textit{Kyushu University, Fukuoka, Japan} \\
+\textit{April 2024 -- September 2025}
+\begin{itemize}[leftmargin=*, noitemsep, nolistsep]
+    \item Conducting research on Retrieval Augmented Generation for medical prescriptions and learning health systems.
+    \item Collaborated with Kyushu University Hospital on system-level data analysis tools, working directly with production database servers and analytics infrastructure..
+\end{itemize}
+
+\vspace{4pt}
+
+\textbf{Bachelor of Computer Software Engineering} \hfill \textit{Foundation University, Islamabad, Pakistan} \\
+\textit{August 2022}
+\begin{itemize}[leftmargin=*, noitemsep, nolistsep]
+    \item Graduated with 3.5+ CGPA. Coursework included Computer Networks, Operating Systems, Database Management, and Software Architecture
+\end{itemize}
+
+%--------------------- PROJECTS -----------------------%
+\section*{Projects}
+
+\textbf{Portable Health Clinic 2.0}
+\hfill
+\href{https://portable-healthcare-clinic-2.netlify.app/}{View} \\
+Production healthcare platform for Kyushu University Hospital. led backend and infrastructure engineering for a team of four.
+\begin{itemize}[leftmargin=*, noitemsep, nolistsep]
+    \item  Provisioned and maintained Docker \& Kubernetes infrastructure for microservices, performing health monitoring, rolling updates, and failure recovery.
+    \item Built ETL pipelines for real-time clinical data ingestion, monitored pipeline health and resolved failures via structured incident logs.
+    \item Developed a dynamic prescription generation module integrated with live medication databases for dosage accuracy.
+    \item Managed PostgreSQL database server, configured backups, monitored performance, and resolved storage and query bottlenecks.
+
+\end{itemize}
+\textit{Tech Stack}:  Docker, Kubernetes, Apache Airflow, Kafka, Snowflake, PostgreSQL, Django, FHIR, React
+\vspace{6pt}
+
+\textbf{PHC FHIR Adapter – Java \& Spring Boot}
+\hfill
+\href{https://github.com/usama-shiranai90/phc-fhir-adapter}{Code} \\
+At SocialTech Lab, Kyushu University. Built a FHIR-style API layer on top of the legacy Portable Health Clinic (PHC) PostgreSQL schema to expose interoperable patient and vital-sign data.
+\begin{itemize}[leftmargin=*, noitemsep, nolistsep]
+    \item Modeled core PHC tables using \textbf{Spring Data JPA} and designed REST endpoints for FHIR-like \texttt{Patient} and \texttt{Observation} resources.
+    \item Implemented Java mapping logic to transform legacy records into FHIR R4–shaped JSON using DTOs and standardized vital signs.
+    \item Added \textbf{Swagger} documentation and basic tests (\textbf{JUnit} + \textbf{MockMvc}) to demonstrate clean API contracts and testable Spring Boot code.
+\end{itemize}
+\textit{Tech Stack}: Java 17, Spring Boot, Spring Web, Spring Data JPA, PostgreSQL, Swagger, JUnit
+
+\vspace{6pt}
+
+\textbf{LLM-Powered Medical Summary Generator} \hfill \textit{Internal R\&D at CareCloud} \\
+Prompt-engineered a contextual summary generator using GPT-3.5 and Vertex AI to summarize patient visits and encounters.
+\begin{itemize}[leftmargin=*, noitemsep, nolistsep]
+    \item Developed prompt templates fine-tuned for medical language understanding and hallucination mitigation.
+    \item Developed a mask layer for patient privacy and HIPAA regulation in collaboration with the medical team.
+    \item Deployed and tested summaries on anonymized EHR data with active feedback loops from clinical staff.
+\end{itemize}
+\textit{Tech Stack}: Vertex AI, Python, FastAPI, GCP Functions, Prompt Engineering
+
+
+%--------------------- CERTIFICATES -------------------%
+\section*{Certificates}
+\textbf{AWS Educate – Cloud Computing}
+\hfill
+\href{https://aws.amazon.com/education/awseducate/}{View} \\
+\textbf{AWS Educate – Getting Started with Networking}
+\hfill
+\href{https://aws.amazon.com/education/awseducate/}{View} \\
+\textbf{Certified Data Scientist Associate}
+\hfill
+\href{https://www.datacamp.com/certificate/DSA0012637301766}{View} \\[4pt]
+\textbf{Certified Data Scientist with Python}
+\hfill
+\href{https://www.datacamp.com/certificate/PDA0014190164566}{View} \\
+\textbf{Associate Data Engineer} \\
+
+%--------------------- ACHIEVEMENTS -------------------%
+\section*{Achievements}
+\textbf{FUSST Open House}
+\hfill \\
+Secured third position at the Foundation University Open House competition.
+
+\textbf{English-language Proficiency Tests (TOEIC)} \hfill \textit{(860/990)}
+
+%--------------------- LANGUAGES -------------------------%
+\section*{Languages}
+\textbf{English}: Business proficiency \\
+\textbf{Japanese}: Basic conversational \\
+\textbf{Urdu}: Native
+
+\end{document}

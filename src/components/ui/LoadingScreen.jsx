@@ -4,8 +4,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { OneEyeOwl } from "@/components/ui/OneEyeOwl";
+import { useTheme } from "@/context/ThemeContext";
 
 export function LoadingScreen() {
+    const { accent } = useTheme();
     const [progress, setProgress] = useState(0);
     const [phase, setPhase] = useState("INIT"); // INIT, SYNC, READY
     const [loadingText, setLoadingText] = useState("INITIALIZING_CORE");
@@ -59,7 +61,7 @@ export function LoadingScreen() {
             ctx.fillStyle = "rgba(5, 5, 5, 0.1)";
             ctx.fillRect(0, 0, width, height);
 
-            ctx.fillStyle = "rgba(20, 184, 166, 0.35)"; // Cyan Accent
+            ctx.fillStyle = `rgba(${accent.rgb}, 0.35)`; // Dynamic Accent
             ctx.font = "12px monospace";
 
             for (let i = 0; i < drops.length; i++) {
@@ -92,7 +94,7 @@ export function LoadingScreen() {
             clearInterval(intervalId);
             window.removeEventListener('resize', resize);
         };
-    }, []);
+    }, [accent]);
 
     return (
         <motion.div
@@ -112,11 +114,11 @@ export function LoadingScreen() {
 
                 {/* Custom One Eye Owl Logo Animation */}
                 <div className="relative mb-8">
-                    <OneEyeOwl className="w-48 h-48 md:w-64 md:h-64" color="#14b8a6" />
+                    <OneEyeOwl className="w-48 h-48 md:w-64 md:h-64" color={accent.value} />
 
                     {/* Floating Percentage Indicator */}
-                    <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-[#030303]/80 backdrop-blur px-3 py-1 rounded-full border border-teal-500/30">
-                        <span className="font-mono text-xl font-bold text-teal-400 tracking-tighter">
+                    <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-[#030303]/80 backdrop-blur px-3 py-1 rounded-full border border-cyan-accent/30">
+                        <span className="font-mono text-xl font-bold text-cyan-accent tracking-tighter" style={{ color: accent.value }}>
                             {Math.floor(progress)}%
                         </span>
                     </div>

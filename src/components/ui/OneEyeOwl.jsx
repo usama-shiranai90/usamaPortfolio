@@ -37,7 +37,7 @@ export const OneEyeOwl = ({ className, color = "#14b8a6" }) => {
                 xmlns="http://www.w3.org/2000/svg"
                 initial="hidden"
                 animate="visible"
-                className="drop-shadow-[0_0_15px_rgba(20,184,166,0.2)]"
+                className="drop-shadow-[0_0_15px_rgba(var(--theme-accent-rgb),0.2)]"
             >
                 {/* 1. Neural Network Node Connections (The "Brain/Head" Structure) */}
                 {/* Connecting nodes to form the owl silhouette */}

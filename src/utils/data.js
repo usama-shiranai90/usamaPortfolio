@@ -75,5 +75,32 @@ export const projects = [
         image: image1,
         github: "https://github.com",
         demo: "#"
+    },
+    {
+        title: "Dawakhana",
+        description: "A multi-modal data annotation and collection platform for herbal medicine research.",
+        tags: ["Data Collection", "Data Annotation", "AI/ML"],
+        category: "AI/ML",
+        image: image3,
+        github: "https://github.com/usama-shiranai90",
+        demo: "#"
+    },
+    {
+        title: "Lab Sync",
+        description: "Smart lab operations and research tracking platform centralizing progress reports, schedules, attendance, task assignments, and inventory. Deployed at Social Tech Lab, Kyushu University.",
+        tags: ["Lab Operations", "Management", "Collaboration"],
+        category: "Web Dev",
+        image: image2,
+        github: "https://github.com/usama-shiranai90",
+        demo: "#"
+    },
+    {
+        title: "ConferenceTracker",
+        description: "Organize academic conference submission cycles, tracking draft statuses, feedback, and deadlines.",
+        tags: ["Academic Tools", "React", "Next.js"],
+        category: "Web Dev",
+        image: image1,
+        github: "https://github.com/usama-shiranai90",
+        demo: "#"
     }
 ];
