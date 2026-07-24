@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from 'react';
 import { useState } from 'react';
 import Link from 'next/link';
 import logo from 'p/images/logo.png';
@@ -20,10 +21,10 @@ const socialLinks = [
 ];
 
 const navItems = [
-    { label: 'About', href: '/#about' },
-    { label: 'Experience', href: '/#experience' },
-    { label: 'Projects', href: '/#projects' },
-    { label: 'Contact', href: '/#contact' },
+    { label: 'About', href: '/#about', id: 'about' },
+    { label: 'Experience', href: '/#experience', id: 'experience' },
+    { label: 'Projects', href: '/#projects', id: 'projects' },
+    { label: 'Contact', href: '/#contact', id: 'contact' },
 ];
 
 // Animation Variants
@@ -55,7 +56,28 @@ const lineVariants = {
 
 export function Sidebar() {
     const [isSocialHovered, setIsSocialHovered] = useState(false);
+    const [activeSection, setActiveSection] = useState("");
     const { accent } = useTheme();
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollPos = window.scrollY + 250;
+            const ids = ["about", "research", "projects", "skills", "experience", "contact"];
+            let current = "";
+            for (let i = ids.length - 1; i >= 0; i--) {
+                const el = document.getElementById(ids[i]);
+                if (el && scrollPos >= el.offsetTop) {
+                    current = ids[i];
+                    break;
+                }
+            }
+            setActiveSection(current);
+        };
+
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        handleScroll();
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
     return (
         <motion.aside
@@ -101,20 +123,29 @@ export function Sidebar() {
 
                 <nav className="z-10 py-8">
                     <div className="flex flex-row gap-4 [writing-mode:vertical-lr] rotate-180 items-center">
-                        {[...navItems].reverse().map((item, i) => (
-                            <motion.div key={item.label} variants={itemVariants} custom={i} className="relative group">
-                                <Link
-                                    href={item.href}
-                                    className="relative text-[10px] font-body font-bold tracking-[0.25em] text-theme-text opacity-50 hover:text-cyan-accent hover:opacity-100 transition-all uppercase py-4 px-2 no-underline flex items-center justify-center bg-theme-bg/80 backdrop-blur-sm border border-transparent hover:border-cyan-accent/30 rounded-full"
-                                >
-                                    {item.label}
-                                </Link>
-                                {/* Hover Dot Indicator */}
-                                <span
-                                    className="absolute -right-4 top-1/2 -translate-y-1/2 w-1 h-1 bg-cyan-accent rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-[0_0_8px_rgba(var(--theme-accent-rgb),0.8)]"
-                                ></span>
-                            </motion.div>
-                        ))}
+                        {[...navItems].reverse().map((item, i) => {
+                            const isActive = activeSection === item.id;
+                            return (
+                                <motion.div key={item.label} variants={itemVariants} custom={i} className="relative group">
+                                    <Link
+                                        href={item.href}
+                                        className={`relative text-[10px] font-body font-bold tracking-[0.25em] transition-all uppercase py-4 px-2 no-underline flex items-center justify-center rounded-full backdrop-blur-sm ${
+                                            isActive
+                                                ? "text-cyan-accent bg-cyan-accent/10 border border-cyan-accent/40 shadow-glow-accent opacity-100"
+                                                : "text-theme-text opacity-50 hover:text-cyan-accent hover:opacity-100 bg-theme-bg/80 border border-transparent hover:border-cyan-accent/30"
+                                        }`}
+                                    >
+                                        {item.label}
+                                    </Link>
+                                    {/* Active / Hover Dot Indicator */}
+                                    <span
+                                        className={`absolute -right-4 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-cyan-accent rounded-full transition-all duration-300 shadow-[0_0_8px_rgba(var(--theme-accent-rgb),0.8)] ${
+                                            isActive ? "opacity-100 scale-125" : "opacity-0 group-hover:opacity-100"
+                                        }`}
+                                    />
+                                </motion.div>
+                            );
+                        })}
                     </div>
                 </nav>
             </div>

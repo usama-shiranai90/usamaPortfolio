@@ -4,6 +4,7 @@ import { createContext, useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { MotionConfig } from 'framer-motion'
 import { ThemeProvider } from '@/context/ThemeContext'
+import { LenisProvider } from '@/components/utilities/LenisProvider'
 
 function usePrevious(value) {
   let ref = useRef()
@@ -26,7 +27,9 @@ export function Providers({ children }) {
     <AppContext.Provider value={{ previousPathname, introShown, setIntroShown }}>
       <ThemeProvider>
         <MotionConfig reducedMotion="user">
-          {children}
+          <LenisProvider>
+            {children}
+          </LenisProvider>
         </MotionConfig>
       </ThemeProvider>
     </AppContext.Provider>

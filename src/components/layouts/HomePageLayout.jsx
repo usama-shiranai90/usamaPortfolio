@@ -15,6 +15,7 @@ import { useTheme } from '@/context/ThemeContext';
 import { translations } from '@/utils/translations';
 import { OneEyeOwl } from '@/components/ui/OneEyeOwl';
 import { ContactTerminal } from '@/components/ui/ContactTerminal';
+import { SectionProgressIndicator } from '@/components/ui/SectionProgressIndicator';
 import { AlertTriangle, X, CreditCard } from 'lucide-react';
 import avatar_1 from '/public/images/avatars/avatar_1.jpg';
 import { EASE, DURATION, VIEWPORT, springSnappy, sectionReveal, fadeUp, staggerContainer } from '@/lib/motion';
@@ -66,7 +67,34 @@ export default function HomePageLayout({ githubProjects = [] }) {
     const [activeCategory, setActiveCategory] = useState("All");
     const [currentPage, setCurrentPage] = useState(0);
     const [showWarning, setShowWarning] = useState(true);
+    const [activeSection, setActiveSection] = useState("hero");
     const prefersReducedMotion = useReducedMotion();
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollPos = window.scrollY + 250;
+            const sectionIds = ["hero", "about", "research", "projects", "skills", "experience", "contact"];
+            let current = "hero";
+
+            for (let i = sectionIds.length - 1; i >= 0; i--) {
+                const id = sectionIds[i];
+                if (id === "hero" && window.scrollY < 300) {
+                    current = "hero";
+                    break;
+                }
+                const el = document.getElementById(id);
+                if (el && scrollPos >= el.offsetTop) {
+                    current = id;
+                    break;
+                }
+            }
+            setActiveSection(current);
+        };
+
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        handleScroll();
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
     useEffect(() => {
         setCurrentPage(0);
@@ -134,14 +162,16 @@ export default function HomePageLayout({ githubProjects = [] }) {
             </AnimatePresence>
 
             {!isLoading && (
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: DURATION.slow, ease: EASE }}
-                    className="h-[calc(100dvh-3.5rem)] lg:h-screen overflow-y-scroll md:snap-y md:snap-mandatory scroll-smooth relative z-10 scrollbar-none"
-                >
+                <>
+                    <SectionProgressIndicator activeSection={activeSection} />
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: DURATION.slow, ease: EASE }}
+                        className="relative z-10 w-full"
+                    >
                         {/* --- HERO SECTION --- */}
-                        <section className="min-h-screen snap-start flex flex-col justify-center max-w-7xl mx-auto w-full pt-20 px-4 md:px-8">
+                        <section id="hero" className="min-h-screen flex flex-col justify-center max-w-7xl mx-auto w-full pt-20 pb-12 px-4 md:px-8 relative">
                             <motion.div
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={{ opacity: 1, y: 0 }}
@@ -264,11 +294,34 @@ export default function HomePageLayout({ githubProjects = [] }) {
                                         <CreditCard size={16} className="group-hover:text-cyan-accent transition-colors" />
                                     </Link>
                                 </motion.div>
+
+                                {/* Human Persona Scroll Prompt */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 1.2, duration: 0.8 }}
+                                    className="pt-12 flex items-center gap-3 text-theme-text/40 hover:text-cyan-accent cursor-pointer transition-colors group"
+                                    onClick={() => {
+                                        const about = document.getElementById('about');
+                                        if (about) about.scrollIntoView({ behavior: 'smooth' });
+                                    }}
+                                >
+                                    <div className="w-5 h-9 rounded-full border-2 border-current flex justify-center p-1">
+                                        <motion.div
+                                            animate={{ y: [0, 12, 0] }}
+                                            transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
+                                            className="w-1 h-2 bg-cyan-accent rounded-full"
+                                        />
+                                    </div>
+                                    <span className="font-mono text-xs tracking-widest uppercase group-hover:translate-x-1 transition-transform">
+                                        SCROLL TO EXPLORE ↓
+                                    </span>
+                                </motion.div>
                             </motion.div>
                         </section>
 
                         {/* About Section */}
-                        <section id="about" className="min-h-screen snap-start flex flex-col justify-center max-w-5xl mx-auto w-full px-4 md:px-8 py-24">
+                        <section id="about" className="min-h-screen flex flex-col justify-center max-w-5xl mx-auto w-full px-4 md:px-8 py-24 md:py-32 relative border-t border-theme-text/5">
                             <motion.h2
                                 variants={sectionReveal}
                                 initial="hidden"
@@ -384,7 +437,7 @@ export default function HomePageLayout({ githubProjects = [] }) {
                         </section>
 
                         {/* Research Section */}
-                        <section id="research" className="min-h-screen snap-start flex flex-col justify-center max-w-7xl mx-auto w-full px-4 md:px-8 py-20">
+                        <section id="research" className="min-h-screen flex flex-col justify-center max-w-7xl mx-auto w-full px-4 md:px-8 py-24 md:py-32 relative border-t border-theme-text/5">
                             <motion.h2
                                 variants={sectionReveal}
                                 initial="hidden"
@@ -420,7 +473,7 @@ export default function HomePageLayout({ githubProjects = [] }) {
                         </section>
 
                         {/* Projects Section */}
-                        <section id="projects" className="snap-start flex flex-col justify-center max-w-7xl mx-auto w-full px-4 md:px-8 py-20 min-h-[1600px] md:min-h-[1100px] lg:min-h-screen">
+                        <section id="projects" className="flex flex-col justify-center max-w-7xl mx-auto w-full px-4 md:px-8 py-24 md:py-32 min-h-screen relative border-t border-theme-text/5">
                             <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                                 <motion.h2
                                     variants={sectionReveal}
@@ -518,7 +571,7 @@ export default function HomePageLayout({ githubProjects = [] }) {
                         </section>
 
                         {/* Skills Section */}
-                        <section id="skills" className="min-h-screen snap-start flex flex-col justify-center max-w-7xl mx-auto w-full px-4 md:px-8 py-24">
+                        <section id="skills" className="min-h-screen flex flex-col justify-center max-w-7xl mx-auto w-full px-4 md:px-8 py-24 md:py-32 relative border-t border-theme-text/5">
                             <motion.h2
                                 variants={sectionReveal}
                                 initial="hidden"
@@ -532,16 +585,17 @@ export default function HomePageLayout({ githubProjects = [] }) {
                         </section>
 
                         {/* Experience Section */}
-                        <section id="experience" className="min-h-screen snap-start flex flex-col justify-center max-w-5xl mx-auto w-full px-4 md:px-8 py-24">
+                        <section id="experience" className="min-h-screen flex flex-col justify-center max-w-5xl mx-auto w-full px-4 md:px-8 py-24 md:py-32 relative border-t border-theme-text/5">
                             <h2 className="text-3xl md:text-5xl font-bold font-heading text-theme-text mb-8 md:mb-16">{t.experience.title} <span className="text-cyan-accent">{t.experience.highlight}</span></h2>
                             <Timeline items={experiences} />
                         </section>
 
                         {/* Contact Section */}
-                        <section id="contact" className="min-h-screen snap-start flex flex-col justify-center max-w-7xl mx-auto w-full px-4 md:px-8 py-24 pb-32">
+                        <section id="contact" className="min-h-screen flex flex-col justify-center max-w-7xl mx-auto w-full px-4 md:px-8 py-24 md:py-32 pb-32 relative border-t border-theme-text/5">
                             <ContactTerminal t={t} />
                         </section>
-                </motion.div>
+                    </motion.div>
+                </>
             )}
         </div>
     );

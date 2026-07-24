@@ -1,26 +1,34 @@
 "use client";
 
-import { motion, useMotionValue, useTransform, animate, useReducedMotion } from "framer-motion";
+import { motion, useMotionValue, useTransform, animate, useReducedMotion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { OneEyeOwl } from "@/components/ui/OneEyeOwl";
 import { useTheme } from "@/context/ThemeContext";
 import { EASE } from "@/lib/motion";
 
-const readoutFor = (p) => {
-    if (p < 30) return "LOADING_NEURO_SYMBOLIC_KERNELS";
-    if (p < 70) return "TRAINING_MIXTURE_OF_EXPERTS";
-    return "SYSTEM_READY";
+const GREETINGS = [
+    { text: "Welcome", sub: "Digital Portfolio Experience" },
+    { text: "こんにちは", sub: "ポートフォリオへようこそ" },
+    { text: "Salam", sub: "Software & AI Research" },
+    { text: "Usama Bukhari", sub: "Crafting Digital Architecture" },
+];
+
+const getHumanReadout = (p) => {
+    if (p < 35) return "Initializing personal portfolio experience...";
+    if (p < 75) return "Curating engineering projects & AI research...";
+    return "Welcome to Usama Bukhari's digital workspace.";
 };
 
 export function LoadingScreen({ onComplete }) {
     const { accent } = useTheme();
     const prefersReducedMotion = useReducedMotion();
     const [progress, setProgress] = useState(prefersReducedMotion ? 100 : 0);
+    const [greetingIndex, setGreetingIndex] = useState(0);
 
     const progressValue = useMotionValue(prefersReducedMotion ? 100 : 0);
     const barWidth = useTransform(progressValue, (v) => `${v}%`);
 
-    // Canvas for neural generation visualization
+    // Canvas for smooth fluid aurora light field
     const canvasRef = useRef(null);
 
     useEffect(() => {
@@ -30,8 +38,8 @@ export function LoadingScreen({ onComplete }) {
         }
 
         const controls = animate(progressValue, 100, {
-            duration: 3,
-            ease: "linear",
+            duration: 2.8,
+            ease: [0.22, 1, 0.36, 1],
             onUpdate: (v) => {
                 setProgress((prev) => {
                     const next = Math.floor(v);
@@ -44,128 +52,158 @@ export function LoadingScreen({ onComplete }) {
         return () => controls.stop();
     }, [prefersReducedMotion, progressValue, onComplete]);
 
-    // Canvas Matrix Rain / Grid Effect
+    // Greeting rotation timer
+    useEffect(() => {
+        if (prefersReducedMotion) return;
+        const interval = setInterval(() => {
+            setGreetingIndex((prev) => (prev + 1) % GREETINGS.length);
+        }, 700);
+        return () => clearInterval(interval);
+    }, [prefersReducedMotion]);
+
+    // Canvas Aurora Light Field Effect
     useEffect(() => {
         if (prefersReducedMotion) return;
 
         const canvas = canvasRef.current;
         if (!canvas) return;
         const ctx = canvas.getContext("2d");
-        let width = canvas.width = window.innerWidth;
-        let height = canvas.height = window.innerHeight;
+        let width = (canvas.width = window.innerWidth);
+        let height = (canvas.height = window.innerHeight);
 
-        const columns = Math.floor(width / 20);
-        const drops = Array(columns).fill(1).map(() => Math.random() * -100);
+        const orbs = Array.from({ length: 18 }, () => ({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            radius: Math.random() * 180 + 100,
+            vx: (Math.random() - 0.5) * 0.4,
+            vy: (Math.random() - 0.5) * 0.4,
+            alpha: Math.random() * 0.2 + 0.08,
+        }));
 
-        const draw = () => {
-            // Translucent black background for trail effect
-            ctx.fillStyle = "rgba(5, 5, 5, 0.12)";
-            ctx.fillRect(0, 0, width, height);
+        let animationFrameId;
+        const renderFrame = () => {
+            ctx.clearRect(0, 0, width, height);
 
-            ctx.fillStyle = `rgba(${accent.rgb}, 0.4)`; // Dynamic Accent, capped alpha
-            ctx.font = "12px monospace";
+            orbs.forEach((orb) => {
+                orb.x += orb.vx;
+                orb.y += orb.vy;
 
-            for (let i = 0; i < drops.length; i++) {
-                const text = String.fromCharCode(0x30A0 + Math.random() * 96); // Random Katakana
-                const x = i * 20;
-                const y = drops[i] * 20;
+                if (orb.x < -orb.radius) orb.x = width + orb.radius;
+                if (orb.x > width + orb.radius) orb.x = -orb.radius;
+                if (orb.y < -orb.radius) orb.y = height + orb.radius;
+                if (orb.y > height + orb.radius) orb.y = -orb.radius;
 
-                // Draw glyphs often enough to be visible, but still sparse
-                if (Math.random() > 0.9) {
-                    ctx.fillText(text, x, y);
-                }
+                const grad = ctx.createRadialGradient(
+                    orb.x,
+                    orb.y,
+                    0,
+                    orb.x,
+                    orb.y,
+                    orb.radius
+                );
+                grad.addColorStop(0, `rgba(${accent.rgb}, ${orb.alpha})`);
+                grad.addColorStop(1, "rgba(0,0,0,0)");
 
-                // Reset or move
-                if (y > height && Math.random() > 0.99) {
-                    drops[i] = 0;
-                }
-                drops[i]++;
-            }
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.arc(orb.x, orb.y, orb.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            animationFrameId = requestAnimationFrame(renderFrame);
         };
 
-        const intervalId = setInterval(draw, 50);
+        animationFrameId = requestAnimationFrame(renderFrame);
 
-        const resize = () => {
+        const handleResize = () => {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
         };
-        window.addEventListener('resize', resize);
+        window.addEventListener("resize", handleResize);
 
         return () => {
-            clearInterval(intervalId);
-            window.removeEventListener('resize', resize);
+            cancelAnimationFrame(animationFrameId);
+            window.removeEventListener("resize", handleResize);
         };
     }, [accent, prefersReducedMotion]);
 
-    const loadingText = readoutFor(progress);
+    const currentGreeting = GREETINGS[greetingIndex];
+    const readoutText = getHumanReadout(progress);
 
     return (
         <motion.div
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.8, ease: EASE }}
-            className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#030303] text-white overflow-hidden"
+            initial={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            exit={{ opacity: 0, scale: 1.05, filter: "blur(12px)" }}
+            transition={{ duration: 0.9, ease: EASE }}
+            className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#05070c] text-white overflow-hidden"
         >
-            {/* Background Matrix/Grid Canvas */}
-            <canvas ref={canvasRef} className="absolute inset-0 opacity-30" />
+            {/* Aurora Light Field Canvas */}
+            <canvas ref={canvasRef} className="absolute inset-0 opacity-80" />
 
-            {/* Vignette */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,black_100%)] opacity-80" />
+            {/* Ambient Radial Vignette */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_15%,rgba(5,7,12,0.95)_100%)] pointer-events-none" />
 
-            {/* Central Content */}
-            <div className="relative z-10 flex flex-col items-center justify-center w-full max-w-md px-6">
+            {/* Central Glassmorphic Stage Card */}
+            <div className="relative z-10 flex flex-col items-center justify-center w-full max-w-md mx-auto px-6">
+                <div className="w-full p-8 md:p-10 rounded-3xl bg-white/[0.04] border border-white/15 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.5)] flex flex-col items-center text-center space-y-6">
 
-                {/* Custom One Eye Owl Logo Animation */}
-                <div className="relative mb-8">
-                    <OneEyeOwl className="w-48 h-48 md:w-64 md:h-64" color={accent.value} />
-
-                    {/* Floating Percentage Indicator */}
-                    <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-[#030303]/80 backdrop-blur px-3 py-1 rounded-full border border-cyan-accent/30">
-                        <span className="font-mono text-xl font-bold text-cyan-accent tracking-tighter">
-                            {progress}%
-                        </span>
-                    </div>
-                </div>
-
-                {/* Text Readout */}
-                <div className="w-full space-y-2">
-                    <div className="flex justify-between items-end">
-                        <span className="font-mono text-xs text-cyan-accent/70 tracking-widest uppercase">
-                            {loadingText}
-                        </span>
-                        <span className="font-mono text-xs text-white/30">
-                            v2.5.0-RC
-                        </span>
-                    </div>
-
-                    {/* Technical Progress Bar */}
-                    <div className="h-1 w-full bg-white/5 overflow-hidden relative">
-                        <motion.div
-                            className="absolute top-0 left-0 h-full bg-cyan-accent"
-                            style={{ width: barWidth }}
+                    {/* Redesigned Organic OneEyeOwl Emblem */}
+                    <div className="relative flex items-center justify-center py-2">
+                        <OneEyeOwl
+                            className="w-44 h-44 md:w-56 md:h-56 relative z-10"
+                            color={accent.value}
                         />
-                        {/* Scanning highlight */}
-                        {!prefersReducedMotion && (
-                            <motion.div
-                                animate={{ left: ["-100%", "100%"] }}
-                                transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-                                className="absolute top-0 w-1/3 h-full bg-gradient-to-r from-transparent via-cyan-accent/50 to-transparent"
-                            />
-                        )}
                     </div>
 
-                    {/* Sub-text */}
-                    <div className="flex justify-between font-mono text-[10px] text-white/20 pt-1">
-                        <span>MEM: {Math.floor(progress * 12.4)}MB OK</span>
-                        <span>NET: DETECTED</span>
+                    {/* Dynamic Greeting Carousel */}
+                    <div className="h-16 flex flex-col items-center justify-center overflow-hidden w-full">
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={greetingIndex}
+                                initial={{ opacity: 0, y: 14, scale: 0.95 }}
+                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                exit={{ opacity: 0, y: -14, scale: 0.95 }}
+                                transition={{ duration: 0.45, ease: EASE }}
+                                className="flex flex-col items-center justify-center space-y-1"
+                            >
+                                <span className="font-heading text-2xl md:text-3xl font-bold tracking-tight text-white">
+                                    {currentGreeting.text}
+                                </span>
+                                <span className="font-body text-xs text-white/50 tracking-widest uppercase">
+                                    {currentGreeting.sub}
+                                </span>
+                            </motion.div>
+                        </AnimatePresence>
+                    </div>
+
+                    {/* Glass Progress Panel */}
+                    <div className="w-full space-y-3 pt-2">
+                        <div className="flex justify-between items-center text-xs">
+                            <span className="font-body text-cyan-accent/90 font-medium tracking-wide text-[11px] truncate max-w-[260px]">
+                                {readoutText}
+                            </span>
+                            <span className="font-mono text-sm font-bold text-white tracking-tight ml-2">
+                                {progress}%
+                            </span>
+                        </div>
+
+                        {/* Fluid Progress Bar */}
+                        <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden relative">
+                            <motion.div
+                                className="absolute top-0 left-0 h-full rounded-full shadow-glow-accent"
+                                style={{
+                                    width: barWidth,
+                                    backgroundColor: accent.value,
+                                }}
+                            />
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            {/* Corner Info */}
-            <div className="absolute bottom-8 left-8 font-mono text-[10px] text-white/10 hidden md:block">
-                SYS.ID: 0x938AA<br />
-                LOC: FUKUOKA, JP
+                {/* Subtitle Footer */}
+                <div className="mt-8 font-body text-[10px] sm:text-[11px] text-white/40 tracking-[0.25em] uppercase text-center">
+                    Syed Usama Bukhari &bull; Software Engineer & Research Student
+                </div>
             </div>
         </motion.div>
     );

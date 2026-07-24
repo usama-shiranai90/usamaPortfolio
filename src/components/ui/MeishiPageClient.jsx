@@ -5,31 +5,16 @@ import { Container } from '@/components/ui/Container';
 import { Meishi } from '@/components/ui/Meishi';
 import { useTheme } from '@/context/ThemeContext';
 import { toPng } from 'html-to-image';
-import { Download, Share2, Copy, Check, Camera } from 'lucide-react';
+import { Download, Share2, Copy, Check, Camera, RefreshCw, Sparkles, Cpu } from 'lucide-react';
 import { Omikuji } from '@/components/ui/Omikuji';
-
-// Data for the Meishi
-const MEISHI_DATA = {
-    name: "Syed Usama Bukhari",
-    furigana: "サイド ウサマ ブカリ",
-    title: "Software Engineer / Researcher",
-    titleJp: "ソフトウェアエンジニア / 研究員",
-    company: "Kyushu University",
-    companyJp: "国立大学法人 九州大学",
-    department: "SocialTech Lab",
-    departmentJp: "ソーシャルテックラボ",
-    postalCode: "819-0395",
-    address: "福岡県福岡市西区元岡744 ウエスト2号館 648",
-    addressEn: "W2-648, Ito Campus, Kyushu University\n744 Moto’oka, Nishi-Ku, Fukuoka 819-0395\nJapan",
-    building: "ウエスト2号館",
-    phone: "070-92##-####",
-    email: "bukhari.453@s.kyushu-u.ac.jp",
-    website: "usamabukhari.netlify.app"
-};
+import { JapaneseDocHeader } from '@/components/ui/JapaneseDocHeader';
+import { MEISHI_DATA } from '@/lib/japanese-docs-data';
 
 export default function MeishiPageClient() {
     const { accent } = useTheme();
     const [copied, setCopied] = useState(false);
+    const [styleMode, setStyleMode] = useState('washi'); // 'washi' | 'cyber'
+    const [isFlipped, setIsFlipped] = useState(false);
 
     const handleCopyEmail = () => {
         navigator.clipboard.writeText(MEISHI_DATA.email);
@@ -49,7 +34,7 @@ export default function MeishiPageClient() {
                 console.error('Share failed:', err);
             }
         } else {
-            handleCopyEmail(); // Fallback
+            handleCopyEmail();
         }
     };
 
@@ -77,13 +62,13 @@ END:VCARD`;
     };
 
     const handleDownloadImage = async () => {
-        const node = document.getElementById('meishi-container');
+        const node = document.getElementById('meishi-capture-node');
         if (!node) return;
 
         try {
             const dataUrl = await toPng(node, { cacheBust: true, pixelRatio: 3 });
             const link = document.createElement('a');
-            link.download = `meishi-${accent.name.toLowerCase()}.png`;
+            link.download = `meishi-${styleMode}-${isFlipped ? 'back' : 'front'}.png`;
             link.href = dataUrl;
             link.click();
         } catch (err) {
@@ -92,7 +77,7 @@ END:VCARD`;
     };
 
     return (
-        <div className="min-h-screen bg-[var(--theme-bg)] text-[var(--theme-text)] w-full flex flex-col relative overflow-hidden transition-colors duration-500">
+        <div className="min-h-[calc(100vh-3.5rem)] lg:min-h-screen text-[var(--theme-text)] w-full flex flex-col items-center justify-center relative overflow-hidden transition-colors duration-500 py-8 md:py-16">
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none"
                 style={{
@@ -101,40 +86,85 @@ END:VCARD`;
                 }}
             />
 
-            <Container className="flex-1 flex flex-col items-center justify-center py-20 relative z-10">
+            {/* Shared Centralized Document Header */}
+            <JapaneseDocHeader
+                activeDoc="meishi"
+                onDownloadVCard={generateVCard}
+                onCopyEmail={handleCopyEmail}
+                onShare={handleShare}
+                copied={copied}
+            />
+
+            <Container className="flex-1 w-full flex flex-col items-center justify-center text-center relative z-10">
 
                 {/* Header Section */}
-                <div className="text-center mb-16 space-y-4 max-w-2xl mx-auto">
+                <div className="text-center mb-8 space-y-3 max-w-2xl mx-auto">
                     <span
-                        className="text-xs font-bold tracking-[0.3em] uppercase block mb-2 transition-colors duration-300"
+                        className="text-xs font-bold tracking-[0.3em] uppercase block mb-1 transition-colors duration-300"
                         style={{ color: accent.value }}
                     >Digital Identity</span>
                     <h1 className="text-4xl md:text-5xl font-serif font-medium tracking-tight">
                         Meishi <span className="text-theme-muted font-light">名刺</span>
                     </h1>
                     <p className="text-sm opacity-60 leading-relaxed font-serif tracking-wide max-w-md mx-auto">
-                        A digital representation of professional affiliation and personal identity.
+                        An interactive digital business card with 3D tilt physics, dual aesthetic modes, and vCard export.
                     </p>
                 </div>
 
-                {/* Main Stage: The Card */}
-                <div className="w-full flex justify-center mb-8 md:mb-16 relative px-4">
-                    {/* Capture Target with constrained layout bounds to prevent 'ghost' overflow from scaling */}
-                    <div
-                        id="meishi-container"
-                        className="relative flex items-center justify-center w-[340px] h-[220px] sm:w-[500px] sm:h-[320px] md:w-[600px] md:h-[400px] lg:w-auto lg:h-auto p-4 rounded-xl"
-                    >
-                        <div className="scale-[0.55] sm:scale-[0.7] md:scale-[0.85] lg:scale-100 transition-transform duration-500 hover:scale-[0.57] sm:hover:scale-[0.72] md:hover:scale-[0.87] lg:hover:scale-[1.02] origin-center">
-                            {/* Bind to Global Accent */}
-                            <Meishi data={{ ...MEISHI_DATA, color: accent.value }} />
-                        </div>
+                {/* Card Aesthetic Switcher & Flip Controls */}
+                <div className="flex flex-wrap items-center justify-center gap-3 mb-6 relative z-20">
+                    <div className="flex items-center gap-1.5 p-1 bg-theme-card/80 border border-theme-border rounded-xl backdrop-blur-md shadow-md">
+                        <button
+                            onClick={() => setStyleMode('washi')}
+                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono transition-all duration-200 ${
+                                styleMode === 'washi'
+                                    ? "bg-amber-700/20 text-amber-500 border border-amber-600/40 font-bold"
+                                    : "text-theme-text/60 hover:text-theme-text"
+                            }`}
+                        >
+                            <Sparkles size={13} />
+                            <span>Washi Paper (和紙)</span>
+                        </button>
+
+                        <button
+                            onClick={() => setStyleMode('cyber')}
+                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono transition-all duration-200 ${
+                                styleMode === 'cyber'
+                                    ? "bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 font-bold shadow-glow-accent"
+                                    : "text-theme-text/60 hover:text-theme-text"
+                            }`}
+                        >
+                            <Cpu size={13} />
+                            <span>Cyber Glass (現代)</span>
+                        </button>
                     </div>
 
-                    {/* Floating Action for Capture (Mobile optimized position) */}
+                    {/* 3D Flip Toggle */}
+                    <button
+                        onClick={() => setIsFlipped(!isFlipped)}
+                        className="flex items-center gap-2 px-4 py-2 bg-theme-card border border-theme-border rounded-xl text-xs font-mono text-cyan-accent hover:border-cyan-accent/50 hover:bg-theme-card/80 transition-all shadow-md group"
+                    >
+                        <RefreshCw size={14} className="group-hover:rotate-180 transition-transform duration-500" />
+                        <span>Flip Card ({isFlipped ? "Back EN" : "Front JP"})</span>
+                    </button>
+                </div>
+
+                {/* Main Stage: The Card */}
+                <div className="w-full flex justify-center mb-6 md:mb-12 relative px-4">
+                    <div id="meishi-capture-node" className="relative p-2">
+                        <Meishi
+                            data={{ ...MEISHI_DATA, color: accent.value }}
+                            styleMode={styleMode}
+                            isFlipped={isFlipped}
+                            onFlip={setIsFlipped}
+                        />
+                    </div>
+
+                    {/* Floating Action for Capture */}
                     <button
                         onClick={handleDownloadImage}
-                        className="absolute right-4 top-0 lg:right-20 lg:top-10 p-3 bg-theme-card text-theme-text rounded-full shadow-lg hover:scale-110 transition-transform border border-theme-border tooltip-trigger z-20"
-                        title="Download as Image"
+                        className="absolute right-4 top-2 lg:right-16 lg:top-6 p-3 bg-theme-card text-theme-text rounded-full shadow-xl hover:scale-110 transition-transform border border-theme-border tooltip-trigger z-30"
+                        title="Download High-Res PNG Image"
                     >
                         <Camera size={20} />
                     </button>
@@ -144,20 +174,20 @@ END:VCARD`;
                 <div className="w-full max-w-[90vw] md:max-w-md mx-auto grid gap-3 md:gap-4 relative z-20">
                     <button
                         onClick={generateVCard}
-                        className="w-full group relative flex items-center justify-center gap-4 py-3 md:py-4 bg-[var(--theme-text)] text-[var(--theme-bg)] rounded-sm shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transition-all duration-300 overflow-hidden"
+                        className="w-full group relative flex items-center justify-center gap-4 py-3 md:py-4 bg-[var(--theme-text)] text-[var(--theme-bg)] rounded-xl shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transition-all duration-300 overflow-hidden"
                     >
                         <div
                             className="absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300"
                             style={{ backgroundColor: accent.value }}
                         />
                         <Download size={18} className="relative z-10" />
-                        <span className="relative z-10 text-xs font-bold tracking-[0.2em] uppercase">Save to Contacts</span>
+                        <span className="relative z-10 text-xs font-bold tracking-[0.2em] uppercase">Save to Contacts (vCard)</span>
                     </button>
 
                     <div className="grid grid-cols-2 gap-3 md:gap-4">
                         <button
                             onClick={handleCopyEmail}
-                            className="flex items-center justify-center gap-2 md:gap-3 py-3 bg-theme-card border border-theme-text/10 rounded-sm hover:bg-theme-text/5 hover:border-cyan-accent/50 transition-all duration-200 group"
+                            className="flex items-center justify-center gap-2 md:gap-3 py-3 bg-theme-card border border-theme-text/10 rounded-xl hover:bg-theme-text/5 hover:border-cyan-accent/50 transition-all duration-200 group"
                         >
                             {copied ? <Check size={16} className="text-green-500" /> : <Copy size={16} className="text-theme-text/40 group-hover:text-theme-text transition-colors" />}
                             <span className="text-[9px] md:text-[10px] font-bold tracking-[0.1em] md:tracking-[0.15em] uppercase text-theme-text/80 whitespace-nowrap">
@@ -166,7 +196,7 @@ END:VCARD`;
                         </button>
                         <button
                             onClick={handleShare}
-                            className="flex items-center justify-center gap-2 md:gap-3 py-3 bg-theme-card border border-theme-text/10 rounded-sm hover:bg-theme-text/5 hover:border-cyan-accent/50 transition-all duration-200 group"
+                            className="flex items-center justify-center gap-2 md:gap-3 py-3 bg-theme-card border border-theme-text/10 rounded-xl hover:bg-theme-text/5 hover:border-cyan-accent/50 transition-all duration-200 group"
                         >
                             <Share2 size={16} className="text-theme-text/40 group-hover:text-theme-text transition-colors" />
                             <span className="text-[9px] md:text-[10px] font-bold tracking-[0.1em] md:tracking-[0.15em] uppercase text-theme-text/80">
@@ -175,18 +205,15 @@ END:VCARD`;
                         </button>
                     </div>
 
-                    <div className="mt-4 md:mt-8 text-center">
+                    <div className="mt-4 text-center">
                         <p className="text-[9px] md:text-[10px] text-theme-muted tracking-widest uppercase">
                             Kyushu University &bull; Fukuoka, Japan
                         </p>
                     </div>
                 </div>
 
-                {/* --- Japanese Cultural Elements --- */}
-
-
-                {/* 2. Omikuji Widget */}
-                <div className="mt-12 xl:mt-24 w-full flex justify-center pb-20">
+                {/* Omikuji Widget */}
+                <div className="mt-12 xl:mt-20 w-full flex justify-center pb-12">
                     <div className="max-w-md w-full">
                         <Omikuji />
                     </div>
