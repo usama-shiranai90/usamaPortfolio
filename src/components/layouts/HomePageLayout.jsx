@@ -1,11 +1,11 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect, useContext } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { useState, useEffect, useContext, useMemo, useCallback } from "react";
 import { AppContext } from '@/app/providers';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ProjectCard } from '@/components/ui/ProjectCard';
+import { GithubProjectCard } from '@/components/ui/GithubProjectCard';
 import { ScientificBackground } from '@/components/ui/ScientificBackground';
 import { LoadingScreen } from '@/components/ui/LoadingScreen';
 import { PublicationCard } from '@/components/ui/PublicationCard';
@@ -17,12 +17,13 @@ import { OneEyeOwl } from '@/components/ui/OneEyeOwl';
 import { ContactTerminal } from '@/components/ui/ContactTerminal';
 import { AlertTriangle, X, CreditCard } from 'lucide-react';
 import avatar_1 from '/public/images/avatars/avatar_1.jpg';
+import { EASE, DURATION, VIEWPORT, springSnappy, sectionReveal, fadeUp, staggerContainer } from '@/lib/motion';
 
-import { projects, publications } from '@/utils/data';
+import { publications } from '@/utils/data';
 
 const publicationCategories = ["Journal", "Conference", "Poster"];
 
-const categories = ["All", "Web Dev", "Healthcare", "AI/ML", "Python"];
+const ITEMS_PER_PAGE = 6;
 
 const experiences = [
     {
@@ -55,7 +56,7 @@ const experiences = [
     }
 ];
 
-export default function HomePageLayout() {
+export default function HomePageLayout({ githubProjects = [] }) {
     const { introShown, setIntroShown } = useContext(AppContext);
     const { language } = useTheme(); // Get language
     const t = translations[language] || translations.en;
@@ -63,7 +64,21 @@ export default function HomePageLayout() {
     // If intro has been shown in this session (context), skip loading.
     const [isLoading, setIsLoading] = useState(!introShown);
     const [activeCategory, setActiveCategory] = useState("All");
+    const [currentPage, setCurrentPage] = useState(0);
     const [showWarning, setShowWarning] = useState(true);
+    const prefersReducedMotion = useReducedMotion();
+
+    useEffect(() => {
+        setCurrentPage(0);
+    }, [activeCategory]);
+
+    const finishIntro = useCallback(() => {
+        setIsLoading(false);
+        setIntroShown(true);
+        if (typeof window !== 'undefined') {
+            sessionStorage.setItem('introShown', 'true');
+        }
+    }, [setIntroShown]);
 
     useEffect(() => {
         // If context says it's done, ensure we stick to that (though initial state handles it)
@@ -75,24 +90,40 @@ export default function HomePageLayout() {
         const hasShownSession = typeof window !== 'undefined' && sessionStorage.getItem('introShown');
 
         if (hasShownSession) {
-            setIntroShown(true);
-            setIsLoading(false);
+            finishIntro();
         } else {
-            const timer = setTimeout(() => {
-                setIsLoading(false);
-                setIntroShown(true);
-                if (typeof window !== 'undefined') {
-                    sessionStorage.setItem('introShown', 'true');
-                }
-            }, 2500);
-
+            // Reduced-motion users skip the boot sequence entirely.
+            const timer = setTimeout(finishIntro, prefersReducedMotion ? 0 : 2500);
             return () => clearTimeout(timer);
         }
-    }, [introShown, setIntroShown]);
+    }, [introShown, finishIntro, prefersReducedMotion]);
 
-    const filteredProjects = activeCategory === "All"
-        ? projects
-        : projects.filter(p => p.category === activeCategory);
+    const dynamicCategories = useMemo(() => {
+        const allTags = githubProjects.flatMap(p => p.tags || []);
+        const tagCounts = allTags.reduce((acc, tag) => {
+            acc[tag] = (acc[tag] || 0) + 1;
+            return acc;
+        }, {});
+
+        const topTags = Object.entries(tagCounts)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 8)
+            .map(entry => entry[0]);
+
+        return ["All", ...topTags];
+    }, [githubProjects]);
+
+    const filteredProjects = useMemo(() => (
+        activeCategory === "All"
+            ? githubProjects
+            : githubProjects.filter(p => p.tags && p.tags.includes(activeCategory))
+    ), [githubProjects, activeCategory]);
+
+    const totalPages = Math.ceil(filteredProjects.length / ITEMS_PER_PAGE);
+    const currentProjects = useMemo(() => filteredProjects.slice(
+        currentPage * ITEMS_PER_PAGE,
+        (currentPage + 1) * ITEMS_PER_PAGE
+    ), [filteredProjects, currentPage]);
 
     return (
         <div className="relative text-theme-text transition-colors duration-500 min-h-screen">
@@ -106,20 +137,9 @@ export default function HomePageLayout() {
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ duration: 1 }}
-                    className="contents"
+                    transition={{ duration: DURATION.slow, ease: EASE }}
+                    className="h-[calc(100dvh-3.5rem)] lg:h-screen overflow-y-scroll md:snap-y md:snap-mandatory scroll-smooth relative z-10 scrollbar-none"
                 >
-
-
-                    <div
-                        className="h-screen overflow-y-scroll md:snap-y md:snap-mandatory scroll-smooth relative z-10"
-                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                    >
-                        <style jsx>{`
-                            div::-webkit-scrollbar {
-                                display: none;
-                            }
-                        `}</style>
                         {/* --- HERO SECTION --- */}
                         <section className="min-h-screen snap-start flex flex-col justify-center max-w-7xl mx-auto w-full pt-20 px-4 md:px-8">
                             <motion.div
@@ -250,8 +270,10 @@ export default function HomePageLayout() {
                         {/* About Section */}
                         <section id="about" className="min-h-screen snap-start flex flex-col justify-center max-w-5xl mx-auto w-full px-4 md:px-8 py-24">
                             <motion.h2
-                                initial={{ opacity: 0, x: -20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
+                                variants={sectionReveal}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={VIEWPORT}
                                 className="text-3xl md:text-5xl font-bold font-heading text-theme-text mb-8 md:mb-12"
                             >
                                 {t.about.title} <span className="text-cyan-accent">{t.about.highlight}</span>
@@ -259,8 +281,10 @@ export default function HomePageLayout() {
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                                 <motion.div
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
+                                    variants={fadeUp}
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    viewport={VIEWPORT}
                                     className="space-y-6 text-theme-text/80 leading-relaxed"
                                 >
                                     <p>
@@ -275,8 +299,10 @@ export default function HomePageLayout() {
                                 </motion.div>
 
                                 <motion.div
-                                    initial={{ opacity: 0, x: 20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
+                                    variants={fadeUp}
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    viewport={VIEWPORT}
                                     className="relative group h-[300px]"
                                 >
                                     {/* SYSTEM_STATS (Default View) */}
@@ -317,7 +343,7 @@ export default function HomePageLayout() {
 
                                     {/* IDENTITY_CARD (Hover View) */}
                                     <div className="absolute inset-0 z-20 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out transform group-hover:scale-100 scale-105 pointer-events-none group-hover:pointer-events-auto">
-                                        <div className="relative w-full h-full rounded-xl overflow-hidden border border-cyan-accent/30 bg-black/90 shadow-[0_0_30px_rgba(34,211,238,0.2)]">
+                                        <div className="relative w-full h-full rounded-xl overflow-hidden border border-cyan-accent/30 bg-black/90 shadow-glow-accent-lg">
                                             {/* Photo */}
                                             <Image
                                                 src={avatar_1}
@@ -360,8 +386,10 @@ export default function HomePageLayout() {
                         {/* Research Section */}
                         <section id="research" className="min-h-screen snap-start flex flex-col justify-center max-w-7xl mx-auto w-full px-4 md:px-8 py-20">
                             <motion.h2
-                                initial={{ opacity: 0, x: -20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
+                                variants={sectionReveal}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={VIEWPORT}
                                 className="text-3xl md:text-5xl font-bold font-heading text-theme-text mb-8 md:mb-12"
                             >
                                 {t.research.title} <span className="text-cyan-accent">{t.research.highlight}</span>
@@ -395,48 +423,107 @@ export default function HomePageLayout() {
                         <section id="projects" className="snap-start flex flex-col justify-center max-w-7xl mx-auto w-full px-4 md:px-8 py-20 min-h-[1600px] md:min-h-[1100px] lg:min-h-screen">
                             <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                                 <motion.h2
-                                    initial={{ opacity: 0, x: -20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
+                                    variants={sectionReveal}
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    viewport={VIEWPORT}
                                     className="text-3xl md:text-5xl font-bold font-heading text-theme-text">
                                     {t.projects.title} <span className="text-cyan-accent">{t.projects.highlight}</span>
                                 </motion.h2>
 
                                 {/* Category Filter */}
-                                <div className="flex flex-wrap gap-2">
-                                    {categories.map((cat, i) => (
-                                        <button
-                                            key={cat}
-                                            onClick={() => setActiveCategory(cat)}
-                                            className={`
-                                                px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all duration-300
-                                                ${activeCategory === cat
-                                                    ? 'bg-cyan-accent text-theme-bg font-bold shadow-[0_0_15px_rgba(0,255,255,0.3)]'
-                                                    : 'bg-theme-card border border-theme-text/10 text-theme-text/60 hover:border-cyan-accent/50 hover:text-cyan-accent'}
-                                            `}
+                                {githubProjects.length > 0 && (
+                                    <div className="flex flex-wrap gap-2">
+                                        {dynamicCategories.map((cat) => (
+                                            <button
+                                                key={cat}
+                                                onClick={() => setActiveCategory(cat)}
+                                                aria-pressed={activeCategory === cat}
+                                                className={`
+                                                    px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all duration-300
+                                                    ${activeCategory === cat
+                                                        ? 'bg-cyan-accent text-theme-bg font-bold shadow-glow-accent'
+                                                        : 'bg-theme-card border border-theme-text/10 text-theme-text/60 hover:border-cyan-accent/50 hover:text-cyan-accent'}
+                                                `}
+                                            >
+                                                {cat}
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="w-full relative min-h-[400px]">
+                                {githubProjects.length === 0 ? (
+                                    <div className="flex h-full min-h-[400px] flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-theme-border bg-theme-card/30 text-center font-mono backdrop-blur-sm">
+                                        <span className="text-xs uppercase tracking-[0.3em] text-theme-muted">[ SIGNAL_LOST ]</span>
+                                        <p className="text-sm text-theme-muted px-6">
+                                            No project telemetry received from GitHub.
+                                        </p>
+                                        <a
+                                            href="https://github.com/usama-shiranai90"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-xs uppercase tracking-widest text-cyan-accent hover:underline"
                                         >
-                                            {cat}
+                                            github.com/usama-shiranai90 →
+                                        </a>
+                                    </div>
+                                ) : (
+                                    <AnimatePresence mode="wait">
+                                        <motion.div
+                                            key={currentPage + activeCategory}
+                                            variants={staggerContainer}
+                                            initial="hidden"
+                                            animate="visible"
+                                            exit={{ opacity: 0, transition: { duration: DURATION.fast / 2 } }}
+                                            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                                        >
+                                            {currentProjects.map((project) => (
+                                                <motion.div key={project.id} variants={fadeUp} className="h-full min-h-[380px]">
+                                                    <GithubProjectCard project={project} />
+                                                </motion.div>
+                                            ))}
+                                        </motion.div>
+                                    </AnimatePresence>
+                                )}
+                            </div>
+
+                            {/* Pagination Dots */}
+                            {totalPages > 1 && (
+                                <div className="flex justify-center items-center gap-4 mt-12 relative z-10 pb-8">
+                                    {Array.from({ length: totalPages }).map((_, idx) => (
+                                        <button
+                                            key={idx}
+                                            onClick={() => setCurrentPage(idx)}
+                                            className={`relative block w-3 h-3 min-w-[12px] min-h-[12px] rounded-full transition-colors duration-300 ${
+                                                currentPage === idx
+                                                    ? 'bg-cyan-accent shadow-glow-accent'
+                                                    : 'bg-theme-text/40 hover:bg-theme-text/80'
+                                            }`}
+                                            aria-label={`Go to page ${idx + 1}`}
+                                            aria-current={currentPage === idx ? 'page' : undefined}
+                                        >
+                                            {currentPage === idx && (
+                                                <motion.span
+                                                    layoutId="projects-active-dot"
+                                                    transition={springSnappy}
+                                                    className="absolute -inset-1.5 rounded-full border border-cyan-accent/50"
+                                                />
+                                            )}
                                         </button>
                                     ))}
                                 </div>
-                            </div>
-
-                            <motion.div
-                                layout
-                                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-                            >
-                                <AnimatePresence mode="popLayout">
-                                    {filteredProjects.map((project) => (
-                                        <ProjectCard key={project.title} project={project} />
-                                    ))}
-                                </AnimatePresence>
-                            </motion.div>
+                            )}
                         </section>
 
                         {/* Skills Section */}
                         <section id="skills" className="min-h-screen snap-start flex flex-col justify-center max-w-7xl mx-auto w-full px-4 md:px-8 py-24">
                             <motion.h2
-                                initial={{ opacity: 0, x: -20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
+                                variants={sectionReveal}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={VIEWPORT}
                                 className="text-3xl md:text-5xl font-bold font-heading text-theme-text mb-8 md:mb-12"
                             >
                                 {t.skills.title} <span className="text-cyan-accent">{t.skills.highlight}</span>
@@ -454,7 +541,6 @@ export default function HomePageLayout() {
                         <section id="contact" className="min-h-screen snap-start flex flex-col justify-center max-w-7xl mx-auto w-full px-4 md:px-8 py-24 pb-32">
                             <ContactTerminal t={t} />
                         </section>
-                    </div>
                 </motion.div>
             )}
         </div>

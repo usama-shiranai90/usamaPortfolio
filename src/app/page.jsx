@@ -1,5 +1,5 @@
 import HomePageLayout from "@/components/layouts/HomePageLayout";
-// import {useTheme} from "next-themes";
+import { getGithubProjects } from "@/lib/github";
 
 export const metadata = {
     title: {
@@ -20,7 +20,9 @@ export const metadata = {
     },
 };
 
-export default function Home() {
-    // const { resolvedTheme, setTheme } = useTheme();
-    return <HomePageLayout />;
+export const revalidate = 86400;
+
+export default async function Home() {
+    const githubProjects = await getGithubProjects();
+    return <HomePageLayout githubProjects={githubProjects} />;
 }

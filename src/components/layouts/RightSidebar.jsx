@@ -9,6 +9,7 @@ import {
     SiRedux, SiLinux, SiRust
 } from 'react-icons/si';
 import { X } from 'lucide-react';
+import { EASE, DURATION, springGentle } from '@/lib/motion';
 
 const mainTools = [
     { icon: SiJavascript, label: "JavaScript", color: "text-[#F7DF1E]" },
@@ -20,7 +21,7 @@ const mainTools = [
 
 const extraTools = [
     { icon: SiReact, label: "React", color: "text-[#61DAFB]" },
-    { icon: SiNextdotjs, label: "Next.js", color: "text-white" },
+    { icon: SiNextdotjs, label: "Next.js", color: "text-theme-text" },
     { icon: SiTypescript, label: "TypeScript", color: "text-[#3178C6]" },
     { icon: SiNodedotjs, label: "Node.js", color: "text-[#339933]" },
     { icon: SiDocker, label: "Docker", color: "text-[#2496ED]" },
@@ -39,8 +40,8 @@ const sidebarVariants = {
         opacity: 1,
         x: 0,
         transition: {
-            duration: 0.8,
-            ease: [0.22, 1, 0.36, 1],
+            duration: DURATION.slow,
+            ease: EASE,
             staggerChildren: 0.1
         }
     }
@@ -76,19 +77,16 @@ export function RightSidebar() {
             variants={sidebarVariants}
             className="fixed right-0 top-0 h-screen w-24 flex flex-col items-center justify-center py-12 z-50 hidden lg:flex pointer-events-none"
         >
-            {/* Extended Hit Area for Mouse Interaction */}
-            <div className="absolute inset-y-0 right-0 w-48 pointer-events-auto -z-20" />
-
             {/* Top Line */}
             <motion.div
                 initial={{ height: 0 }}
                 animate={{ height: "30vh" }}
-                transition={{ duration: 1.5, ease: "easeInOut" }}
+                transition={{ duration: DURATION.slow, ease: EASE }}
                 className="w-[1px] bg-gradient-to-b from-transparent via-cyan-accent/20 to-transparent absolute top-0"
             />
 
             <div
-                className="flex flex-col items-center transition-all duration-500 ease-out pointer-events-auto z-10 relative mb-4"
+                className="w-full flex flex-col items-center transition-all duration-500 ease-out pointer-events-auto z-10 relative mb-4"
                 onMouseEnter={() => setIsSidebarHovered(true)}
                 onMouseLeave={() => setIsSidebarHovered(false)}
             >
@@ -102,21 +100,21 @@ export function RightSidebar() {
                             zIndex: mainTools.length - i, // Maintain stack order
                         }}
                         transition={{
-                            duration: 0.5,
-                            ease: [0.23, 1, 0.32, 1], // "Quart Out" - Silky smooth
+                            duration: DURATION.base,
+                            ease: EASE,
                             delay: isSidebarHovered ? i * 0.04 : 0 // Subtle ripple
                         }}
                         whileHover={{ scale: 1.2, x: -5, zIndex: 100, transition: { duration: 0.2 } }}
                         onMouseEnter={() => setHovered(i)}
                         onMouseLeave={() => setHovered(null)}
                         className={`
-                            relative w-10 h-10 rounded-full 
-                            bg-theme-bg/40 backdrop-blur-md 
-                            border border-theme-text/10 
-                            flex items-center justify-center 
+                            relative w-10 h-10 rounded-full
+                            bg-theme-bg/40 backdrop-blur-md
+                            border border-theme-border
+                            flex items-center justify-center
                             text-theme-text/40 transition-colors duration-300
                             hover:border-cyan-accent hover:bg-theme-bg
-                            hover:shadow-[0_0_15px_rgba(0,255,255,0.3)]
+                            hover:shadow-glow-accent
                             cursor-pointer group
                             ${Tool.color}
                         `}
@@ -130,13 +128,13 @@ export function RightSidebar() {
                                     initial={{ opacity: 0, x: 20, scale: 0.8 }}
                                     animate={{ opacity: 1, x: 0, scale: 1 }}
                                     exit={{ opacity: 0, x: 10, scale: 0.8 }}
-                                    className="absolute right-full mr-4 py-1.5 px-3 bg-[#0a0a0a] border border-cyan-accent/30 rounded-lg shadow-xl"
+                                    className="absolute right-full mr-4 py-1.5 px-3 bg-theme-elevated border border-cyan-accent/30 rounded-lg shadow-xl"
                                 >
                                     <span className="text-[10px] font-mono tracking-wider text-cyan-accent whitespace-nowrap">
                                         {Tool.label}
                                     </span>
                                     {/* Arrow */}
-                                    <div className="absolute top-1/2 -right-1 -mt-1 w-2 h-2 bg-[#0a0a0a] border-t border-r border-cyan-accent/30 transform rotate-45" />
+                                    <div className="absolute top-1/2 -right-1 -mt-1 w-2 h-2 bg-theme-elevated border-t border-r border-cyan-accent/30 transform rotate-45" />
                                 </motion.div>
                             )}
                         </AnimatePresence>
@@ -146,18 +144,21 @@ export function RightSidebar() {
 
             <div className="flex flex-col gap-4 mt-5 pointer-events-auto z-10 relative">
                 {/* Expand Button */}
-                <motion.div
+                <motion.button
+                    type="button"
+                    aria-expanded={isExpanded}
+                    aria-label={isExpanded ? "Hide extra tools" : "Show all tools"}
                     variants={itemVariants}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setIsExpanded(!isExpanded)}
                     className={`
-                        w-10 h-10 rounded-full 
-                        bg-cyan-accent/10 backdrop-blur-md 
-                        border flex items-center justify-center 
+                        w-10 h-10 rounded-full
+                        bg-cyan-accent/10 backdrop-blur-md
+                        border flex items-center justify-center
                         cursor-pointer transition-all duration-300
                         ${isExpanded
-                            ? "border-cyan-accent bg-cyan-accent text-theme-bg shadow-[0_0_20px_rgba(0,255,255,0.4)]"
+                            ? "border-cyan-accent bg-cyan-accent text-theme-bg shadow-glow-accent-lg"
                             : "border-cyan-accent/30 text-cyan-accent hover:border-cyan-accent"}
                     `}
                 >
@@ -183,7 +184,7 @@ export function RightSidebar() {
                             </motion.span>
                         )}
                     </AnimatePresence>
-                </motion.div>
+                </motion.button>
 
                 {/* Expanded Tools Panel */}
                 <AnimatePresence>
@@ -192,11 +193,11 @@ export function RightSidebar() {
                             initial={{ opacity: 0, x: 20, scale: 0.9 }}
                             animate={{ opacity: 1, x: 0, scale: 1 }}
                             exit={{ opacity: 0, x: 20, scale: 0.9 }}
-                            transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                            className="absolute right-16 bottom-0 w-64 p-4 bg-[#0a0a0a]/90 backdrop-blur-xl border border-cyan-accent/20 rounded-2xl shadow-2xl grid grid-cols-4 gap-3 z-50 origin-bottom-right"
+                            transition={springGentle}
+                            className="absolute right-16 bottom-0 w-64 p-4 bg-theme-elevated/90 backdrop-blur-xl border border-cyan-accent/20 rounded-2xl shadow-2xl grid grid-cols-4 gap-3 z-50 origin-bottom-right"
                         >
                             {/* Decorative Header */}
-                            <div className="col-span-4 flex justify-between items-center mb-2 pb-2 border-b border-white/5">
+                            <div className="col-span-4 flex justify-between items-center mb-2 pb-2 border-b border-theme-border">
                                 <span className="text-[10px] font-mono text-cyan-accent/50 uppercase tracking-widest">
                                     Full Arsenal
                                 </span>
@@ -213,12 +214,12 @@ export function RightSidebar() {
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: i * 0.03 }}
                                     whileHover={{ scale: 1.2, zIndex: 10 }}
-                                    className="relative group flex flex-col items-center justify-center gap-1 p-2 rounded-lg hover:bg-white/5 transition-colors"
+                                    className="relative group flex flex-col items-center justify-center gap-1 p-2 rounded-lg hover:bg-theme-text/5 transition-colors"
                                 >
                                     <Tool.icon className={`w-5 h-5 ${Tool.color} opacity-70 group-hover:opacity-100 transition-opacity`} />
 
                                     {/* Float Tooltip */}
-                                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-cyan-accent text-black text-[9px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-cyan-accent text-theme-bg text-[9px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
                                         {Tool.label}
                                         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full border-4 border-transparent border-t-cyan-accent" />
                                     </div>
@@ -233,7 +234,7 @@ export function RightSidebar() {
             <motion.div
                 initial={{ height: 0 }}
                 animate={{ height: "30vh" }}
-                transition={{ duration: 1.5, ease: "easeInOut" }}
+                transition={{ duration: DURATION.slow, ease: EASE }}
                 className="w-[1px] bg-gradient-to-b from-theme-text/10 to-transparent absolute bottom-0"
             />
         </motion.aside>

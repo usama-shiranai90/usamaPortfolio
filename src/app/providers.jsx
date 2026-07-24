@@ -2,6 +2,7 @@
 
 import { createContext, useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
+import { MotionConfig } from 'framer-motion'
 import { ThemeProvider } from '@/context/ThemeContext'
 
 function usePrevious(value) {
@@ -24,7 +25,9 @@ export function Providers({ children }) {
   return (
     <AppContext.Provider value={{ previousPathname, introShown, setIntroShown }}>
       <ThemeProvider>
-        {children}
+        <MotionConfig reducedMotion="user">
+          {children}
+        </MotionConfig>
       </ThemeProvider>
     </AppContext.Provider>
   )

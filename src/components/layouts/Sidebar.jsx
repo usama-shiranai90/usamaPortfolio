@@ -4,8 +4,9 @@ import { useState } from 'react';
 import Link from 'next/link';
 import logo from 'p/images/logo.png';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Github, Linkedin, Mail, FileText, Share2, Twitter, Globe, Send, Bookmark, CreditCard } from 'lucide-react';
+import { Github, Linkedin, FileText, Share2, Twitter, Globe, Send, Bookmark, CreditCard } from 'lucide-react';
 import { useTheme } from '@/context/ThemeContext';
+import { EASE, DURATION } from '@/lib/motion';
 
 const socialLinks = [
     { icon: Github, href: 'https://github.com/usama-shiranai90', label: 'GitHub' },
@@ -15,8 +16,7 @@ const socialLinks = [
     { icon: Globe, href: 'https://scholar.google.com/citations?user=n5GPnEIAAAAJ&hl=en', label: 'Scholar' },
     { icon: FileText, href: '/resume', label: 'Resume' },
     { icon: CreditCard, href: '/meishi', label: 'Meishi' },
-    { icon: FileText, href: '/keirekisho', label: 'Keirekisho' },
-    { icon: Send, href: 'mailto:john@example.com', label: 'Contact' },
+    { icon: Send, href: 'mailto:syedusamahussain@addo.ai', label: 'Contact' },
 ];
 
 const navItems = [
@@ -33,9 +33,9 @@ const sidebarVariants = {
         opacity: 1,
         x: 0,
         transition: {
-            duration: 1,
+            duration: DURATION.slow,
             staggerChildren: 0.15,
-            ease: [0.22, 1, 0.36, 1] // Custom cubic bezier for smooth "mechanical" feel
+            ease: EASE
         }
     }
 };
@@ -49,7 +49,7 @@ const lineVariants = {
     hidden: { scaleY: 0, originY: 0 },
     visible: {
         scaleY: 1,
-        transition: { duration: 1.5, ease: "easeInOut" }
+        transition: { duration: DURATION.slow, ease: EASE }
     }
 };
 
@@ -64,9 +64,6 @@ export function Sidebar() {
             variants={sidebarVariants}
             className="fixed bg-theme-bg left-0 top-0 h-screen w-24 flex flex-col items-center justify-between py-12 z-50 hidden lg:flex pointer-events-none"
         >
-            {/* Background blur for better visibility */}
-            <div className="absolute inset-0 w-full h-full bg-theme-bg/0 backdrop-blur-[2px] -z-10" />
-
             {/* 1. Logo Section */}
             <motion.div
                 variants={itemVariants}
@@ -114,10 +111,7 @@ export function Sidebar() {
                                 </Link>
                                 {/* Hover Dot Indicator */}
                                 <span
-                                    className="absolute -right-4 top-1/2 -translate-y-1/2 w-1 h-1 bg-cyan-accent rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                                    style={{
-                                        boxShadow: `0 0 8px rgba(${accent.rgb}, 0.8)`
-                                    }}
+                                    className="absolute -right-4 top-1/2 -translate-y-1/2 w-1 h-1 bg-cyan-accent rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-[0_0_8px_rgba(var(--theme-accent-rgb),0.8)]"
                                 ></span>
                             </motion.div>
                         ))}
@@ -135,15 +129,12 @@ export function Sidebar() {
                     {/* Trigger Button - Permanent Hub */}
                     <div
                         className={`
-                            relative z-20 w-12 h-12 
-                            flex items-center justify-center 
-                            rounded-xl bg-theme-card border border-theme-text/10 
+                            relative z-20 w-12 h-12
+                            flex items-center justify-center
+                            rounded-xl bg-theme-card border border-theme-border
                             transition-all duration-300
-                            ${isSocialHovered ? 'border-cyan-accent text-cyan-accent' : 'text-theme-text opacity-50'}
+                            ${isSocialHovered ? 'border-cyan-accent text-cyan-accent shadow-glow-accent' : 'text-theme-text opacity-50'}
                         `}
-                        style={isSocialHovered ? {
-                            boxShadow: `0 0 20px rgba(${accent.rgb}, 0.2)`
-                        } : {}}
                     >
                         <Share2 size={18} strokeWidth={1.5} />
                     </div>
@@ -155,7 +146,7 @@ export function Sidebar() {
                                 initial={{ opacity: 0, x: -15, width: 0 }}
                                 animate={{ opacity: 1, x: 0, width: "auto" }}
                                 exit={{ opacity: 0, x: -15, width: 0 }}
-                                transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
+                                transition={{ duration: DURATION.fast, ease: EASE }}
                                 className="absolute left-10 top-1/2 -translate-y-1/2 ml-4 flex items-center z-10"
                             >
                                 {/* Visual Connector Bridge */}
@@ -168,8 +159,8 @@ export function Sidebar() {
                                 {/* The Glass Drawer Content */}
                                 <div className="
                                     flex items-center gap-1 p-2
-                                    bg-theme-card/95 backdrop-blur-xl 
-                                    border border-theme-text/10 rounded-xl shadow-2xl overflow-hidden
+                                    bg-theme-card/95 backdrop-blur-xl
+                                    border border-theme-border rounded-xl shadow-2xl overflow-hidden
                                 ">
                                     {socialLinks.map((link, index) => {
                                         const isInternal = link.href.startsWith('/');

@@ -10,90 +10,58 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        heading: ['syne-Medium', 'sans-serif'],
-        body: ['syne-Regular', 'sans-serif'],
+        heading: ['var(--font-syne)', 'sans-serif'],
+        body: ['var(--font-syne)', 'sans-serif'],
         // Aliases for backward compatibility
-        syne: ['syne-Medium', 'sans-serif'],
-        sans: ['syne-Regular', 'sans-serif'],
+        syne: ['var(--font-syne)', 'sans-serif'],
+        sans: ['var(--font-syne)', 'sans-serif'],
       },
 
       colors: {
-        catalystDark: {
-          darkest: `var(--ex-dark-color)`,
-          dark: `var(--d-dark-color)`,
-          medium: `var(--sm-dark-color)`,
-        },
-
-        shaddy: {
-          Skobeloff: `var(--l_Skobeloff-color)`,
-          MidnightGreenEagleGreen: `var(--l_MidnightGreenEagleGreen-color)`,
-          x_MidnightGreenEagleGreen: `var(--lx_MidnightGreenEagleGreen-color)`,
-          xx_MidnightGreenEagleGreen: `var(--lxx_MidnightGreenEagleGreen-color)`,
-          Charcoal: `var(--l_Charcoal-color)`,
-          PrussianBlue: `var(--PrussianBlue-color)`,
-          SpaceCadet: `var(--SpaceCadet-color)`,
-          DarkPurple: `var(--DarkPurple-color)`,
-          PalatinatePurple: `var(--PalatinatePurple-color)`,
-
-          l_Skobeloff: `var(--l_Skobeloff-color)`,
-          l_MidnightGreenEagleGreen: `var(--l_MidnightGreenEagleGreen-color)`,
-          lx_MidnightGreenEagleGreen: `var(--lx_MidnightGreenEagleGreen-color)`,
-          lxx_MidnightGreenEagleGreen: `var(--lxx_MidnightGreenEagleGreen-color)`,
-          l_Charcoal: `var(--l_Charcoal-color)`,
-        },
-
-        bluesh: {
-          dark: `var(--dark-color)`,
-          oxfordBlue: `var(--oxfordBlue-color)`,
-          midnightBlue: `var(--midnightBlue-color)`,
-          navyBlue: `var(--navyBlue-color)`,
-          dukeBlue: `var(--dukeBlue-color)`,
-          richBlack: `var(--richBlack-color)`,
-          blueJean: `var(--blueJean-color)`,
-          blueCrayola: `var(--blueCrayola-color)`,
-          sapBlue: `var(--sapBlue-color)`,
-          prussianBlue: `var(--prussianBlue-color)`,
-        },
-
-        light: {
-          cultured: `var(--cultured-color)`,
-          darkCultured: `var(--cultured-d-color)`,
-          gainsboro: `var(--gainsboro-color)`,
-          lightGray: `var(--light-gray-color)`,
-        },
-
-        // Dynamic Theme Colors
+        // Dynamic Theme Colors (runtime CSS vars set by src/lib/themes.js).
+        // Channel vars (--theme-*-rgb) let `<alpha-value>` opacity modifiers work.
         theme: {
-          bg: 'var(--theme-bg)',
-          text: 'var(--theme-text)',
+          bg: 'rgb(var(--theme-bg-rgb) / <alpha-value>)',
+          text: 'rgb(var(--theme-text-rgb) / <alpha-value>)',
+          card: 'rgb(var(--theme-card-rgb) / <alpha-value>)',
+          elevated: 'rgb(var(--theme-card-elevated-rgb) / <alpha-value>)',
+          // Semantic tokens derived from the text channel.
+          muted: 'rgb(var(--theme-text-rgb) / 0.6)',
+          border: 'rgb(var(--theme-text-rgb) / 0.12)',
           accent: 'rgba(var(--theme-accent-rgb), <alpha-value>)',
-          card: 'var(--theme-card)',
         },
         // Aliases for backward compatibility (mapped to theme)
         dark: {
-          bg: 'var(--theme-bg)',
-          card: 'var(--theme-card)',
+          bg: 'rgb(var(--theme-bg-rgb) / <alpha-value>)',
+          card: 'rgb(var(--theme-card-rgb) / <alpha-value>)',
           accent: 'rgba(var(--theme-accent-rgb), <alpha-value>)',
         },
         'cyan-accent': 'rgba(var(--theme-accent-rgb), <alpha-value>)',
       },
 
       backgroundImage: {
-        Simple: `linear-gradient(transparent, transparent), linear-gradient(#fff, #fff)`,
-        Simpleh: 'linear-gradient(transparent, transparent), linear-gradient(#051923, #051923)',
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-
-        nvSimple: `linear-gradient(transparent, transparent), linear-gradient(#fff, #fff)`,
-        nvSimpleh: 'linear-gradient(transparent, transparent), linear-gradient(#051923, #051923)',
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
       },
 
-      screens: {
-        sm: '640px',
-        md: '768px',
-        lg: '1024px',
-        xl: '1280px',
-        '2xl': '1536px',
+      boxShadow: {
+        'glow-accent': '0 0 15px rgba(var(--theme-accent-rgb), 0.2)',
+        'glow-accent-lg': '0 0 30px rgba(var(--theme-accent-rgb), 0.3)',
+      },
+
+      keyframes: {
+        panGrid: {
+          '0%': { backgroundPosition: '0 0' },
+          '100%': { backgroundPosition: '16px 16px' },
+        },
+        scanLine: {
+          '0%': { transform: 'translateY(-100%)' },
+          '100%': { transform: 'translateY(100%)' },
+        },
+      },
+
+      animation: {
+        'pan-grid': 'panGrid 4s linear infinite',
+        scan: 'scanLine 2.5s ease-in-out infinite',
       },
     },
 
@@ -106,11 +74,11 @@ module.exports = {
       '2xl': ['1.5rem', { lineHeight: '2rem' }],
       '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
       '4xl': ['2rem', { lineHeight: '2.5rem' }],
-      '5xl': ['3rem', { lineHeight: '3.5rem' }],
-      '6xl': ['3.75rem', { lineHeight: '1' }],
-      '7xl': ['4.5rem', { lineHeight: '1' }],
-      '8xl': ['6rem', { lineHeight: '1' }],
-      '9xl': ['8rem', { lineHeight: '1' }],
+      '5xl': ['clamp(2.5rem, 1.9rem + 2.5vw, 3rem)', { lineHeight: '1.15' }],
+      '6xl': ['clamp(3rem, 2.2rem + 3vw, 3.75rem)', { lineHeight: '1.1' }],
+      '7xl': ['clamp(3.5rem, 2.6rem + 4vw, 4.5rem)', { lineHeight: '1.05' }],
+      '8xl': ['clamp(4.5rem, 3.2rem + 5.5vw, 6rem)', { lineHeight: '1' }],
+      '9xl': ['clamp(5.5rem, 3.8rem + 7vw, 8rem)', { lineHeight: '1' }],
     },
 
     typography: typographyStyles,

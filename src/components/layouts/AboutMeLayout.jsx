@@ -4,10 +4,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import clsx from 'clsx';
-import dynamic from 'next/dynamic';
 import { Github, Linkedin, Mail, ArrowDown } from 'lucide-react';
-
-const MotionDiv = dynamic(() => import('framer-motion').then(mod => mod.motion.div), { ssr: false });
 
 import { Container } from '@/components/ui/Container';
 import portraitImage from 'p/images/avatars/portrait.jpg';
@@ -24,20 +21,14 @@ function SocialLink({ className, href, children, icon: Icon }) {
         >
             <Link
                 href={href}
-                className="group flex text-sm font-medium text-zinc-800 transition hover:text-cyan-accent dark:text-zinc-200 dark:hover:text-cyan-accent"
+                className="group flex text-sm font-medium text-theme-text transition hover:text-cyan-accent"
             >
-                <Icon className="h-6 w-6 flex-none fill-zinc-500 transition group-hover:fill-cyan-accent" />
+                <Icon className="h-6 w-6 flex-none fill-theme-muted transition group-hover:fill-cyan-accent" />
                 <span className="ml-4">{children}</span>
             </Link>
         </motion.li>
     );
 }
-
-export const metadata = {
-    title: 'About',
-    description:
-        'I’m Usama Bukhari. a software engineer and research student at Kyushu University - Japan.',
-};
 
 export default function AboutMeLayout() {
     const text1 = `I've always loved creating things, and my journey into software development started with web development. During my early years in university, I was all about building interactive websites and mastering front-end design. But everything changed in my 6th semester when I took a course in Data Science and Probability. That's when I discovered my passion for data analysis and algorithms.`;
@@ -56,7 +47,7 @@ export default function AboutMeLayout() {
             >
                 <motion.div className="lg:pl-20" initial={{ x: -50, opacity: 0 }} animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 0.6 }}>
-                    <h2 className="owl-ni-title font-heading text-zinc-800 dark:text-zinc-100 mb-5">
+                    <h2 className="font-heading font-semibold uppercase text-3xl md:text-4xl lg:text-5xl text-theme-text mb-5 after:content-[''] after:block after:w-2/12 after:h-2 after:rounded-full after:bg-cyan-accent after:opacity-80 after:my-1">
                         Who am <span className="text-cyan-accent">I</span>?
                     </h2>
                     <motion.div
@@ -69,21 +60,21 @@ export default function AboutMeLayout() {
                             src={portraitImage}
                             alt="Portrait of Usama Bukhari"
                             sizes="(min-width: 1024px) 32rem, 20rem"
-                            className="aspect-square rounded-2xl bg-zinc-100 object-cover dark:bg-zinc-800"
+                            className="aspect-square rounded-2xl bg-theme-card object-cover"
                         />
                     </motion.div>
                 </motion.div>
                 <motion.div className="lg:order-first lg:row-span-2" initial={{ x: 50, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.6 }}>
-                    <h1 className="text-4xl font-bold font-heading tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
+                    <h1 className="text-4xl font-bold font-heading tracking-tight text-theme-text sm:text-5xl">
                         I’m <span className="text-cyan-accent capitalize">Usama Bukhari</span>.
                     </h1>
-                    <h2 className="text-2xl font-bold font-heading tracking-tight text-zinc-800 sm:text-3xl dark:text-zinc-100 capitalize">
+                    <h2 className="text-2xl font-bold font-heading tracking-tight text-theme-text sm:text-3xl capitalize">
                         A software engineer and research student at Kyushu University - Japan.
                     </h2>
 
                     <motion.div 
-                        className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400"
+                        className="mt-6 space-y-7 text-base text-theme-muted"
                         variants={{
                             hidden: { opacity: 0 },
                             show: {
@@ -133,7 +124,7 @@ export default function AboutMeLayout() {
                         <SocialLink
                             href="mailto:bukhari.453@s.kyushu-u.ac.jp"
                             icon={Mail}
-                            className="mt-8 border-t border-zinc-100 pt-8 dark:border-zinc-700/40"
+                            className="mt-8 border-t border-theme-border pt-8"
                         >
                             bukhari.453@s.kyushu-u.ac.jp
                         </SocialLink>
@@ -148,10 +139,10 @@ export default function AboutMeLayout() {
                 transition={{ duration: 0.5 }}
             >
                 <Button href="/resume" download="UsamaBukhari-Resume.pdf" variant="secondary"
-                    className="group mt-6 w-1/2 owl-p-button owl-animate-out -dark-side-move">
+                    className="group mt-6 w-1/2 rounded border-2 border-current px-6 py-2 transition duration-300 ease-out hover:scale-105 hover:opacity-90">
                     View Resume
                     <ArrowDown
-                        className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50" />
+                        className="h-4 w-4 stroke-theme-muted transition group-hover:stroke-cyan-accent group-active:stroke-cyan-accent" />
                 </Button>
 
             </motion.div>

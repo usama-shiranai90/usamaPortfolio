@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { QrCode, Mail, MapPin, Phone, Globe, Smartphone } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Mail, Phone } from 'lucide-react';
 import Image from 'next/image';
-import { useTheme } from '@/context/ThemeContext';
+import { springGentle } from '@/lib/motion';
 import { Hanko } from './Hanko';
 
 export function Meishi({ data }) {
@@ -28,10 +28,17 @@ export function Meishi({ data }) {
         website = "one-eye-owl.res",
     } = data || {};
 
-    const activeColor = data.color || "#A6192E";
+    const activeColor = data?.color || "#A6192E";
 
     const handleFlip = () => {
         setIsFlipped(!isFlipped);
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleFlip();
+        }
     };
 
     return (
@@ -39,12 +46,18 @@ export function Meishi({ data }) {
             <div
                 className="relative w-[550px] aspect-[91/55] cursor-pointer group"
                 onClick={handleFlip}
+                onKeyDown={handleKeyDown}
+                role="button"
+                tabIndex={0}
+                aria-pressed={isFlipped}
+                aria-label="Flip business card"
                 style={{ transformStyle: 'preserve-3d' }}
             >
                 <motion.div
-                    className="w-full h-full relative transition-all duration-1000 ease-[cubic-bezier(0.2,0.8,0.2,1)]"
+                    className="w-full h-full relative"
                     animate={{ rotateY: isFlipped ? 180 : 0 }}
                     initial={{ rotateY: 0 }}
+                    transition={springGentle}
                     style={{ transformStyle: 'preserve-3d' }}
                 >
                     {/* 
@@ -209,6 +222,7 @@ export function Meishi({ data }) {
                                             src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://${website}&color=${activeColor.replace('#', '')}&bgcolor=ffffff`}
                                             alt="QR Code"
                                             fill
+                                            crossOrigin="anonymous"
                                             className="mix-blend-multiply opacity-90 object-contain"
                                             unoptimized
                                         />

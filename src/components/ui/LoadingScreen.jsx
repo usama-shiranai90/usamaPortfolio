@@ -1,52 +1,53 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
+import { motion, useMotionValue, useTransform, animate, useReducedMotion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { OneEyeOwl } from "@/components/ui/OneEyeOwl";
 import { useTheme } from "@/context/ThemeContext";
+import { EASE } from "@/lib/motion";
 
-export function LoadingScreen() {
+const readoutFor = (p) => {
+    if (p < 30) return "LOADING_NEURO_SYMBOLIC_KERNELS";
+    if (p < 70) return "TRAINING_MIXTURE_OF_EXPERTS";
+    return "SYSTEM_READY";
+};
+
+export function LoadingScreen({ onComplete }) {
     const { accent } = useTheme();
-    const [progress, setProgress] = useState(0);
-    const [phase, setPhase] = useState("INIT"); // INIT, SYNC, READY
-    const [loadingText, setLoadingText] = useState("INITIALIZING_CORE");
+    const prefersReducedMotion = useReducedMotion();
+    const [progress, setProgress] = useState(prefersReducedMotion ? 100 : 0);
+
+    const progressValue = useMotionValue(prefersReducedMotion ? 100 : 0);
+    const barWidth = useTransform(progressValue, (v) => `${v}%`);
 
     // Canvas for neural generation visualization
     const canvasRef = useRef(null);
 
     useEffect(() => {
-        const duration = 3000; // 3.0s total load
-        const startTime = Date.now();
+        if (prefersReducedMotion) {
+            onComplete?.();
+            return;
+        }
 
-        const interval = setInterval(() => {
-            const elapsed = Date.now() - startTime;
-            const p = Math.min((elapsed / duration) * 100, 100);
+        const controls = animate(progressValue, 100, {
+            duration: 3,
+            ease: "linear",
+            onUpdate: (v) => {
+                setProgress((prev) => {
+                    const next = Math.floor(v);
+                    return next === prev ? prev : next;
+                });
+            },
+            onComplete: () => onComplete?.(),
+        });
 
-            setProgress(p);
-
-            // Phase logic
-            if (p < 30) {
-                setLoadingText("LOADING_NEURO_SYMBOLIC_KERNELS");
-                setPhase("INIT");
-            } else if (p < 70) {
-                setLoadingText("TRAINING_MIXTURE_OF_EXPERTS");
-                setPhase("SYNC");
-            } else {
-                setLoadingText("SYSTEM_READY");
-                setPhase("READY");
-            }
-
-            if (p >= 100) {
-                clearInterval(interval);
-            }
-        }, 16); // 60fps update
-
-        return () => clearInterval(interval);
-    }, []);
+        return () => controls.stop();
+    }, [prefersReducedMotion, progressValue, onComplete]);
 
     // Canvas Matrix Rain / Grid Effect
     useEffect(() => {
+        if (prefersReducedMotion) return;
+
         const canvas = canvasRef.current;
         if (!canvas) return;
         const ctx = canvas.getContext("2d");
@@ -58,10 +59,10 @@ export function LoadingScreen() {
 
         const draw = () => {
             // Translucent black background for trail effect
-            ctx.fillStyle = "rgba(5, 5, 5, 0.1)";
+            ctx.fillStyle = "rgba(5, 5, 5, 0.12)";
             ctx.fillRect(0, 0, width, height);
 
-            ctx.fillStyle = `rgba(${accent.rgb}, 0.35)`; // Dynamic Accent
+            ctx.fillStyle = `rgba(${accent.rgb}, 0.4)`; // Dynamic Accent, capped alpha
             ctx.font = "12px monospace";
 
             for (let i = 0; i < drops.length; i++) {
@@ -69,8 +70,8 @@ export function LoadingScreen() {
                 const x = i * 20;
                 const y = drops[i] * 20;
 
-                // Draw only if "active" (based on progress)
-                if (Math.random() > 0.98) {
+                // Draw glyphs often enough to be visible, but still sparse
+                if (Math.random() > 0.9) {
                     ctx.fillText(text, x, y);
                 }
 
@@ -94,17 +95,19 @@ export function LoadingScreen() {
             clearInterval(intervalId);
             window.removeEventListener('resize', resize);
         };
-    }, [accent]);
+    }, [accent, prefersReducedMotion]);
+
+    const loadingText = readoutFor(progress);
 
     return (
         <motion.div
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.8, ease: EASE }}
             className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#030303] text-white overflow-hidden"
         >
             {/* Background Matrix/Grid Canvas */}
-            <canvas ref={canvasRef} className="absolute inset-0 opacity-20" />
+            <canvas ref={canvasRef} className="absolute inset-0 opacity-30" />
 
             {/* Vignette */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,black_100%)] opacity-80" />
@@ -118,8 +121,8 @@ export function LoadingScreen() {
 
                     {/* Floating Percentage Indicator */}
                     <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-[#030303]/80 backdrop-blur px-3 py-1 rounded-full border border-cyan-accent/30">
-                        <span className="font-mono text-xl font-bold text-cyan-accent tracking-tighter" style={{ color: accent.value }}>
-                            {Math.floor(progress)}%
+                        <span className="font-mono text-xl font-bold text-cyan-accent tracking-tighter">
+                            {progress}%
                         </span>
                     </div>
                 </div>
@@ -139,15 +142,16 @@ export function LoadingScreen() {
                     <div className="h-1 w-full bg-white/5 overflow-hidden relative">
                         <motion.div
                             className="absolute top-0 left-0 h-full bg-cyan-accent"
-                            style={{ width: `${progress}%` }}
-                            transition={{ ease: "linear", duration: 0.1 }} // Instant updates via state
+                            style={{ width: barWidth }}
                         />
                         {/* Scanning highlight */}
-                        <motion.div
-                            animate={{ left: ["-100%", "100%"] }}
-                            transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-                            className="absolute top-0 w-1/3 h-full bg-gradient-to-r from-transparent via-cyan-accent/50 to-transparent"
-                        />
+                        {!prefersReducedMotion && (
+                            <motion.div
+                                animate={{ left: ["-100%", "100%"] }}
+                                transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                                className="absolute top-0 w-1/3 h-full bg-gradient-to-r from-transparent via-cyan-accent/50 to-transparent"
+                            />
+                        )}
                     </div>
 
                     {/* Sub-text */}

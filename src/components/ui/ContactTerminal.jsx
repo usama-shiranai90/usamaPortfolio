@@ -2,23 +2,19 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, Terminal, Loader2, CheckCircle, AlertCircle, Copy, Mail, MapPin } from "lucide-react";
-import { useTheme } from "@/context/ThemeContext";
+import { Send, Loader2, CheckCircle, AlertCircle, Mail, MapPin } from "lucide-react";
+import { TerminalShell } from "@/components/ui/TerminalShell";
 import { Hanko } from "./Hanko";
 
-const TerminalLine = ({ text, delay = 0, type = "info", accent }) => (
+const TerminalLine = ({ text, delay = 0, type = "info" }) => (
     <motion.div
         initial={{ opacity: 0, x: -10 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
         transition={{ delay, duration: 0.5 }}
-        className={`flex items-start gap-2 text-xs md:text-sm font-mono mb-1 ${type === 'error' ? 'text-red-500' : ''}`}
-        style={type !== 'error' ? { color: accent?.value } : {}}
+        className={`flex items-start gap-2 text-xs md:text-sm font-mono mb-1 ${type === 'error' ? 'text-red-500' : 'text-cyan-accent'}`}
     >
-        <span
-            className={type === 'error' ? 'text-red-500' : ''}
-            style={type !== 'error' ? { color: `rgba(${accent?.rgb}, 0.5)` } : {}}
-        >
+        <span className={type === 'error' ? 'text-red-500' : 'text-cyan-accent/50'}>
             {type === 'error' ? '✖' : '➜'}
         </span>
         <span>{text}</span>
@@ -26,7 +22,6 @@ const TerminalLine = ({ text, delay = 0, type = "info", accent }) => (
 );
 
 export function ContactTerminal({ t }) {
-    const { accent } = useTheme();
     const [formState, setFormState] = useState({ name: "", email: "", message: "" });
     const [errors, setErrors] = useState({});
     const [status, setStatus] = useState("idle"); // idle, sending, success, error
@@ -104,55 +99,32 @@ export function ContactTerminal({ t }) {
 
     return (
         <div className="w-full max-w-6xl mx-auto p-4 md:p-8">
-            <div className="relative rounded-2xl overflow-hidden bg-black/80 border border-zinc-800 backdrop-blur-xl shadow-2xl">
-                {/* Header Bar */}
-                <div className="flex items-center justify-between px-4 py-3 bg-zinc-900/50 border-b border-zinc-800">
-                    <div className="flex items-center gap-2">
-                        <div className="flex gap-2">
-                            <div className="w-3 h-3 rounded-full bg-zinc-600/50" />
-                            <div className="w-3 h-3 rounded-full bg-zinc-600/50" />
-                            <div className="w-3 h-3 rounded-full bg-zinc-600/50" />
-                        </div>
-                        <div className="h-4 w-[1px] bg-zinc-700 mx-2" />
-                        <span className="text-xs font-mono text-zinc-500 flex items-center gap-2">
-                            <Terminal size={12} />
-                            research_lab/contact_interface
-                        </span>
-                    </div>
-                    <div className="text-[10px] font-mono text-zinc-600">
-                        Status: Active
-                    </div>
-                </div>
-
+            <TerminalShell path="research_lab/contact_interface" status="Active">
                 <div className="grid grid-cols-1 lg:grid-cols-2">
                     {/* Left Column: Terminal Output & Info */}
-                    <div className="p-6 md:p-10 border-b lg:border-b-0 lg:border-r border-zinc-800 bg-zinc-900/30 flex flex-col justify-between relative overflow-hidden">
+                    <div className="p-6 md:p-10 border-b lg:border-b-0 lg:border-r border-theme-border bg-white/[0.02] flex flex-col justify-between relative overflow-hidden">
                         {/* Scanline Effect */}
                         <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))]" style={{ backgroundSize: "100% 2px, 3px 100%" }} />
 
                         <div className="space-y-6 relative z-10">
                             <div>
                                 <h3 className="text-xl font-bold font-heading text-white mb-2">
-                                    RESEARCH_<span style={{ color: accent.value }}>INQUIRY</span>
+                                    RESEARCH_<span className="text-cyan-accent">INQUIRY</span>
                                 </h3>
                                 <p className="text-sm text-zinc-400 font-light leading-relaxed">
                                     Open for collaboration on AI research, software engineering projects, or academic discussions.
                                 </p>
                             </div>
 
-                            <div
-                                className="font-mono text-xs space-y-2 p-4 rounded-lg bg-black/40 border shadow-inner min-h-[150px]"
-                                style={{ borderColor: `rgba(${accent.rgb}, 0.1)` }}
-                            >
+                            <div className="font-mono text-xs space-y-2 p-4 rounded-lg bg-black/40 border border-cyan-accent/10 shadow-inner min-h-[150px]">
                                 {logs.map((log, i) => (
-                                    <TerminalLine key={i} text={log.text} type={log.type} delay={i * 0.1} accent={accent} />
+                                    <TerminalLine key={i} text={log.text} type={log.type} delay={i * 0.1} />
                                 ))}
                                 {status === "sending" && (
                                     <motion.div
                                         animate={{ opacity: [0, 1] }}
                                         transition={{ repeat: Infinity, duration: 0.8 }}
-                                        className="text-indigo-500/50"
-                                        style={{ color: `rgba(${accent.rgb}, 0.5)` }}
+                                        className="text-cyan-accent/50"
                                     >
                                         _
                                     </motion.div>
@@ -161,20 +133,20 @@ export function ContactTerminal({ t }) {
 
                             <div className="space-y-4 pt-6">
                                 <div className="flex items-center gap-3 text-sm text-zinc-400">
-                                    <div className="p-2 rounded-lg bg-zinc-800/50" style={{ color: accent.value }}>
+                                    <div className="p-2 rounded-lg bg-white/5 text-cyan-accent">
                                         <Mail size={16} />
                                     </div>
                                     <div className="flex flex-col">
-                                        <span className="text-[10px] uppercase tracking-wider text-zinc-600">Email Address</span>
+                                        <span className="text-[10px] uppercase tracking-wider text-zinc-500">Email Address</span>
                                         <span className="font-sans hover:text-white transition-colors cursor-pointer select-all">bukhari.453 (domain) s.kyushu-u.ac.jp</span>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3 text-sm text-zinc-400">
-                                    <div className="p-2 rounded-lg bg-zinc-800/50" style={{ color: accent.value }}>
+                                    <div className="p-2 rounded-lg bg-white/5 text-cyan-accent">
                                         <MapPin size={16} />
                                     </div>
                                     <div className="flex flex-col">
-                                        <span className="text-[10px] uppercase tracking-wider text-zinc-600">Location</span>
+                                        <span className="text-[10px] uppercase tracking-wider text-zinc-500">Location</span>
                                         <span className="font-sans">33.5902° N, 130.4017° E</span>
                                     </div>
                                 </div>
@@ -182,19 +154,19 @@ export function ContactTerminal({ t }) {
                         </div>
                     </div>
                     {/* Right Column: Interactive Form */}
-                    <div className="p-6 md:p-10 flex flex-col justify-center relative bg-gradient-to-b from-zinc-900/10 to-transparent">
+                    <div className="p-6 md:p-10 flex flex-col justify-center relative bg-gradient-to-b from-white/[0.02] to-transparent">
                         <form onSubmit={handleSubmit} className="space-y-6 relative">
                             {/* Success Stamp Overlay */}
                             <AnimatePresence>
                                 {status === 'success' && (
                                     <motion.div
-                                        initial={{ opacity: 0, scale: 2, rotate: -20 }}
-                                        animate={{ opacity: 1, scale: 1, rotate: -15 }}
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
                                         exit={{ opacity: 0 }}
                                         className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none bg-zinc-900/5 backdrop-blur-[1px]"
                                     >
                                         <div className="relative">
-                                            <Hanko text="受領" color="#d00" className="text-[120px] md:text-[160px] opacity-90 mix-blend-multiply dark:mix-blend-normal" />
+                                            <Hanko text="受領" color="#d00" animated className="text-[120px] md:text-[160px] opacity-90 mix-blend-multiply dark:mix-blend-normal" />
                                             <motion.span
                                                 initial={{ opacity: 0, y: 10 }}
                                                 animate={{ opacity: 1, y: 0 }}
@@ -215,7 +187,6 @@ export function ContactTerminal({ t }) {
                                     value={formState.name}
                                     onChange={e => handleInputChange('name', e.target.value)}
                                     error={errors.name}
-                                    accent={accent}
                                 />
                                 <FormInput
                                     label="ACADEMIC / WORK EMAIL"
@@ -224,14 +195,10 @@ export function ContactTerminal({ t }) {
                                     value={formState.email}
                                     onChange={e => handleInputChange('email', e.target.value)}
                                     error={errors.email}
-                                    accent={accent}
                                 />
                                 <div className="space-y-2 group">
                                     <div className="flex justify-between items-center">
-                                        <label
-                                            className={`text-[10px] font-mono uppercase tracking-wider transition-colors ${errors.message ? 'text-red-500' : ''}`}
-                                            style={!errors.message ? { color: accent?.value } : {}}
-                                        >
+                                        <label className={`text-[10px] font-mono uppercase tracking-wider transition-colors ${errors.message ? 'text-red-500' : 'text-cyan-accent'}`}>
                                             MESSAGE CONTENT
                                         </label>
                                         {errors.message && <span className="text-[10px] text-red-500 font-mono tracking-tighter">{errors.message}</span>}
@@ -242,25 +209,8 @@ export function ContactTerminal({ t }) {
                                         value={formState.message}
                                         onChange={e => handleInputChange('message', e.target.value)}
                                         className={`w-full bg-black/20 border-b px-0 py-2 text-zinc-300 font-sans text-sm placeholder:text-zinc-600 transition-all outline-none resize-none pl-2
-                                            ${errors.message ? 'border-red-500/50 focus:border-red-500 bg-red-500/5' : 'border-zinc-700'}
+                                            ${errors.message ? 'border-red-500/50 focus:border-red-500 bg-red-500/5' : 'border-zinc-700 focus:border-cyan-accent/50 focus:bg-cyan-accent/5'}
                                         `}
-                                        style={!errors.message ? {
-                                            borderColor: status === 'idle' ? undefined : accent?.value,
-                                            '--focus-border': `rgba(${accent?.rgb}, 0.5)`,
-                                            '--focus-bg': `rgba(${accent?.rgb}, 0.05)`
-                                        } : {}}
-                                        onFocus={(e) => {
-                                            if (!errors.message) {
-                                                e.target.style.borderColor = `rgba(${accent?.rgb}, 0.5)`;
-                                                e.target.style.backgroundColor = `rgba(${accent?.rgb}, 0.05)`;
-                                            }
-                                        }}
-                                        onBlur={(e) => {
-                                            if (!errors.message) {
-                                                e.target.style.borderColor = ''; // Reset to class styles (border-zinc-700)
-                                                e.target.style.backgroundColor = '';
-                                            }
-                                        }}
                                     />
                                 </div>
                             </div>
@@ -274,28 +224,8 @@ export function ContactTerminal({ t }) {
                                         ? 'bg-green-500/20 text-green-500 border border-green-500/50'
                                         : status === 'error'
                                             ? 'bg-red-500/20 text-red-500 border border-red-500/50 cursor-not-allowed'
-                                            : `bg-[var(--theme-accent)]/10 text-[var(--theme-accent)] border border-[var(--theme-accent)]/30 hover:bg-[var(--theme-accent)] hover:text-white`}
+                                            : 'bg-cyan-accent/10 text-cyan-accent border border-cyan-accent/30 hover:bg-cyan-accent hover:text-white hover:shadow-glow-accent'}
                                 `}
-                                style={status === 'idle' ? {
-                                    backgroundColor: `rgba(${accent?.rgb}, 0.1)`,
-                                    color: accent?.value,
-                                    borderColor: `rgba(${accent?.rgb}, 0.3)`,
-                                    '--hover-shadow': `0 0 20px rgba(${accent?.rgb}, 0.4)`
-                                } : {}}
-                                onMouseEnter={(e) => {
-                                    if (status === 'idle') {
-                                        e.currentTarget.style.backgroundColor = accent?.value;
-                                        e.currentTarget.style.color = '#ffffff';
-                                        e.currentTarget.style.boxShadow = `0 0 20px rgba(${accent?.rgb}, 0.4)`;
-                                    }
-                                }}
-                                onMouseLeave={(e) => {
-                                    if (status === 'idle') {
-                                        e.currentTarget.style.backgroundColor = `rgba(${accent?.rgb}, 0.1)`;
-                                        e.currentTarget.style.color = accent?.value;
-                                        e.currentTarget.style.boxShadow = 'none';
-                                    }
-                                }}
                             >
                                 <span className="relative z-10 flex items-center justify-center gap-2">
                                     {status === 'sending' ? (
@@ -320,19 +250,16 @@ export function ContactTerminal({ t }) {
                         </form>
                     </div>
                 </div>
-            </div>
+            </TerminalShell>
         </div>
     );
 }
 
 // Subcomponent for inputs
-const FormInput = ({ label, type = "text", placeholder, value, onChange, error, accent }) => (
+const FormInput = ({ label, type = "text", placeholder, value, onChange, error }) => (
     <div className="space-y-2 group">
         <div className="flex justify-between items-center">
-            <label
-                className={`text-[10px] font-mono uppercase tracking-wider transition-colors ${error ? 'text-red-500' : ''}`}
-                style={!error ? { color: accent?.value } : {}}
-            >
+            <label className={`text-[10px] font-mono uppercase tracking-wider transition-colors ${error ? 'text-red-500' : 'text-cyan-accent'}`}>
                 {label}
             </label>
             {error && <span className="text-[10px] text-red-500 font-mono tracking-tighter">{error}</span>}
@@ -344,29 +271,10 @@ const FormInput = ({ label, type = "text", placeholder, value, onChange, error, 
                 value={value}
                 onChange={onChange}
                 className={`w-full bg-black/20 border-b px-0 py-2 text-zinc-300 font-sans text-sm placeholder:text-zinc-600 transition-all outline-none pl-2
-                ${error ? 'border-red-500/50 focus:border-red-500 bg-red-500/5' : 'border-zinc-700'}
+                ${error ? 'border-red-500/50 focus:border-red-500 bg-red-500/5' : 'border-zinc-700 focus:border-cyan-accent/50 focus:bg-cyan-accent/5'}
             `}
-                style={!error ? {
-                    '--focus-border': `rgba(${accent?.rgb}, 0.5)`,
-                    '--focus-bg': `rgba(${accent?.rgb}, 0.05)`
-                } : {}}
-                onFocus={(e) => {
-                    if (!error) {
-                        e.target.style.borderColor = `rgba(${accent?.rgb}, 0.5)`;
-                        e.target.style.backgroundColor = `rgba(${accent?.rgb}, 0.05)`;
-                    }
-                }}
-                onBlur={(e) => {
-                    if (!error) {
-                        e.target.style.borderColor = '';
-                        e.target.style.backgroundColor = '';
-                    }
-                }}
             />
-            <div
-                className={`absolute bottom-0 left-0 w-0 h-[1px] group-focus-within:w-full transition-all duration-500 ${error ? 'bg-red-500' : ''}`}
-                style={!error ? { backgroundColor: accent?.value } : {}}
-            />
+            <div className={`absolute bottom-0 left-0 w-0 h-[1px] group-focus-within:w-full transition-all duration-500 ${error ? 'bg-red-500' : 'bg-cyan-accent'}`} />
         </div>
     </div>
 );

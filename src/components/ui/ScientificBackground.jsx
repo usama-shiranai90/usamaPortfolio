@@ -363,17 +363,13 @@ export function ScientificBackground() {
         };
 
         // --- Animate ---
-        const animate = (time) => {
-            const dt = (time - lastTime) / 1000;
-            lastTime = time;
+        const drawFrame = (dt) => {
+            const { accent: currentAccent, isDark: currentIsDark, backgroundStyle: currentStyle } = themeRef.current;
 
-            // Safe DT cap
-            if (dt > 0.1) {
-                animationFrameId = requestAnimationFrame(animate);
+            if (currentStyle === 'minimal') {
+                ctx.clearRect(0, 0, width, height);
                 return;
             }
-
-            const { accent: currentAccent, isDark: currentIsDark, backgroundStyle: currentStyle } = themeRef.current;
             const accentRgb = currentAccent.rgb;
 
             ctx.clearRect(0, 0, width, height);
@@ -529,8 +525,24 @@ export function ScientificBackground() {
                     }
                 }
             }
+        };
+
+        const animate = (time) => {
+            const dt = (time - lastTime) / 1000;
+            lastTime = time;
+
+            // Safe DT cap
+            if (dt <= 0.1) {
+                drawFrame(dt);
+            }
 
             animationFrameId = requestAnimationFrame(animate);
+        };
+
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        const renderStaticFrame = () => {
+            drawFrame(1 / 60);
         };
 
         const handleMouseMove = (e) => {
@@ -540,15 +552,55 @@ export function ScientificBackground() {
             mouse.active = true;
         };
 
-        window.addEventListener('resize', resize);
-        window.addEventListener('mousemove', handleMouseMove);
+        let resizeTimer;
+        const handleResize = () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                resize();
+                if (prefersReducedMotion) renderStaticFrame();
+            }, 200);
+        };
+
+        const handleVisibilityChange = () => {
+            // Cancel first so a stray 'visible' event can't stack a second rAF loop.
+            cancelAnimationFrame(animationFrameId);
+            if (!document.hidden) {
+                lastTime = performance.now();
+                animationFrameId = requestAnimationFrame(animate);
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
 
         resize();
+
+        if (backgroundStyle === 'minimal') {
+            ctx.clearRect(0, 0, width, height);
+            return () => {
+                window.removeEventListener('resize', handleResize);
+                clearTimeout(resizeTimer);
+            };
+        }
+
+        if (prefersReducedMotion) {
+            renderStaticFrame();
+            return () => {
+                window.removeEventListener('resize', handleResize);
+                clearTimeout(resizeTimer);
+            };
+        }
+
+        window.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        lastTime = performance.now();
         animationFrameId = requestAnimationFrame(animate);
 
         return () => {
-            window.removeEventListener('resize', resize);
+            window.removeEventListener('resize', handleResize);
             window.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+            clearTimeout(resizeTimer);
             cancelAnimationFrame(animationFrameId);
         };
     }, [backgroundStyle]); // Re-init when style changes

@@ -85,12 +85,11 @@ export function ThemeController() {
         }
     };
 
-    // Dynamic panel styles based on theme
-    const panelBg = isDark ? 'bg-[#0a0a0a]/90 border-white/10' : 'bg-white/90 border-black/5';
-    const textColor = isDark ? 'text-white' : 'text-zinc-900';
-    const subTextColor = isDark ? 'text-white/50' : 'text-zinc-500';
-    const cardBg = isDark ? 'bg-zinc-900' : 'bg-zinc-100';
-    const borderColor = isDark ? 'border-white/10' : 'border-black/10';
+    // Token-driven surfaces so the panel follows the active theme
+    // (dracula/nord/terminal panels actually differ now).
+    const textColor = 'text-theme-text';
+    const subTextColor = 'text-theme-muted';
+    const borderColor = 'border-theme-border';
 
     const themeOptions = [
         { id: 'light', icon: Sun, label: 'Light' },
@@ -104,37 +103,16 @@ export function ThemeController() {
     ];
 
     return (
-        <div className="fixed right-4 top-4 md:right-6 md:top-6 z-[60] flex flex-col items-end gap-4 pointer-events-none">
-            <style>{`
-                @keyframes panGrid {
-                    0% { background-position: 0 0; }
-                    100% { background-position: 16px 16px; }
-                }
-                @keyframes scanLine {
-                    0% { transform: translateY(-100%); }
-                    100% { transform: translateY(100%); }
-                }
-                .animate-pan-grid {
-                    animation: panGrid 4s linear infinite;
-                }
-                .animate-scan {
-                    animation: scanLine 2.5s ease-in-out infinite;
-                }
-            `}</style>
+        <div className="fixed right-4 top-[4.5rem] md:right-6 lg:top-6 z-[60] flex flex-col items-end gap-4 pointer-events-none">
             <div className="flex items-center gap-3">
                 {/* Command Palette Trigger - Smaller & Left */}
                 <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => window.dispatchEvent(new CustomEvent('open-command-menu'))}
-                    className={`
-                        pointer-events-auto
-                        w-8 h-8 rounded-lg flex items-center justify-center 
-                        backdrop-blur-xl border shadow-lg transition-all duration-300
-                        ${isDark ? 'bg-zinc-900/60 border-white/10 text-white/50 hover:text-white hover:bg-zinc-800'
-                            : 'bg-white/60 border-black/10 text-zinc-500 hover:text-zinc-900 hover:bg-white'}
-                    `}
+                    className="pointer-events-auto flex h-8 w-8 items-center justify-center rounded-lg border border-theme-border bg-theme-card/60 text-theme-muted shadow-lg backdrop-blur-xl transition-all duration-300 hover:bg-theme-card hover:text-theme-text"
                     title="Command Palette (Cmd+K)"
+                    aria-label="Open command palette"
                 >
                     <span className="text-[10px] font-mono font-bold">⌘</span>
                 </motion.button>
@@ -144,14 +122,14 @@ export function ThemeController() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setIsOpen(!isOpen)}
+                    aria-expanded={isOpen}
+                    aria-label="Theme settings"
                     className={`
-                        pointer-events-auto
-                        w-12 h-12 rounded-xl flex items-center justify-center 
-                        backdrop-blur-xl border shadow-2xl transition-all duration-300
+                        pointer-events-auto flex h-12 w-12 items-center justify-center rounded-xl
+                        border border-theme-border shadow-2xl backdrop-blur-xl transition-all duration-300
                         ${isOpen
-                            ? 'bg-zinc-900/95 text-white'
-                            : isDark ? 'bg-zinc-900/60 border-white/10 text-white/70 hover:bg-zinc-800 hover:border-white/30 hover:text-white'
-                                : 'bg-white/60 border-black/10 text-zinc-700 hover:bg-white hover:text-black'}
+                            ? 'bg-theme-card/95'
+                            : 'bg-theme-card/60 text-theme-muted hover:border-theme-text/30 hover:bg-theme-card hover:text-theme-text'}
                     `}
                     style={{
                         borderColor: isOpen ? accent.value : '',
@@ -180,7 +158,7 @@ export function ThemeController() {
                             relative p-5 rounded-2xl backdrop-blur-2xl border
                             w-80 max-w-[calc(100vw-2rem)] origin-top-right h-auto max-h-[85vh] overflow-y-auto
                             scrollbar-none transition-all duration-300
-                            ${isDark ? 'bg-zinc-950/85 border-zinc-800/40 text-white' : 'bg-white/85 border-zinc-200/50 text-zinc-900'}
+                            border-theme-border bg-theme-bg/85 text-theme-text
                         `}
                         style={{
                             boxShadow: `0 20px 50px -10px rgba(0, 0, 0, 0.4), 0 0 40px -20px ${accent.value}33`
@@ -194,7 +172,7 @@ export function ThemeController() {
                             }}
                         />
 
-                        <div className={`flex items-center justify-between mb-6 pb-4 border-b ${isDark ? 'border-white/10' : 'border-black/5'}`}>
+                        <div className="flex items-center justify-between mb-6 pb-4 border-b border-theme-border">
                             <div className="flex items-center gap-2">
                                 <Monitor size={16} style={{ color: accent.value }} />
                                 <span className={`text-xs font-mono tracking-widest uppercase font-bold ${textColor}`}>System Config</span>
@@ -215,13 +193,14 @@ export function ThemeController() {
                                     <Languages size={13} className={subTextColor} />
                                     <span className={subTextColor}>Language Region</span>
                                 </div>
-                                <div className={`relative flex items-center p-1 rounded-xl border ${borderColor} ${isDark ? 'bg-black/40' : 'bg-black/5'}`}>
+                                <div className={`relative flex items-center p-1 rounded-xl border ${borderColor} bg-theme-text/5`}>
                                     {['en', 'jp'].map((lang) => {
                                         const isSelected = language === lang;
                                         return (
                                             <button
                                                 key={lang}
                                                 onClick={() => setLanguage(lang)}
+                                                aria-pressed={isSelected}
                                                 className={`relative flex-1 flex items-center justify-center py-1.5 rounded-lg text-xs font-mono font-bold transition-all duration-300 ${isSelected
                                                     ? 'text-white'
                                                     : `${subTextColor} opacity-60 hover:opacity-100`
@@ -257,11 +236,12 @@ export function ThemeController() {
                                                 onClick={() => setThemeMode(id)}
                                                 whileHover={{ scale: 1.05 }}
                                                 whileTap={{ scale: 0.95 }}
+                                                aria-pressed={isSelected}
                                                 className={`
                                                     relative flex flex-col items-center justify-center gap-1.5 py-2 rounded-xl border transition-all duration-300
                                                     ${isSelected
                                                         ? 'border-transparent text-white shadow-md'
-                                                        : `border-zinc-200/5 hover:border-zinc-200/20 text-zinc-400 hover:text-zinc-200 ${isDark ? 'bg-white/5' : 'bg-black/5'}`
+                                                        : 'border-theme-border bg-theme-text/5 text-theme-muted hover:border-theme-text/20 hover:text-theme-text'
                                                     }
                                                 `}
                                                 style={{
@@ -299,11 +279,12 @@ export function ThemeController() {
                                                 onClick={() => setBackgroundStyle(bg.id)}
                                                 whileHover={{ scale: 1.02, y: -1 }}
                                                 whileTap={{ scale: 0.98 }}
+                                                aria-pressed={isSelected}
                                                 className={`
                                                     relative h-16 rounded-xl border overflow-hidden flex items-center gap-3 px-3.5 transition-all duration-300
                                                     ${isSelected
                                                         ? 'border-transparent text-white shadow-lg'
-                                                        : `border-zinc-200/5 hover:border-zinc-200/20 text-zinc-400 hover:text-zinc-200 ${isDark ? 'bg-white/5' : 'bg-black/5'}`
+                                                        : 'border-theme-border bg-theme-text/5 text-theme-muted hover:border-theme-text/20 hover:text-theme-text'
                                                     }
                                                 `}
                                                 style={{
@@ -323,7 +304,7 @@ export function ThemeController() {
                                                 <div className="absolute inset-0 opacity-[0.08] pointer-events-none z-0">
                                                     {bg.id === 'scientific' && (
                                                         <div className="absolute inset-0 animate-pan-grid" style={{ 
-                                                            backgroundImage: `radial-gradient(${isDark ? '#fff' : '#000'} 1px, transparent 1px)`, 
+                                                            backgroundImage: `radial-gradient(currentColor 1px, transparent 1px)`, 
                                                             backgroundSize: '8px 8px' 
                                                         }} />
                                                     )}
@@ -341,13 +322,13 @@ export function ThemeController() {
                                                     )}
                                                     {bg.id === 'grid' && (
                                                         <div className="absolute inset-0 animate-pan-grid" style={{ 
-                                                            backgroundImage: `linear-gradient(${isDark ? '#fff' : '#000'} 0.5px, transparent 0.5px), linear-gradient(90deg, ${isDark ? '#fff' : '#000'} 0.5px, transparent 0.5px)`, 
+                                                            backgroundImage: `linear-gradient(currentColor 0.5px, transparent 0.5px), linear-gradient(90deg, currentColor 0.5px, transparent 0.5px)`, 
                                                             backgroundSize: '12px 12px' 
                                                         }} />
                                                     )}
                                                     {bg.id === 'blueprint' && (
                                                         <div className="absolute inset-0 animate-pan-grid" style={{ 
-                                                            backgroundImage: `linear-gradient(${isDark ? '#fff' : '#000'} 0.5px, transparent 0.5px), linear-gradient(90deg, ${isDark ? '#fff' : '#000'} 0.5px, transparent 0.5px)`, 
+                                                            backgroundImage: `linear-gradient(currentColor 0.5px, transparent 0.5px), linear-gradient(90deg, currentColor 0.5px, transparent 0.5px)`, 
                                                             backgroundSize: '6px 6px' 
                                                         }} />
                                                     )}
@@ -359,7 +340,7 @@ export function ThemeController() {
                                                     )}
                                                     {bg.id === 'research' && (
                                                         <div className="absolute inset-0 animate-pan-grid" style={{
-                                                            backgroundImage: `radial-gradient(circle, ${isDark ? '#fff' : '#000'} 0.8px, transparent 0.8px)`,
+                                                            backgroundImage: `radial-gradient(circle, currentColor 0.8px, transparent 0.8px)`,
                                                             backgroundSize: '10px 10px',
                                                         }} />
                                                     )}
@@ -373,11 +354,11 @@ export function ThemeController() {
                                                     />
                                                 )}
 
-                                                <div className={`relative z-10 p-2 rounded-lg transition-colors ${isSelected ? 'bg-white/20 text-white' : (isDark ? 'bg-black/30 text-zinc-400' : 'bg-white/50 text-zinc-700')}`}>
+                                                <div className={`relative z-10 p-2 rounded-lg transition-colors ${isSelected ? 'bg-white/20 text-white' : 'bg-theme-bg/40 text-theme-muted'}`}>
                                                     {getBgIcon(bg.id)}
                                                 </div>
                                                 <div className="relative z-10 flex flex-col items-start leading-none gap-1">
-                                                    <span className={`text-[9px] font-mono font-bold uppercase tracking-wider ${isSelected ? 'text-white' : (isDark ? 'text-zinc-200' : 'text-zinc-800')}`}>{bg.name.split(' ')[0]}</span>
+                                                    <span className={`text-[9px] font-mono font-bold uppercase tracking-wider ${isSelected ? 'text-white' : 'text-theme-text'}`}>{bg.name.split(' ')[0]}</span>
                                                     <span className={`text-[7px] font-mono opacity-65 tracking-normal text-left ${isSelected ? 'text-white/80' : subTextColor}`}>
                                                         {bgDescriptions[bg.id]}
                                                     </span>
@@ -403,7 +384,9 @@ export function ThemeController() {
                                                 onClick={() => setAccent(c)}
                                                 whileHover={{ scale: 1.15 }}
                                                 whileTap={{ scale: 0.9 }}
-                                                className="group relative w-9 h-9 rounded-full flex items-center justify-center focus:outline-none"
+                                                aria-pressed={isSelected}
+                                                aria-label={`${c.name} accent`}
+                                                className="group relative w-9 h-9 rounded-full flex items-center justify-center"
                                                 title={c.name}
                                             >
                                                 <div
@@ -411,7 +394,7 @@ export function ThemeController() {
                                                     style={{ backgroundColor: c.value, boxShadow: `0 0 12px ${c.value}` }}
                                                 />
                                                 <div
-                                                    className={`relative w-7 h-7 rounded-full border overflow-hidden transition-all duration-300 ${isDark ? 'border-white/10' : 'border-black/5'}`}
+                                                    className={`relative w-7 h-7 rounded-full border overflow-hidden transition-all duration-300 border-theme-border`}
                                                     style={{ backgroundColor: c.value }}
                                                 >
                                                     {isSelected && (

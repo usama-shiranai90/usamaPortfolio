@@ -28,7 +28,7 @@ const MEISHI_DATA = {
 };
 
 export default function MeishiPageClient() {
-    const { accent, themeMode } = useTheme();
+    const { accent } = useTheme();
     const [copied, setCopied] = useState(false);
 
     const handleCopyEmail = () => {
@@ -110,7 +110,7 @@ END:VCARD`;
                         style={{ color: accent.value }}
                     >Digital Identity</span>
                     <h1 className="text-4xl md:text-5xl font-serif font-medium tracking-tight">
-                        Meishi <span className="text-zinc-400 font-light">名刺</span>
+                        Meishi <span className="text-theme-muted font-light">名刺</span>
                     </h1>
                     <p className="text-sm opacity-60 leading-relaxed font-serif tracking-wide max-w-md mx-auto">
                         A digital representation of professional affiliation and personal identity.
@@ -133,7 +133,7 @@ END:VCARD`;
                     {/* Floating Action for Capture (Mobile optimized position) */}
                     <button
                         onClick={handleDownloadImage}
-                        className="absolute right-4 top-0 lg:right-20 lg:top-10 p-3 bg-[var(--theme-card)] text-[var(--theme-text)] rounded-full shadow-lg hover:scale-110 transition-transform border border-zinc-100 dark:border-zinc-700 tooltip-trigger z-20"
+                        className="absolute right-4 top-0 lg:right-20 lg:top-10 p-3 bg-theme-card text-theme-text rounded-full shadow-lg hover:scale-110 transition-transform border border-theme-border tooltip-trigger z-20"
                         title="Download as Image"
                     >
                         <Camera size={20} />
@@ -176,7 +176,7 @@ END:VCARD`;
                     </div>
 
                     <div className="mt-4 md:mt-8 text-center">
-                        <p className="text-[9px] md:text-[10px] text-zinc-400 dark:text-zinc-600 tracking-widest uppercase">
+                        <p className="text-[9px] md:text-[10px] text-theme-muted tracking-widest uppercase">
                             Kyushu University &bull; Fukuoka, Japan
                         </p>
                     </div>

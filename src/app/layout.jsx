@@ -1,9 +1,24 @@
+import localFont from 'next/font/local'
 import { Providers } from '@/app/providers'
 import { Layout } from '@/components/layouts/Layout'
 
 import { ThemeController } from '@/components/ui/ThemeController'
 import { CommandMenu } from '@/components/ui/CommandMenu';
+import { themes } from '@/lib/themes'
 import 'p/styles/tailwind.css'
+
+const syne = localFont({
+  src: '../../public/fonts/syne/Syne-VariableFont_wght.ttf',
+  variable: '--font-syne',
+  display: 'swap',
+  weight: '400 800',
+})
+
+// Runs before first paint: applies the saved theme + accent so there is no
+// flash of un-themed content. Mirrors applyTheme() in src/lib/themes.js.
+const themeInitScript = `(function(){try{var t=${JSON.stringify(
+  themes,
+)};var m=localStorage.getItem('themeMode');if(!t[m])m='dark';var th=t[m];var r=document.documentElement;r.classList.toggle('dark',th.type==='dark');for(var k in th){if(k.indexOf('--')===0)r.style.setProperty(k,th[k]);}var a=null;try{a=JSON.parse(localStorage.getItem('accent'))}catch(e){}if(a&&a.value&&a.rgb){r.style.setProperty('--theme-accent',a.value);r.style.setProperty('--theme-accent-rgb',a.rgb);}}catch(e){}})();`
 
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://usamabukhari.com'),
@@ -80,8 +95,9 @@ export default function RootLayout({ children }) {
   }
 
   return (
-    <html lang="en" className="h-full antialiased" suppressHydrationWarning>
-      <body className="flex h-full bg-zinc-50 dark:bg-black">
+    <html lang="en" className={`h-full antialiased ${syne.variable}`} suppressHydrationWarning>
+      <body className="flex h-full bg-theme-bg text-theme-text">
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <Providers>
           <ThemeController />
           <CommandMenu />

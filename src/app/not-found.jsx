@@ -1,23 +1,24 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { AlertTriangle, RefreshCcw, Power } from 'lucide-react';
 
 export default function NotFound() {
   const [glitch, setGlitch] = useState(false);
   const [rebooting, setRebooting] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
 
   // Random glitch effect trigger
   useEffect(() => {
+    if (prefersReducedMotion) return;
     const interval = setInterval(() => {
       setGlitch(true);
       setTimeout(() => setGlitch(false), 200);
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [prefersReducedMotion]);
 
   const handleReboot = () => {
     setRebooting(true);

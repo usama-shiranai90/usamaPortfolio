@@ -1,15 +1,18 @@
 import { Card } from '@/components/ui/Card'
 import { Section } from '@/components/ui/Section'
 import { SimpleLayout } from '@/components/layouts/SimpleLayout'
+import { FadeIn } from '@/components/motion/FadeIn'
 import Image from 'next/image'
 
 function ToolsSection({ children, ...props }) {
     return (
-        <Section {...props}>
-            <ul role="list" className="space-y-16">
-                {children}
-            </ul>
-        </Section>
+        <FadeIn>
+            <Section {...props}>
+                <ul role="list" className="space-y-16">
+                    {children}
+                </ul>
+            </Section>
+        </FadeIn>
     )
 }
 

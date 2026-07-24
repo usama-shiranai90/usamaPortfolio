@@ -3,9 +3,9 @@ import clsx from 'clsx'
 
 const variantStyles = {
   primary:
-    'bg-cyan-accent font-semibold text-[var(--theme-bg)] hover:bg-cyan-accent/90 active:bg-cyan-accent shadow-md transition-all duration-200',
+    'bg-cyan-accent font-semibold text-theme-bg hover:bg-cyan-accent/90 active:bg-cyan-accent shadow-md transition-all duration-200',
   secondary:
-    'bg-theme-card border border-theme-text/10 font-medium text-theme-text hover:bg-theme-text/5 hover:border-cyan-accent/50 active:bg-theme-text/10 transition-all duration-200',
+    'bg-theme-card border border-theme-border font-medium text-theme-text hover:bg-theme-elevated hover:border-cyan-accent/50 active:bg-theme-elevated transition-all duration-200',
 }
 
 export function Button({ variant = 'primary', className, ...props }) {

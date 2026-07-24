@@ -3,6 +3,8 @@ import { getFileBySlug, getFiles } from '@/lib/mdx';
 import { Container } from '@/components/ui/Container';
 import { Citation } from '@/components/mdx/Citation';
 import { ScientificBackground } from '@/components/ui/ScientificBackground';
+import { FadeIn } from '@/components/motion/FadeIn';
+import { Tag } from '@/components/ui/Tag';
 import { Calendar, User, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import 'katex/dist/katex.min.css';
@@ -132,50 +134,54 @@ export default async function BlogPost({ params }) {
             <ScientificBackground />
 
             <Container className="max-w-4xl mx-auto relative z-10">
-                <Link href="/research" className="inline-flex items-center gap-2 text-sm text-theme-text/40 hover:text-cyan-accent mb-8 transition-colors group">
-                    <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-                    BACK_TO_LAB
-                </Link>
+                <FadeIn>
+                    <Link href="/research" className="group mb-8 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-theme-muted transition-colors hover:text-cyan-accent">
+                        <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+                        BACK_TO_LAB
+                    </Link>
 
-                <header className="mb-12 border-b border-theme-text/10 pb-12">
-                    <div className="flex flex-wrap gap-2 mb-6">
-                        {frontMatter.tags?.map(tag => (
-                            <span key={tag} className="text-xs font-mono uppercase px-3 py-1 rounded-full bg-cyan-accent/10 text-cyan-accent border border-cyan-accent/20">
-                                {tag}
-                            </span>
-                        ))}
-                    </div>
+                    <header className="mb-12 border-b border-theme-border pb-12">
+                        <div className="flex flex-wrap gap-2 mb-6">
+                            {frontMatter.tags?.map(tag => (
+                                <Tag key={tag} active className="uppercase">
+                                    {tag}
+                                </Tag>
+                            ))}
+                        </div>
 
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading text-theme-text mb-8 leading-tight">
-                        {frontMatter.title}
-                    </h1>
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading text-theme-text mb-8 leading-tight">
+                            {frontMatter.title}
+                        </h1>
 
-                    <div className="flex items-center gap-8 text-sm text-theme-text/60 font-mono">
-                        <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 rounded-full bg-cyan-accent/20 flex items-center justify-center text-cyan-accent">
-                                <User size={16} />
+                        <div className="flex items-center gap-8 text-sm text-theme-muted font-mono">
+                            <div className="flex items-center gap-2">
+                                <div className="w-8 h-8 rounded-full bg-cyan-accent/20 flex items-center justify-center text-cyan-accent">
+                                    <User size={16} />
+                                </div>
+                                <span>{frontMatter.author}</span>
                             </div>
-                            <span>{frontMatter.author}</span>
+                            <div className="flex items-center gap-2">
+                                <Calendar size={16} />
+                                <span>{frontMatter.publishedAt}</span>
+                            </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                            <Calendar size={16} />
-                            <span>{frontMatter.publishedAt}</span>
-                        </div>
-                    </div>
-                </header>
+                    </header>
+                </FadeIn>
 
-                <article className="prose dark:prose-invert prose-lg max-w-none">
-                    <MDXRemote
-                        source={content}
-                        options={{
-                            mdxOptions: {
-                                remarkPlugins: [remarkMath],
-                                rehypePlugins: [rehypeKatex, rehypeHighlight],
-                            },
-                        }}
-                        components={components}
-                    />
-                </article>
+                <FadeIn delay={0.1} y={16}>
+                    <article className="prose dark:prose-invert prose-lg max-w-none">
+                        <MDXRemote
+                            source={content}
+                            options={{
+                                mdxOptions: {
+                                    remarkPlugins: [remarkMath],
+                                    rehypePlugins: [rehypeKatex, rehypeHighlight],
+                                },
+                            }}
+                            components={components}
+                        />
+                    </article>
+                </FadeIn>
             </Container>
         </div>
     );

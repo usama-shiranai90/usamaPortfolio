@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { AppContext } from '@/app/providers'
 import { Container } from '@/components/ui/Container'
 import { Prose } from '@/components/ui/Prose'
+import { FadeIn } from '@/components/motion/FadeIn'
 import { formatDate } from '@/lib/formatDate'
 
 function ArrowLeftIcon(props) {
@@ -90,27 +91,32 @@ export function ArticleLayout({ article, children }) {
               type="button"
               onClick={() => router.back()}
               aria-label="Go back to articles"
-              className="group mb-8 flex h-10 w-10 items-center justify-center rounded-full bg-theme-card border border-theme-text/10 shadow-md transition-all duration-300 lg:absolute lg:-left-5 lg:-mt-2 lg:mb-0 xl:-top-1.5 xl:left-0 xl:mt-0 hover:border-cyan-accent hover:shadow-[0_0_15px_rgba(var(--theme-accent-rgb),0.2)]"
+              className="group mb-8 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-theme-muted transition-colors hover:text-cyan-accent"
             >
-              <ArrowLeftIcon className="h-4 w-4 stroke-theme-text/60 transition-colors duration-300 group-hover:stroke-cyan-accent" />
+              <ArrowLeftIcon className="h-4 w-4 stroke-current transition-transform group-hover:-translate-x-1" />
+              BACK_TO_ARTICLES
             </button>
           )}
           <article>
-            <header className="flex flex-col">
-              <h1 className="mt-6 text-4xl font-bold tracking-tight text-theme-text sm:text-5xl">
-                {article.title}
-              </h1>
-              <time
-                dateTime={article.date}
-                className="order-first flex items-center text-base text-theme-text/60"
-              >
-                <span className="h-4 w-0.5 rounded-full bg-cyan-accent" />
-                <span className="ml-3">{formatDate(article.date)}</span>
-              </time>
-            </header>
-            <Prose className="mt-8" data-mdx-content>
-              {children}
-            </Prose>
+            <FadeIn>
+              <header className="flex flex-col">
+                <h1 className="mt-6 text-4xl font-bold tracking-tight text-theme-text sm:text-5xl">
+                  {article.title}
+                </h1>
+                <time
+                  dateTime={article.date}
+                  className="order-first flex items-center text-base text-theme-muted"
+                >
+                  <span className="h-4 w-0.5 rounded-full bg-cyan-accent" />
+                  <span className="ml-3">{formatDate(article.date)}</span>
+                </time>
+              </header>
+            </FadeIn>
+            <FadeIn delay={0.1} y={16}>
+              <Prose className="mt-8" data-mdx-content>
+                {children}
+              </Prose>
+            </FadeIn>
           </article>
         </div>
       </div>

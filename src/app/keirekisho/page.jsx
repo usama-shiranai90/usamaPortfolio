@@ -1,9 +1,6 @@
 "use client";
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Download, Printer } from 'lucide-react';
-import { useTheme } from '@/context/ThemeContext';
+import { Printer } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 
 // --- DATA: Technical Dossier ---
@@ -175,8 +172,6 @@ const KEIREKI_DATA = {
 };
 
 export default function KeirekishoPage() {
-    const { accent } = useTheme();
-
     const handlePrint = () => {
         window.print();
     };
@@ -186,13 +181,13 @@ export default function KeirekishoPage() {
             {/* Page Controls (Screen Only) */}
             <div className="mb-8 flex justify-between items-center print:hidden">
                 <div>
-                    <h1 className="text-2xl font-bold text-[var(--theme-text)]">職務経歴書 (Technical Dossier)</h1>
-                    <p className="text-sm text-zinc-500">Professional History for Engineering Roles</p>
+                    <h1 className="text-2xl font-bold text-theme-text">職務経歴書 (Technical Dossier)</h1>
+                    <p className="text-sm text-theme-muted">Professional History for Engineering Roles</p>
                 </div>
                 <div className="flex gap-2">
                     <button
                         onClick={handlePrint}
-                        className="flex items-center gap-2 px-4 py-2 bg-[var(--theme-text)] text-[var(--theme-bg)] rounded-md font-bold text-sm hover:opacity-80 transition-opacity"
+                        className="flex items-center gap-2 px-4 py-2 bg-theme-text text-theme-bg rounded-md font-bold text-sm hover:opacity-80 transition-opacity"
                     >
                         <Printer size={16} /> Print / Save PDF
                     </button>
@@ -208,9 +203,9 @@ export default function KeirekishoPage() {
                     <p className="font-bold text-lg mt-2 underline">{KEIREKI_DATA.header.name}</p>
                 </div>
 
-                <h1 className="text-center text-2xl font-bold border-b-2 border-zinc-900 dark:border-zinc-100 pb-2 mb-8 tracking-widest print:border-black">
+                <h2 className="text-center text-2xl font-bold border-b-2 border-zinc-900 dark:border-zinc-100 pb-2 mb-8 tracking-widest print:border-black">
                     職務経歴書
-                </h1>
+                </h2>
 
                 {/* Summary */}
                 <div className="mb-8">

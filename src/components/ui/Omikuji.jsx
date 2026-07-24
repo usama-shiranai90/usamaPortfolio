@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, RefreshCw } from 'lucide-react';
-import { useTheme } from '@/context/ThemeContext';
+import { RefreshCw } from 'lucide-react';
+import { springGentle } from '@/lib/motion';
 
 const FORTUNES = [
     { label: "大吉", reading: "Daikichi", title: "Great Blessing", text: "Your code will compile without errors today. Deploy with confidence.", color: "#ef4444" },
@@ -15,7 +15,6 @@ const FORTUNES = [
 ];
 
 export function Omikuji() {
-    const { accent } = useTheme();
     const [state, setState] = useState('idle'); // idle, shaking, result
     const [fortune, setFortune] = useState(null);
 
@@ -34,7 +33,7 @@ export function Omikuji() {
     };
 
     return (
-        <div className="relative font-sans text-[var(--theme-text)]">
+        <div className="relative font-sans text-theme-text" style={{ perspective: 800 }}>
             <AnimatePresence mode="wait">
                 {state === 'idle' && (
                     <motion.div
@@ -45,14 +44,14 @@ export function Omikuji() {
                     >
                         <button
                             onClick={drawFortune}
-                            className="group relative flex flex-col items-center gap-4 p-8 rounded-xl border border-dashed border-zinc-300 dark:border-zinc-700 hover:border-[var(--theme-accent)] transition-colors bg-[var(--theme-card)]/50"
+                            className="group relative flex flex-col items-center gap-4 p-8 rounded-xl border border-dashed border-theme-border hover:border-cyan-accent transition-colors bg-theme-card/50"
                         >
                             <div className="text-4xl">⛩️</div>
                             <div className="text-center">
                                 <h3 className="text-lg font-bold font-serif mb-1">Tech Omikuji</h3>
-                                <p className="text-xs text-zinc-500 uppercase tracking-widest">Draw your fortune</p>
+                                <p className="text-xs text-theme-muted uppercase tracking-widest">Draw your fortune</p>
                             </div>
-                            <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-[var(--theme-accent)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" style={{ '--theme-accent': accent.value }} />
+                            <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-cyan-accent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                         </button>
                     </motion.div>
                 )}
@@ -84,17 +83,18 @@ export function Omikuji() {
                         key="result"
                         initial={{ opacity: 0, y: 20, rotateX: 90 }}
                         animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                        className="w-full max-w-sm bg-theme-card border-2 border-zinc-800 p-6 relative shadow-xl flex flex-col items-center text-center"
-                        style={{ borderColor: fortune.color }}
+                        transition={springGentle}
+                        className="w-full max-w-sm bg-theme-card border-2 border-theme-border p-6 relative shadow-xl flex flex-col items-center text-center"
+                        style={{ borderColor: fortune.color, transformStyle: 'preserve-3d' }}
                     >
                         {/* Decorative Holes (Ticket style) */}
                         <div className="absolute -left-2 top-1/2 w-4 h-4 bg-theme-bg rounded-full" />
                         <div className="absolute -right-2 top-1/2 w-4 h-4 bg-theme-bg rounded-full" />
 
                         <div className="mb-4">
-                            <span className="text-xs font-mono text-theme-text/40 uppercase tracking-widest">Result</span>
+                            <span className="text-xs font-mono text-theme-muted uppercase tracking-widest">Result</span>
                             <h2 className="text-5xl font-black font-serif my-2" style={{ color: fortune.color }}>{fortune.label}</h2>
-                            <p className="text-sm font-bold uppercase tracking-widest text-theme-text/50">{fortune.reading} • {fortune.title}</p>
+                            <p className="text-sm font-bold uppercase tracking-widest text-theme-muted">{fortune.reading} • {fortune.title}</p>
                         </div>
 
                         <div className="w-full h-[1px] bg-theme-text/10 my-4" />
@@ -105,8 +105,7 @@ export function Omikuji() {
 
                         <button
                             onClick={reset}
-                            className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:text-[var(--theme-accent)] transition-colors text-zinc-400"
-                            style={{ '--theme-accent': accent.value }}
+                            className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:text-cyan-accent transition-colors text-theme-muted"
                         >
                             <RefreshCw size={12} /> Draw Again
                         </button>

@@ -1,6 +1,28 @@
-export const Hanko = ({ text = "ウサマ", className = "", color = "#cc0000" }) => {
+"use client";
+
+import { useId } from "react";
+import { motion } from "framer-motion";
+import { springSnappy } from "@/lib/motion";
+
+export const Hanko = ({ text = "ウサマ", className = "", color = "#cc0000", animated = false }) => {
+    const rawId = useId();
+    const filterId = `ink-texture-${rawId.replace(/:/g, "")}`;
+
+    const Wrapper = animated ? motion.div : "div";
+    const motionProps = animated
+        ? {
+            initial: { opacity: 0, scale: 2, rotate: -20 },
+            animate: { opacity: 1, scale: 1, rotate: -15 },
+            transition: springSnappy,
+        }
+        : {};
+
     return (
-        <div className={`relative inline-flex items-center justify-center ${className}`} style={{ width: '1em', height: '1em' }}>
+        <Wrapper
+            className={`relative inline-flex items-center justify-center ${className}`}
+            style={{ width: '1em', height: '1em' }}
+            {...motionProps}
+        >
             {/* SVG Seal */}
             <svg
                 viewBox="0 0 100 100"
@@ -8,7 +30,7 @@ export const Hanko = ({ text = "ウサマ", className = "", color = "#cc0000" })
                 style={{ filter: "drop-shadow(1px 1px 1px rgba(0,0,0,0.1))" }}
             >
                 <defs>
-                    <filter id="ink-texture">
+                    <filter id={filterId}>
                         <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" result="noise" />
                         <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" />
                     </filter>
@@ -22,7 +44,7 @@ export const Hanko = ({ text = "ウサマ", className = "", color = "#cc0000" })
                     fill="none"
                     stroke={color}
                     strokeWidth="3"
-                    filter="url(#ink-texture)"
+                    filter={`url(#${filterId})`}
                     className="opacity-90"
                 />
 
@@ -48,7 +70,7 @@ export const Hanko = ({ text = "ウサマ", className = "", color = "#cc0000" })
                     textAnchor="middle"
                     dominantBaseline="central"
                     className="select-none"
-                    filter="url(#ink-texture)"
+                    filter={`url(#${filterId})`}
                 >
                     {/* Simple vertical split for 2-3 chars is standard for simple Hanko */}
                     {text.length <= 3 ? (
@@ -65,6 +87,6 @@ export const Hanko = ({ text = "ウサマ", className = "", color = "#cc0000" })
                     )}
                 </text>
             </svg>
-        </div>
+        </Wrapper>
     );
 };

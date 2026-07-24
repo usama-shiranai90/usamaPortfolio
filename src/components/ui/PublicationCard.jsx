@@ -2,17 +2,21 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { FileText, Github, ExternalLink, BookOpen, Calendar, ChevronDown, Quote } from "lucide-react";
-import { useState } from "react";
+import { useId, useState } from "react";
+import { fadeUp, VIEWPORT, EASE, DURATION } from "@/lib/motion";
+import { Tag } from "@/components/ui/Tag";
 
 export function PublicationCard({ publication }) {
     const [isExpanded, setIsExpanded] = useState(false);
+    const abstractId = useId();
 
     return (
         <motion.div
             layout
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={VIEWPORT}
             className="group relative flex flex-col items-start"
         >
             {/* Left Border Accent (Scientific Citation Style) */}
@@ -20,15 +24,13 @@ export function PublicationCard({ publication }) {
 
             <div className="pl-6 md:pl-8 py-2 w-full">
                 {/* Meta Header */}
-                <div className="flex items-center gap-4 text-xs font-mono tracking-wide text-theme-text/40 mb-3">
+                <div className="flex flex-wrap items-center gap-3 text-xs font-mono tracking-wide text-theme-muted mb-3">
                     <span className="flex items-center gap-1.5">
                         <Calendar size={12} className="text-cyan-accent" />
                         {publication.year}
                     </span>
-                    <span className="w-1 h-1 rounded-full bg-theme-text/20" />
-                    <span className="uppercase text-cyan-accent/80 font-semibold">{publication.venue}</span>
-                    <span className="w-1 h-1 rounded-full bg-theme-text/20" />
-                    <span>{publication.type}</span>
+                    <Tag active className="uppercase">{publication.venue}</Tag>
+                    <Tag>{publication.type}</Tag>
                 </div>
 
                 {/* Title */}
@@ -37,7 +39,7 @@ export function PublicationCard({ publication }) {
                 </h3>
 
                 {/* Authors */}
-                <div className="flex flex-wrap gap-x-1 text-theme-text/60 text-sm font-light mb-4">
+                <div className="flex flex-wrap gap-x-1 text-theme-muted text-sm font-light mb-4">
                     {publication.authors.map((author, i) => (
                         <span key={i} className={`flex items-center ${author.includes("Usama") ? "text-theme-text font-medium border-b border-cyan-accent/30" : ""}`}>
                             {author}{i < publication.authors.length - 1 ? "," : ""}
@@ -46,25 +48,25 @@ export function PublicationCard({ publication }) {
                 </div>
 
                 {/* Links & Expand */}
-                <div className="flex items-center justify-between border-t border-theme-text/5 pt-4 mt-2">
+                <div className="flex items-center justify-between border-t border-theme-border pt-4 mt-2">
                     <div className="flex gap-4">
                         {publication.links.pdf && (
-                            <a href={publication.links.pdf} target="_blank" className="flex items-center gap-1.5 text-xs font-medium text-theme-text/50 hover:text-cyan-accent transition-colors">
+                            <a href={publication.links.pdf} target="_blank" className="flex items-center gap-1.5 text-xs font-medium text-theme-muted hover:text-cyan-accent transition-colors">
                                 <FileText size={14} /> <span className="hidden sm:inline">PDF</span>
                             </a>
                         )}
                         {publication.links.code && (
-                            <a href={publication.links.code} target="_blank" className="flex items-center gap-1.5 text-xs font-medium text-theme-text/50 hover:text-cyan-accent transition-colors">
+                            <a href={publication.links.code} target="_blank" className="flex items-center gap-1.5 text-xs font-medium text-theme-muted hover:text-cyan-accent transition-colors">
                                 <Github size={14} /> <span className="hidden sm:inline">CODE</span>
                             </a>
                         )}
                         {publication.links.project && (
-                            <a href={publication.links.project} target="_blank" className="flex items-center gap-1.5 text-xs font-medium text-theme-text/50 hover:text-cyan-accent transition-colors">
+                            <a href={publication.links.project} target="_blank" className="flex items-center gap-1.5 text-xs font-medium text-theme-muted hover:text-cyan-accent transition-colors">
                                 <ExternalLink size={14} /> <span className="hidden sm:inline">PROJECT</span>
                             </a>
                         )}
                         {publication.doi && (
-                            <a href={`https://doi.org/${publication.doi}`} target="_blank" className="flex items-center gap-1.5 text-xs font-medium text-theme-text/50 hover:text-cyan-accent transition-colors">
+                            <a href={`https://doi.org/${publication.doi}`} target="_blank" className="flex items-center gap-1.5 text-xs font-medium text-theme-muted hover:text-cyan-accent transition-colors">
                                 <BookOpen size={14} /> <span className="hidden sm:inline">DOI</span>
                             </a>
                         )}
@@ -72,7 +74,9 @@ export function PublicationCard({ publication }) {
 
                     <button
                         onClick={() => setIsExpanded(!isExpanded)}
-                        className={`flex items-center gap-2 text-xs font-mono tracking-wider uppercase transition-colors px-3 py-1 rounded-full ${isExpanded ? "text-cyan-accent bg-cyan-accent/5" : "text-theme-text/40 hover:text-cyan-accent"
+                        aria-expanded={isExpanded}
+                        aria-controls={abstractId}
+                        className={`flex items-center gap-2 text-xs font-mono tracking-wider uppercase transition-colors px-3 py-1 rounded-full ${isExpanded ? "text-cyan-accent bg-cyan-accent/5" : "text-theme-muted hover:text-cyan-accent"
                             }`}
                     >
                         <span>Abstract</span>
@@ -87,10 +91,11 @@ export function PublicationCard({ publication }) {
                 <AnimatePresence>
                     {isExpanded && (
                         <motion.div
+                            id={abstractId}
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                            transition={{ duration: DURATION.fast, ease: EASE }}
                             className="overflow-hidden"
                         >
                             <div className="pt-6 relative">
