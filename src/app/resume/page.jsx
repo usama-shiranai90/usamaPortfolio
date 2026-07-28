@@ -1,7 +1,6 @@
 'use client'
 
-import Image from 'next/image'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Container } from '@/components/ui/Container'
 import { Button } from "@/components/ui/Button"
 import { motion, AnimatePresence } from 'framer-motion'
@@ -11,7 +10,6 @@ import { Layers, BookOpen, Award, Globe, Briefcase, FileText, Server, Download, 
 import { Timeline } from '@/components/ui/Timeline'
 import { TechStack } from '@/components/ui/TechStack'
 import { Rirekisho } from '@/components/ui/Rirekisho'
-import { LaTeXResumeRenderer } from '@/lib/latex-renderer'
 import { DURATION, EASE, springSnappy } from '@/lib/motion'
 import {
     PDF_TABS,
@@ -27,49 +25,19 @@ import {
     DATA_JP,
 } from '@/lib/resume-data'
 
-import resumeImage1 from 'p/images/resume/Syed Usama Bukhari Resume_Page_1.png'
-import resumeImage2 from 'p/images/resume/Syed Usama Bukhari Resume_Page_2.png'
-
-import resumeImage11 from 'p/images/resume/Syed Usama Bukhari EU_Page_1.png'
-import resumeImage12 from 'p/images/resume/Syed Usama Bukhari EU_Page_2.png'
-
 const VIEW_MODES = [
     { id: 'interactive', label: 'Interactive', icon: Layers },
-    { id: 'pdf', label: 'PDF View', icon: BookOpen },
-    { id: 'latex', label: 'LaTeX / Overleaf', icon: FileText },
 ]
 
 export default function Resume() {
     const [viewMode, setViewMode] = useState('interactive')
     const [activeInteractiveTab, setActiveInteractiveTab] = useState(INTERACTIVE_TABS[0].id)
-    const [activePdfTab, setActivePdfTab] = useState(PDF_TABS[0].id)
-    const [zoomLevel, setZoomLevel] = useState(1);
-    const [selectedTexTemplate, setSelectedTexTemplate] = useState('infrastructure')
-    const [latexCode, setLatexCode] = useState('')
 
-    useEffect(() => {
-        if (viewMode === 'latex') {
-            const fileToFetch = selectedTexTemplate === 'general'
-                ? '/docs/UsamaBukhari-Resume.tex'
-                : '/docs/UsamaBukhari-Infrastructure-Resume.tex';
-
-            fetch(fileToFetch)
-                .then(res => res.text())
-                .then(text => setLatexCode(text))
-                .catch(err => console.error("Error loading LaTeX source:", err));
-        }
-    }, [viewMode, selectedTexTemplate])
-
-    const currentPdfTab = PDF_TABS.find((tab) => tab.id === activePdfTab)
     const currentInteractiveDownload = PDF_TABS.find((tab) => tab.id === activeInteractiveTab)
 
     const handlePrint = () => {
         window.print()
     }
-
-    const handleZoomIn = () => setZoomLevel(prev => Math.min(prev + 0.25, 2.5));
-    const handleZoomOut = () => setZoomLevel(prev => Math.max(prev - 0.25, 0.5));
-    const handleResetZoom = () => setZoomLevel(1);
 
     return (
         <Container className="mt-16 sm:mt-32">
@@ -84,7 +52,7 @@ export default function Resume() {
                 </p>
 
                 {/* Controls Toolbar */}
-                <div className="mt-8 flex flex-col flex-wrap items-center justify-center gap-4">
+                <div className="hidden mt-8 flex flex-col flex-wrap items-center justify-center gap-4">
                     {/* View Mode Switcher */}
                     <div className="flex space-x-1 rounded-full bg-theme-card p-1 shadow-sm border border-theme-border">
                         {VIEW_MODES.map((mode) => (
@@ -238,7 +206,7 @@ export default function Resume() {
                                                     Projects
                                                 </h2>
                                             </div>
-                                            <Timeline items={PROJECTS_DATA} />
+                                            <Timeline items={PROJECTS_DATA} label="Projects" />
                                         </section>
 
                                         {/* Experience Section */}
@@ -251,7 +219,7 @@ export default function Resume() {
                                                     Experience
                                                 </h2>
                                             </div>
-                                            <Timeline items={EXPERIENCE_DATA} />
+                                            <Timeline items={EXPERIENCE_DATA} label="Experience" />
                                         </section>
 
                                         {/* Education Section */}
@@ -264,7 +232,7 @@ export default function Resume() {
                                                     Education
                                                 </h2>
                                             </div>
-                                            <Timeline items={EDUCATION_DATA} />
+                                            <Timeline items={EDUCATION_DATA} label="Education" />
                                         </section>
 
                                         {/* Certificates, Achievements, Languages Grid */}
@@ -379,15 +347,12 @@ export default function Resume() {
                                     transition={{ duration: DURATION.fast, ease: EASE }}
                                     className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16"
                                 >
-                                    {/* Sticky Navigation Sidebar (Japanese) */}
+                                    {/* Sticky Navigation Sidebar */}
                                     <aside className="hidden lg:block lg:col-span-3">
                                         <nav className="sticky top-24 space-y-2">
-                                            <p className="text-xs font-semibold text-theme-muted uppercase tracking-wider mb-4 pl-3">目次 (Contents)</p>
+                                            <p className="text-xs font-semibold text-theme-muted uppercase tracking-wider mb-4 pl-3">Contents</p>
                                             {[
-                                                { id: 'basic-info', label: '基本情報 (Basic Info)', icon: FileText },
-                                                { id: 'history', label: '学歴・職歴 (History)', icon: Briefcase },
-                                                { id: 'licenses', label: '免許・資格 (Licenses)', icon: Award },
-                                                { id: 'pr-skills', label: 'PR・スキル (PR/Skills)', icon: Layers },
+                                                { id: 'rirekisho', label: '履歴書 (Rirekisho)', icon: FileText },
                                             ].map((item) => (
                                                 <a
                                                     key={item.id}
@@ -413,220 +378,8 @@ export default function Resume() {
                             )}
                         </motion.div>
                     )}
-
-                    {viewMode === 'pdf' && (
-                        <motion.div
-                            key="pdf"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: DURATION.base, ease: EASE }}
-                            className="bg-theme-card/30 rounded-3xl border border-theme-border shadow-2xl relative"
-                        >
-                            {/* PDF Viewer Toolbar */}
-                            <div className="sticky top-0 z-30 flex flex-col md:flex-row items-center justify-between gap-4 p-4 bg-theme-card/90 backdrop-blur-md border-b border-theme-border rounded-t-3xl">
-                                {/* Left: Language Selector */}
-                                <div className="flex space-x-1 rounded-lg bg-theme-bg p-1 border border-theme-border">
-                                    {PDF_TABS.map((tab) => (
-                                        <button
-                                            key={tab.id}
-                                            onClick={() => setActivePdfTab(tab.id)}
-                                            aria-label={`Show ${tab.label}`}
-                                            className={clsx(
-                                                'relative rounded-md px-4 py-1.5 text-xs font-medium transition-colors',
-                                                activePdfTab === tab.id
-                                                    ? 'text-theme-text bg-theme-card border border-theme-border shadow-sm'
-                                                    : 'text-theme-text/50 hover:text-theme-text'
-                                            )}
-                                        >
-                                            {tab.label}
-                                        </button>
-                                    ))}
-                                </div>
-
-                                {/* Center: Zoom Controls */}
-                                <div className="flex items-center gap-2 bg-theme-bg rounded-lg p-1 border border-theme-border">
-                                    <button
-                                        onClick={handleZoomOut}
-                                        className="p-1.5 hover:bg-theme-card rounded-md text-theme-text/60 hover:text-theme-text transition"
-                                        aria-label="Zoom Out"
-                                        disabled={zoomLevel <= 0.5}
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><line x1="21" x2="16.65" y1="21" y2="16.65" /><line x1="8" x2="14" y1="11" y2="11" /></svg>
-                                    </button>
-                                    <span className="text-xs font-mono font-medium text-theme-text/60 w-12 text-center">
-                                        {Math.round(zoomLevel * 100)}%
-                                    </span>
-                                    <button
-                                        onClick={handleZoomIn}
-                                        className="p-1.5 hover:bg-theme-card rounded-md text-theme-text/60 hover:text-theme-text transition"
-                                        aria-label="Zoom In"
-                                        disabled={zoomLevel >= 2.5}
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><line x1="21" x2="16.65" y1="21" y2="16.65" /><line x1="11" x2="11" y1="8" y2="14" /><line x1="8" x2="14" y1="11" y2="11" /></svg>
-                                    </button>
-                                    <button
-                                        onClick={handleResetZoom}
-                                        aria-label="Reset zoom"
-                                        className="px-2 py-1.5 text-xs hover:bg-theme-card rounded-md text-theme-text/50 hover:text-theme-text transition ml-1"
-                                    >
-                                        Reset
-                                    </button>
-                                </div>
-
-                                {/* Right: Actions */}
-                                <div className="flex items-center gap-2">
-                                    <a
-                                        href={currentPdfTab.download}
-                                        download={currentPdfTab.filename}
-                                        aria-label="Download PDF"
-                                        className="p-2 hover:bg-theme-card rounded-full text-theme-text/60 hover:text-theme-text transition border border-transparent hover:border-theme-border"
-                                        title="Download PDF"
-                                    >
-                                        <Download className="w-4 h-4" />
-                                    </a>
-                                    <a
-                                        href={currentPdfTab.download}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        aria-label="Open PDF in new tab"
-                                        className="p-2 hover:bg-theme-card rounded-full text-theme-text/60 hover:text-theme-text transition border border-transparent hover:border-theme-border"
-                                        title="Open in New Tab"
-                                    >
-                                        <BookOpen className="w-4 h-4" />
-                                    </a>
-                                </div>
-                            </div>
-
-                            {/* Viewer Area - Natural Flow (No max-h) */}
-                            <div className="p-8 md:p-12 lg:p-16 flex justify-center bg-theme-bg/60 rounded-b-3xl">
-                                <motion.div
-                                    key={activePdfTab}
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ duration: DURATION.fast, ease: EASE }}
-                                    className="origin-top flex flex-col gap-8 shadow-2xl transition-all duration-300 ease-out will-change-transform"
-                                    style={{ width: '100%', maxWidth: `${850 * zoomLevel}px` }}
-                                >
-                                    {activePdfTab === 'english' && (
-                                        <>
-                                            <ResumePageImage src={resumeImage1} alt="English Resume Page 1" priority />
-                                            <ResumePageImage src={resumeImage2} alt="English Resume Page 2" />
-                                        </>
-                                    )}
-                                    {activePdfTab === 'japanese' && (
-                                        <>
-                                            <ResumePageImage src={resumeImage11} alt="Japanese Resume Page 1" priority />
-                                            <ResumePageImage src={resumeImage12} alt="Japanese Resume Page 2" />
-                                        </>
-                                    )}
-                                </motion.div>
-                            </div>
-                        </motion.div>
-                    )}
-
-                    {viewMode === 'latex' && (
-                        <motion.div
-                            key="latex"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: DURATION.base, ease: EASE }}
-                            className="space-y-6 print:space-y-0"
-                        >
-                            {/* Toolbar (Hidden when printing) */}
-                            <div className="bg-theme-card/90 backdrop-blur-md border border-theme-border rounded-2xl p-4 flex flex-col sm:flex-row justify-between items-center gap-4 print:hidden">
-                                {/* Left: Template Selector */}
-                                <div className="flex items-center gap-3">
-                                    <div className="p-2.5 bg-cyan-accent/10 text-cyan-accent rounded-xl">
-                                        <FileText className="w-5 h-5" />
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        <div className="flex rounded-xl bg-theme-bg p-1 border border-theme-border">
-                                            {[
-                                                { id: 'infrastructure', label: 'Infrastructure CV' },
-                                                { id: 'general', label: 'Software Engineer CV' }
-                                            ].map(t => (
-                                                <button
-                                                    key={t.id}
-                                                    onClick={() => setSelectedTexTemplate(t.id)}
-                                                    className={clsx(
-                                                        'rounded-lg px-3.5 py-1.5 text-xs font-medium transition-all duration-200',
-                                                        selectedTexTemplate === t.id
-                                                            ? 'text-theme-text bg-theme-card border border-theme-border shadow-sm'
-                                                            : 'text-theme-text/50 hover:text-theme-text'
-                                                    )}
-                                                >
-                                                    {t.label}
-                                                </button>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Right: Action Buttons */}
-                                <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto justify-end">
-                                    {/* Print Button */}
-                                    <button
-                                        onClick={handlePrint}
-                                        className="flex items-center justify-center h-9 px-4 rounded-xl text-xs font-semibold bg-cyan-accent hover:opacity-90 text-[var(--theme-bg)] gap-2 transition-all shadow-sm"
-                                    >
-                                        <Printer className="w-3.5 h-3.5" />
-                                        <span>Print Resume</span>
-                                    </button>
-
-                                    {/* Open in Overleaf button */}
-                                    <Button
-                                        href={`https://www.overleaf.com/docs?snip_uri=${encodeURIComponent(
-                                            typeof window !== 'undefined'
-                                                ? `${window.location.origin}/docs/UsamaBukhari-${selectedTexTemplate === 'general' ? 'Resume' : 'Infrastructure-Resume'}.tex`
-                                                : `https://usamabukhari.com/docs/UsamaBukhari-${selectedTexTemplate === 'general' ? 'Resume' : 'Infrastructure-Resume'}.tex`
-                                        )}`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        variant="secondary"
-                                        className="h-9 px-4 text-xs font-semibold gap-2 border-theme-border hover:bg-theme-text/5 transition-all text-theme-text"
-                                    >
-                                        <ExternalLink className="w-3.5 h-3.5 text-cyan-accent" />
-                                        <span>Open in Overleaf</span>
-                                    </Button>
-
-                                    {/* Download */}
-                                    <a
-                                        href={`/docs/UsamaBukhari-${selectedTexTemplate === 'general' ? 'Resume' : 'Infrastructure-Resume'}.tex`}
-                                        download={`UsamaBukhari-${selectedTexTemplate === 'general' ? 'Resume' : 'Infrastructure-Resume'}.tex`}
-                                        className="flex items-center justify-center h-9 px-4 rounded-xl text-xs font-medium transition-all bg-theme-bg border border-theme-border hover:bg-theme-card/85 text-theme-text gap-2 shadow-sm"
-                                    >
-                                        <Download className="w-3.5 h-3.5 text-theme-text/60" />
-                                        <span>Download .tex</span>
-                                    </a>
-                                </div>
-                            </div>
-
-                            {/* Rendered Resume Preview */}
-                            <div className="flex justify-center items-start print:block">
-                                <div className="w-full xl:overflow-y-auto print:overflow-visible bg-theme-bg/60 p-4 xl:p-8 rounded-3xl border border-theme-border print:border-none print:bg-transparent print:p-0">
-                                    <LaTeXResumeRenderer latex={latexCode} />
-                                </div>
-                            </div>
-                        </motion.div>
-                    )}
-
                 </AnimatePresence>
-            </div >
-        </Container >
-    )
-}
-
-function ResumePageImage({ src, alt, priority = false }) {
-    return (
-        <div className="relative w-full bg-white shadow-lg overflow-hidden ring-1 ring-theme-border">
-            <Image
-                src={src}
-                alt={alt || "Usama Bukhari Resume Page"}
-                className="w-full h-auto"
-                sizes="(min-width: 1280px) 50rem, (min-width: 1024px) 45rem, 100vw"
-                priority={priority}
-                placeholder="blur"
-            />
-        </div>
+            </div>
+        </Container>
     )
 }

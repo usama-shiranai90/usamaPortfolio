@@ -564,7 +564,7 @@ export default function HomePageLayout({ githubProjects = [] }) {
                                     A track record of building high-concurrency backend services, engineering scalable data migration pipelines, and advancing explainable AI research in healthcare.
                                 </p>
                             </div>
-                            <Timeline items={EXPERIENCE_DATA} />
+                            <Timeline items={EXPERIENCE_DATA} label="Experience" />
                         </section>
 
                         {/* Contact Section */}
