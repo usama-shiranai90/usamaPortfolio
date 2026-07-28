@@ -138,7 +138,7 @@ export function ContactTerminal({ t }) {
                                     </div>
                                     <div className="flex flex-col">
                                         <span className="text-[10px] uppercase tracking-wider text-zinc-500">Email Address</span>
-                                        <span className="font-sans hover:text-white transition-colors cursor-pointer select-all">bukhari.453 (domain) s.kyushu-u.ac.jp</span>
+                                        <span className="font-sans hover:text-white transition-colors cursor-pointer select-all break-all text-xs sm:text-sm">bukhari.453 (domain) s.kyushu-u.ac.jp</span>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3 text-sm text-zinc-400">

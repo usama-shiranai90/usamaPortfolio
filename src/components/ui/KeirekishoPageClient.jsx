@@ -117,10 +117,10 @@ export default function KeirekishoPageClient() {
                                         </div>
 
                                         {/* Tech Stack Grid */}
-                                        <div className="col-span-3 bg-zinc-50 dark:bg-zinc-800/40 p-2 border-r border-zinc-200 dark:border-zinc-800 font-bold flex items-center justify-center text-center text-zinc-800 dark:text-zinc-200 print:bg-gray-50 print:border-black/20 print:text-black">
+                                        <div className="col-span-12 sm:col-span-3 bg-zinc-50 dark:bg-zinc-800/40 p-2 border-b sm:border-b-0 sm:border-r border-zinc-200 dark:border-zinc-800 font-bold flex items-center justify-center text-center text-zinc-800 dark:text-zinc-200 print:bg-gray-50 print:border-black/20 print:text-black text-xs">
                                             環境・言語・ツール
                                         </div>
-                                        <div className="col-span-9 p-2">
+                                        <div className="col-span-12 sm:col-span-9 p-2">
                                             <table className="w-full text-xs">
                                                 <tbody>
                                                     <tr>

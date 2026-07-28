@@ -103,7 +103,7 @@ export function ThemeController() {
     ];
 
     return (
-        <div className="fixed right-4 top-[4.5rem] md:right-6 lg:top-6 z-[60] flex flex-col items-end gap-4 pointer-events-none">
+        <div className="fixed right-6 top-6 z-[60] hidden lg:flex flex-col items-end gap-4 pointer-events-none">
             <div className="flex items-center gap-3">
                 {/* Command Palette Trigger - Smaller & Left */}
                 <motion.button

@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { Container } from '@/components/ui/Container';
 import { Meishi } from '@/components/ui/Meishi';
 import { useTheme } from '@/context/ThemeContext';
-import { toPng } from 'html-to-image';
 import { Download, Share2, Copy, Check, Camera, RefreshCw, Sparkles, Cpu } from 'lucide-react';
 import { Omikuji } from '@/components/ui/Omikuji';
 import { JapaneseDocHeader } from '@/components/ui/JapaneseDocHeader';
@@ -66,6 +65,9 @@ END:VCARD`;
         if (!node) return;
 
         try {
+            // Only needed when the user actually exports a PNG, so keep the
+            // rasteriser out of the page bundle until then.
+            const { toPng } = await import('html-to-image');
             const dataUrl = await toPng(node, { cacheBust: true, pixelRatio: 3 });
             const link = document.createElement('a');
             link.download = `meishi-${styleMode}-${isFlipped ? 'back' : 'front'}.png`;

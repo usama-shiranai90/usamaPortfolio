@@ -41,30 +41,10 @@ export const KEIREKI_DATA = {
     },
     projects: [
         {
-            period: "2023年 11月 - 2025年 1月",
-            company: "Reboot Era Technologies (Remote)",
-            project: "社内向けCRMポータルおよび分析ダッシュボード開発",
-            role: "バックエンドエンジニア",
-            teamSize: "5名",
-            description: "社内業務効率化のためのCRMおよびデータ分析基盤のバックエンド開発を担当。Laravelを用いたAPI設計から実装、パフォーマンスチューニングまでを主導。",
-            tasks: [
-                "JWT/OAuth2を用いたセキュアなRESTful/GraphQL APIの設計・構築",
-                "RedisとLaravel Horizonを用いた非同期ジョブキュー（大量メール送信、PDF生成）の実装",
-                "MySQLデータベースの正規化およびクエリ最適化によるレスポンス速度向上"
-            ],
-            tech: {
-                os: "Linux (Ubuntu)",
-                lang: "PHP 8, SQL",
-                fw: "Laravel 8",
-                db: "MySQL, Redis",
-                tools: "Git, Docker, Postman"
-            }
-        },
-        {
-            period: "2023年 2月 - 2023年 9月",
-            company: "CareCloud (New Jersey/Remote)",
+            period: "2022年 10月 - 2023年 9月",
+            company: "CareCloud (New Jersey / Hybrid)",
             project: "EHR (電子健康記録) システムの検索機能強化およびAI要約モジュール開発",
-            role: "ソフトウェアエンジニア",
+            role: "ソフトウェアエンジニア (Full-time)",
             teamSize: "10名以上",
             description: "大規模EHRシステムの検索性能向上および生成AIを用いた診療記録要約機能の開発に従事。レガシーシステムからの移行およびマイクロサービス化を担当。",
             tasks: [

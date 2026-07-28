@@ -41,59 +41,100 @@ export const SKILLS_DATA = {
 
 export const EXPERIENCE_DATA = [
     {
-        period: "October 2025 - Present",
-        company: "Kyushu University, Fukuoka, Japan",
-        role: "Teaching Assistant (TA)",
+        id: "addo-ai",
+        period: "Jun 2026 – Present",
+        company: "Addo AI",
+        role: "Data Engineer",
+        category: "Data & AI",
+        location: "Internship · Remote · San Francisco, CA",
+        summary: "Data Engineer contributing to a large-scale legacy-system migration for an enterprise banking client — moving an Oracle Analytics Server / OBIEE reporting estate of roughly 1,600 reports onto Teradata and Tableau, while continuing PhD research in explainable clinical AI in parallel.",
         description: [
-            "Supported graduate courses in Data Analytics, and Assembly Language.",
-            "Managed Moodle LMS: uploaded materials, tracked progress, and resolved technical issues."
+            "Engineered a metadata-driven consolidation framework — separating shared base views from per-report macros — that cut overall migration scope by more than 25% while preserving exact result-set equivalence for every report.",
+            "Built a Python-based generation pipeline that parses legacy SQL, extracts projection and predicate metadata, and auto-emits Teradata views, macros, and validation scripts at scale.",
+            "Designed and ran an equivalence-testing protocol — row-count and column-level checksum comparisons — to certify migration correctness ahead of cutover sign-off.",
+            "Identified and corrected a critical shared-predicate error in a report cluster that would have silently altered results across multiple downstream reports."
         ],
-        tags: ["Data Analytics", "Education", "LMS"]
+        tags: ["SQL", "Teradata", "Python", "Tableau", "ETL/data migration", "metadata-driven code generation"]
     },
     {
-        period: "June 2026 - August 2026",
-        company: "Addo AI, Singapore (Remote)",
-        role: "Data Engineer Intern",
+        id: "kyushu-ta-ra",
+        period: "Oct 2025 – Present",
+        company: "Kyushu University",
+        role: "Teaching Assistant / Research Assistant",
+        category: "Research & Academia",
+        location: "Part-time (TA) + Research Assistant · Fukuoka, Japan",
+        summary: "Supports Computer Science instruction while conducting doctoral research on explainable prescription recommendation using EHR data (MIMIC-IV as primary infrastructure).",
         description: [
-            "Designed and optimized ETL pipelines and data processing workflows.",
-            "Collaborated on data modeling and warehouse maintenance for analytical queries."
+            "Teaching Assistant for Assembly Language and Programming Fundamentals coursework, guiding 30+ students through systems-level and introductory programming concepts, holding office hours, and grading with structured feedback.",
+            "Administers course infrastructure on the Moodle LMS, organizing lecture materials and assignments for the teaching team.",
+            "As Research Assistant, designs a RAG + LLM framework for explainable prescription recommendation over EHR and FHIR data, and contributes to real-time clinical data pipeline work for the lab's Portable Health Clinic platform.",
+            "Brings a research-informed teaching lens, connecting foundational CS concepts to real-world clinical systems design."
         ],
-        tags: ["Data Engineering", "ETL", "Python", "SQL"]
+        tags: ["Python", "SQL", "RAG/LLM frameworks", "FHIR/HL7", "MIMIC-IV", "Moodle"]
     },
     {
-        period: "November 2023 - January 2025",
-        company: "Reboot Era Technologies, Lahore (Remote)",
-        role: "Backend Developer",
+        id: "kyushu-research-student",
+        period: "Mar 2024 – Sep 2025",
+        company: "Kyushu University",
+        role: "Research Student, Information Technology",
+        category: "Research & Academia",
+        location: "Graduate School of Information Science and Electrical Engineering · Fukuoka, Japan",
+        summary: "Pre-doctoral research affiliation preparing the ground for full PhD enrollment — building early technical prototypes and research foundations in retrieval-augmented generation and clinical data systems ahead of formally starting the doctoral program.",
         description: [
-            "Designed and developed RESTful and GraphQL APIs with JWT/OAuth2 authentication using Laravel 8 and MySQL, for in-house platforms (CRM portal, analytics dashboard).",
-            "Implemented Redis with Laravel Horizon job queues for async tasks (bulk emails, PDF generation)."
+            "Prototyped Retrieval-Augmented Generation (RAG) components for clinical decision support use cases, evaluating retrieval and grounding strategies against EHR-derived data.",
+            "Built React Native prototype interfaces for clinic-facing data collection and patient interaction workflows.",
+            "Developed foundational familiarity with MIMIC-IV, FHIR/HL7 standards, and clinical NLP pipelines that became the direct basis for the current doctoral thesis, \"A Study on Patient Context for Explainable Prescription Recommendation.\"",
+            "Transitioned directly into the PhD program (Oct 2025) on the strength of this preparatory research."
         ],
-        tags: ["Laravel", "MySQL", "Redis", "GraphQL", "Remote"]
+        tags: ["Python", "RAG/LLM tooling", "React Native", "FHIR", "MIMIC-IV"]
     },
     {
-        period: "February 2023 - September 2023",
-        company: "CareCloud, New Jersey, United States",
+        id: "carecloud",
+        period: "Oct 2022 – Sep 2023",
+        company: "CareCloud",
         role: "Software Engineer",
+        category: "Software Engineering",
+        location: "Full-time · Somerset County, NJ · Hybrid",
+        summary: "Software Engineer building backend systems for a healthcare SaaS platform processing over 1 million clinical records.",
         description: [
-            "Enhanced search functionality by integrating the Elastic Stack, enabling dynamic searches based on singular and multi-conditions instead of relying on prefix matching.",
-            "Designed prompt engineering for GPT and Vertex AI to generate medical summaries.",
-            "Containerized services using Docker and assisted in Helm-based Kubernetes deployment pipelines for healthcare modules.",
-            "Modernized back-end operations by optimizing user interfaces with .NET and Angular Material.",
-            "Collaborated cross-functionally using Git and CI/CD tools with DevOps team to ensure smooth DevOps workflows and maintain high code quality."
+            "Engineered dynamic, multi-condition search by integrating the Elastic Stack, replacing rigid prefix-based matching and improving query response performance by approximately 35%.",
+            "Designed HIPAA-compliant prompt-engineering pipelines using GPT and Vertex AI (GCP) to auto-generate structured medical summaries from unstructured clinical notes, deployed via serverless GCP Cloud Functions.",
+            "Built Python/FastAPI ETL pipelines incorporating NLP (spaCy) for clinical text processing.",
+            "Containerized services with Docker and supported Helm-based Kubernetes deployment pipelines for production healthcare modules.",
+            "Modernized back-end and front-end integration using .NET and Angular Material, and collaborated cross-functionally with DevOps via Git and CI/CD to maintain high code quality."
         ],
-        tags: [".NET", "Elastic Stack", "Docker", "Kubernetes", "Vertex AI", "Angular"]
+        tags: ["Python", "FastAPI", "spaCy", "Elasticsearch", "GPT/Vertex AI (GCP)", "GCP Cloud Functions", "Docker", "Kubernetes/Helm", ".NET", "Angular Material", "Git/CI-CD"]
     },
     {
-        period: "August 2022 - January 2023",
-        company: "Immentia, Islamabad, Pakistan",
-        role: "Software Developer",
+        id: "immentia",
+        period: "Aug 2022 – Feb 2023",
+        company: "Immentia",
+        role: "Software Engineer",
+        category: "Software Engineering",
+        location: "Contract · Islamabad, Pakistan · Remote",
+        summary: "Software Engineer at Immentia, a digital agency delivering custom web and software solutions for e-commerce, mobile, and small-business clients.",
         description: [
-            "Developed matchmaking features, user profiling, and real-time communication for an Islamic matchmaking app.",
-            "Built a CMS with multimedia support and SEO optimization.",
-            "Performed sentiment analysis on customer feedback using Python to enhance service quality.",
-            "Used Git for version control in a team setting to manage collaborative development and ensure code integrity."
+            "Engineered and maintained relational database schemas in MySQL to support web application data models across multiple client projects.",
+            "Developed and extended REST API backends using the Laravel (PHP) framework, including Progressive Web App (PWA) features for improved offline access and responsiveness on client-facing platforms.",
+            "Automated repetitive backend processes and data workflows using Python, reducing manual overhead across delivery cycles.",
+            "Collaborated in a cross-functional, Git-based development environment, contributing to full-stack feature delivery across client engagements end-to-end."
         ],
-        tags: ["Python", "CMS", "SEO", "Real-time"]
+        tags: ["Laravel", "PHP", "MySQL", "Python", "REST APIs", "PWAs", "Git"]
+    },
+    {
+        id: "devsiom",
+        period: "Aug 2021 – Sep 2021",
+        company: "Devsiom Technologies",
+        role: "Android Developer Intern",
+        category: "Software Engineering",
+        location: "Pakistan",
+        summary: "Android Developer Intern contributing to native Android application development in Java under senior engineering guidance.",
+        description: [
+            "Implemented and tested UI components and application logic using core Android SDK building blocks, including Activities, Fragments, and lifecycle management.",
+            "Collaborated within an agile team, participating in code reviews and Git-based version control to deliver incremental feature updates.",
+            "Built a foundation in mobile application architecture and debugging that carried directly into later production Android work in Kotlin and Jetpack Compose."
+        ],
+        tags: ["Java", "Android SDK", "Git"]
     }
 ];
 
@@ -251,15 +292,16 @@ export const DATA_JP = {
         { year: "2024", month: "4", content: "現在に至る (博士課程進学予定)" }
     ],
     experience: [
-        { year: "2022", month: "8", content: "Immentia (Software Developer) 入社" },
-        { year: "2023", month: "1", content: "Immentia 退社" },
-        { year: "2023", month: "2", content: "CareCloud (Software Engineer) 入社" },
+        { year: "2021", month: "8", content: "Devsiom Technologies (Android Developer Intern) 入社" },
+        { year: "2021", month: "9", content: "Devsiom Technologies 退社" },
+        { year: "2022", month: "8", content: "Immentia (Software Engineer - Contract/Remote) 入社" },
+        { year: "2022", month: "10", content: "CareCloud (Software Engineer - Full-time/Hybrid) 入社" },
+        { year: "2023", month: "2", content: "Immentia 退社" },
         { year: "2023", month: "9", content: "CareCloud 退社" },
-        { year: "2023", month: "11", content: "Reboot Era Technologies (Backend Developer) 入社" },
-        { year: "2026", month: "6", content: "Addo AI (Data Engineer Intern) インターン開始" },
-        { year: "2024", month: "8", content: "Addo AI インターン修了" },
-        { year: "2025", month: "1", content: "Reboot Era Technologies 退社" },
-        { year: "2025", month: "10", content: "九州大学 ティーチングアシスタント (データ分析講義担当) 着任" }
+        { year: "2024", month: "3", content: "九州大学 情報理工学府 研究生 着任" },
+        { year: "2025", month: "9", content: "九州大学 研究生 修了" },
+        { year: "2025", month: "10", content: "九州大学 ティーチングアシスタント / 研究助手 (TA/RA) 着任" },
+        { year: "2026", month: "6", content: "Addo AI (Data Engineer Intern) インターン開始" }
     ],
     licenses: [
         { year: "2022", month: "8", content: "Bachelor of Computer Software Engineering 取得" },

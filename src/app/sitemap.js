@@ -1,4 +1,3 @@
-import { getAllArticles } from '@/lib/articles';
 import { getAllFilesFrontMatter } from '@/lib/mdx';
 
 export default async function sitemap() {
@@ -16,12 +15,6 @@ export default async function sitemap() {
             url: `${baseUrl}/about`,
             lastModified: new Date(),
             changeFrequency: 'monthly',
-            priority: 0.8,
-        },
-        {
-            url: `${baseUrl}/articles`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
             priority: 0.8,
         },
         {
@@ -74,20 +67,6 @@ export default async function sitemap() {
         },
     ];
 
-    // Dynamic articles
-    let articles = [];
-    try {
-        articles = await getAllArticles();
-    } catch (e) {
-        console.error('Error fetching articles for sitemap:', e);
-    }
-    const articlePages = articles.map((article) => ({
-        url: `${baseUrl}/articles/${article.slug}`,
-        lastModified: article.date ? new Date(article.date) : new Date(),
-        changeFrequency: 'monthly',
-        priority: 0.7,
-    }));
-
     // Dynamic research papers
     let researchPosts = [];
     try {
@@ -102,5 +81,5 @@ export default async function sitemap() {
         priority: 0.7,
     }));
 
-    return [...staticPages, ...articlePages, ...researchPages];
+    return [...staticPages, ...researchPages];
 }

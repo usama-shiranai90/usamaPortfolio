@@ -8,7 +8,7 @@ import { themes } from '@/lib/themes'
 import 'p/styles/tailwind.css'
 
 const syne = localFont({
-  src: '../../public/fonts/syne/Syne-VariableFont_wght.ttf',
+  src: '../../public/fonts/syne/Syne-Variable.woff2',
   variable: '--font-syne',
   display: 'swap',
   weight: '400 800',
@@ -45,9 +45,10 @@ export const metadata = {
     type: 'website',
     images: [
       {
-        url: '/images/og-image.png',
+        url: '/images/og-image.jpg',
         width: 1200,
         height: 630,
+        type: 'image/jpeg',
         alt: 'Usama Bukhari - Software Engineer & Research Student',
       },
     ],
@@ -57,11 +58,6 @@ export const metadata = {
     title: 'Usama Bukhari',
     description: 'Software Engineer & Research Student at Kyushu University.',
     creator: '@usamabukhari',
-  },
-  alternates: {
-    types: {
-      'application/rss+xml': `${process.env.NEXT_PUBLIC_SITE_URL}/feed.xml`,
-    },
   },
   manifest: '/site.webmanifest',
   robots: {

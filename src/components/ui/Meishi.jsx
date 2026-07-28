@@ -92,7 +92,7 @@ export function Meishi({ data, styleMode = 'washi', isFlipped: externalFlipped =
                     rotateY: rotateYSpring,
                     transformStyle: 'preserve-3d',
                 }}
-                className="relative w-[320px] sm:w-[480px] md:w-[560px] aspect-[91/55] cursor-pointer group rounded-xl transition-shadow duration-300"
+                className="relative w-[290px] xs:w-[320px] sm:w-[480px] md:w-[560px] max-w-full aspect-[91/55] cursor-pointer group rounded-xl transition-shadow duration-300"
             >
                 <motion.div
                     className="w-full h-full relative"

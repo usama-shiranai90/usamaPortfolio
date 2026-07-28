@@ -180,8 +180,8 @@ export default function Resume() {
                                             {[
                                                 { id: 'summary', label: 'Summary', icon: FileText },
                                                 { id: 'skills', label: 'Skills', icon: Layers },
-                                                { id: 'experience', label: 'Experience', icon: Briefcase },
                                                 { id: 'projects', label: 'Projects', icon: Server },
+                                                { id: 'experience', label: 'Experience', icon: Briefcase },
                                                 { id: 'education', label: 'Education', icon: BookOpen },
                                                 { id: 'certifications', label: 'Certifications', icon: Award },
                                             ].map((item) => (
@@ -228,19 +228,6 @@ export default function Resume() {
                                             </div>
                                         </section>
 
-                                        {/* Experience Section */}
-                                        <section id="experience" className="scroll-mt-32">
-                                            <div className="flex items-center gap-4 mb-12">
-                                                <div className="p-2 bg-theme-elevated rounded-xl">
-                                                    <Briefcase className="w-6 h-6 text-theme-muted" />
-                                                </div>
-                                                <h2 className="text-3xl font-bold text-theme-text">
-                                                    Experience
-                                                </h2>
-                                            </div>
-                                            <Timeline items={EXPERIENCE_DATA} />
-                                        </section>
-
                                         {/* Projects Section */}
                                         <section id="projects" className="scroll-mt-32">
                                             <div className="flex items-center gap-4 mb-12">
@@ -252,6 +239,19 @@ export default function Resume() {
                                                 </h2>
                                             </div>
                                             <Timeline items={PROJECTS_DATA} />
+                                        </section>
+
+                                        {/* Experience Section */}
+                                        <section id="experience" className="scroll-mt-32">
+                                            <div className="flex items-center gap-4 mb-12">
+                                                <div className="p-2 bg-theme-elevated rounded-xl">
+                                                    <Briefcase className="w-6 h-6 text-theme-muted" />
+                                                </div>
+                                                <h2 className="text-3xl font-bold text-theme-text">
+                                                    Experience
+                                                </h2>
+                                            </div>
+                                            <Timeline items={EXPERIENCE_DATA} />
                                         </section>
 
                                         {/* Education Section */}

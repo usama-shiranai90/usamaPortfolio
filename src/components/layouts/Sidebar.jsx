@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import logo from 'p/images/logo.png';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -22,8 +21,9 @@ const socialLinks = [
 
 const navItems = [
     { label: 'About', href: '/#about', id: 'about' },
-    { label: 'Experience', href: '/#experience', id: 'experience' },
+    { label: 'Research', href: '/#research', id: 'research' },
     { label: 'Projects', href: '/#projects', id: 'projects' },
+    { label: 'Experience', href: '/#experience', id: 'experience' },
     { label: 'Contact', href: '/#contact', id: 'contact' },
 ];
 
@@ -35,7 +35,7 @@ const sidebarVariants = {
         x: 0,
         transition: {
             duration: DURATION.slow,
-            staggerChildren: 0.15,
+            staggerChildren: 0.1,
             ease: EASE
         }
     }
@@ -84,7 +84,7 @@ export function Sidebar() {
             initial="hidden"
             animate="visible"
             variants={sidebarVariants}
-            className="fixed bg-theme-bg left-0 top-0 h-screen w-24 flex flex-col items-center justify-between py-12 z-50 hidden lg:flex pointer-events-none"
+            className="fixed bg-theme-bg left-0 top-0 h-screen w-24 flex flex-col items-center justify-between py-10 z-50 hidden lg:flex pointer-events-none border-r border-theme-border/30"
         >
             {/* 1. Logo Section */}
             <motion.div
@@ -94,8 +94,7 @@ export function Sidebar() {
                 whileTap={{ scale: 0.95 }}
                 transition={{ duration: 0.3 }}
             >
-                <Link href="/" className="block relative w-16 h-16 flex items-center justify-center">
-                    {/* Masked Logo for Color Control */}
+                <Link href="/" className="block relative w-14 h-14 flex items-center justify-center">
                     <div
                         className="w-full h-full transition-colors duration-300"
                         style={{
@@ -114,24 +113,24 @@ export function Sidebar() {
             </motion.div>
 
             {/* 2. Navigation Section with Scientific Vertical Line */}
-            <div className="flex-1 flex flex-col items-center justify-center relative w-full pointer-events-auto">
+            <div className="flex-1 flex flex-col items-center justify-center relative w-full pointer-events-auto my-4">
                 {/* The vertical guide line with gradient */}
                 <motion.div
                     variants={lineVariants}
-                    className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-theme-text/20 to-transparent"
+                    className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-cyan-accent/20 to-transparent"
                 />
 
-                <nav className="z-10 py-8">
-                    <div className="flex flex-row gap-4 [writing-mode:vertical-lr] rotate-180 items-center">
-                        {[...navItems].reverse().map((item, i) => {
+                <nav className="z-10 py-4">
+                    <div className="flex flex-col gap-3 items-center">
+                        {navItems.map((item, i) => {
                             const isActive = activeSection === item.id;
                             return (
                                 <motion.div key={item.label} variants={itemVariants} custom={i} className="relative group">
                                     <Link
                                         href={item.href}
-                                        className={`relative text-[10px] font-body font-bold tracking-[0.25em] transition-all uppercase py-4 px-2 no-underline flex items-center justify-center rounded-full backdrop-blur-sm ${
+                                        className={`relative text-[9px] font-body font-bold tracking-[0.2em] transition-all uppercase py-2 px-2.5 no-underline flex items-center justify-center rounded-lg backdrop-blur-sm [writing-mode:vertical-lr] rotate-180 ${
                                             isActive
-                                                ? "text-cyan-accent bg-cyan-accent/10 border border-cyan-accent/40 shadow-glow-accent opacity-100"
+                                                ? "text-cyan-accent bg-cyan-accent/15 border border-cyan-accent/40 shadow-glow-accent opacity-100 font-extrabold"
                                                 : "text-theme-text opacity-50 hover:text-cyan-accent hover:opacity-100 bg-theme-bg/80 border border-transparent hover:border-cyan-accent/30"
                                         }`}
                                     >
@@ -139,7 +138,7 @@ export function Sidebar() {
                                     </Link>
                                     {/* Active / Hover Dot Indicator */}
                                     <span
-                                        className={`absolute -right-4 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-cyan-accent rounded-full transition-all duration-300 shadow-[0_0_8px_rgba(var(--theme-accent-rgb),0.8)] ${
+                                        className={`absolute -right-3 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-cyan-accent rounded-full transition-all duration-300 shadow-[0_0_8px_rgba(var(--theme-accent-rgb),0.8)] ${
                                             isActive ? "opacity-100 scale-125" : "opacity-0 group-hover:opacity-100"
                                         }`}
                                     />
@@ -152,7 +151,7 @@ export function Sidebar() {
 
             {/* 3. Social Icons - Absolute Extended Slider */}
             <div
-                className="relative z-50 mb-8 pointer-events-auto"
+                className="relative z-50 pointer-events-auto"
                 onMouseEnter={() => setIsSocialHovered(true)}
                 onMouseLeave={() => setIsSocialHovered(false)}
             >
@@ -160,14 +159,14 @@ export function Sidebar() {
                     {/* Trigger Button - Permanent Hub */}
                     <div
                         className={`
-                            relative z-20 w-12 h-12
+                            relative z-20 w-11 h-11
                             flex items-center justify-center
                             rounded-xl bg-theme-card border border-theme-border
-                            transition-all duration-300
+                            transition-all duration-300 cursor-pointer
                             ${isSocialHovered ? 'border-cyan-accent text-cyan-accent shadow-glow-accent' : 'text-theme-text opacity-50'}
                         `}
                     >
-                        <Share2 size={18} strokeWidth={1.5} />
+                        <Share2 size={16} strokeWidth={1.5} />
                     </div>
 
                     {/* The "Slider" Drawer - Absolutely Positioned Right */}
@@ -214,10 +213,10 @@ export function Sidebar() {
                                                     key={link.label}
                                                     initial={{ opacity: 0, scale: 0 }}
                                                     animate={{ opacity: 1, scale: 1 }}
-                                                    transition={{ delay: 0.1 + index * 0.05 }}
+                                                    transition={{ delay: 0.05 + index * 0.04 }}
                                                 >
                                                     <Link href={link.href} className={commonClasses}>
-                                                        <link.icon size={18} strokeWidth={1.5} />
+                                                        <link.icon size={16} strokeWidth={1.5} />
                                                         {tooltip}
                                                     </Link>
                                                 </motion.div>
@@ -232,10 +231,10 @@ export function Sidebar() {
                                                 rel="noopener noreferrer"
                                                 initial={{ opacity: 0, scale: 0 }}
                                                 animate={{ opacity: 1, scale: 1 }}
-                                                transition={{ delay: 0.1 + index * 0.05 }}
+                                                transition={{ delay: 0.05 + index * 0.04 }}
                                                 className={commonClasses}
                                             >
-                                                <link.icon size={18} strokeWidth={1.5} />
+                                                <link.icon size={16} strokeWidth={1.5} />
                                                 {tooltip}
                                             </motion.a>
                                         );
@@ -245,9 +244,6 @@ export function Sidebar() {
                         )}
                     </AnimatePresence>
                 </div>
-
-                {/* Vertical Line Anchor */}
-                <div className="absolute left-1/2 -translate-x-1/2 top-full w-[1px] h-12 bg-gradient-to-b from-theme-text/10 to-transparent mt-4 -z-10" />
             </div>
         </motion.aside>
     );

@@ -21,41 +21,11 @@ import avatar_1 from '/public/images/avatars/avatar_1.jpg';
 import { EASE, DURATION, VIEWPORT, springSnappy, sectionReveal, fadeUp, staggerContainer } from '@/lib/motion';
 
 import { publications } from '@/utils/data';
+import { EXPERIENCE_DATA } from '@/lib/resume-data';
 
 const publicationCategories = ["Journal", "Conference", "Poster"];
 
 const ITEMS_PER_PAGE = 6;
-
-const experiences = [
-    {
-        company: "Kyushu University",
-        role: "Research Student",
-        period: "2024 - Present",
-        description: "Conducting research on advanced algorithms and machine learning applications. Focusing on evolutionary strategies for neural architecture search.",
-        tags: ["Machine Learning", "Python", "Research"]
-    },
-    {
-        company: "Addo AI",
-        role: "Data Engineer Intern",
-        period: "June 2026 - Aug 2026",
-        description: "Designed and optimized ETL pipelines and data processing workflows for analytical queries.",
-        tags: ["Data Engineering", "ETL", "Python", "SQL"]
-    },
-    {
-        company: "Carecloud",
-        role: "Software Engineer",
-        period: "Feb 2023 - Sept 2023",
-        description: "Developed and maintained healthcare software solutions using .NET and Angular. Implemented FHIR standards for interoperability.",
-        tags: [".NET", "Angular", "Healthcare IT"]
-    },
-    {
-        company: "Immentia",
-        role: "Software Engineer",
-        period: "Aug 2022 - Jan 2023",
-        description: "Worked on full-stack web development projects for international clients. Built scalable APIs and responsive front-end interfaces.",
-        tags: ["React", "Node.js", "Full Stack"]
-    }
-];
 
 export default function HomePageLayout({ githubProjects = [] }) {
     const { introShown, setIntroShown } = useContext(AppContext);
@@ -402,6 +372,7 @@ export default function HomePageLayout({ githubProjects = [] }) {
                                                 src={avatar_1}
                                                 alt="Profile"
                                                 fill
+                                                sizes="(min-width: 512px) 480px, 100vw"
                                                 className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700"
                                             />
 
@@ -473,7 +444,7 @@ export default function HomePageLayout({ githubProjects = [] }) {
                         </section>
 
                         {/* Projects Section */}
-                        <section id="projects" className="flex flex-col justify-center max-w-7xl mx-auto w-full px-4 md:px-8 py-24 md:py-32 min-h-screen relative border-t border-theme-text/5">
+                        <section id="projects" className="flex flex-col justify-center max-w-7xl mx-auto w-full px-4 md:px-8 py-20 md:py-28 relative border-t border-theme-text/5">
                             <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                                 <motion.h2
                                     variants={sectionReveal}
@@ -571,7 +542,7 @@ export default function HomePageLayout({ githubProjects = [] }) {
                         </section>
 
                         {/* Skills Section */}
-                        <section id="skills" className="min-h-screen flex flex-col justify-center max-w-7xl mx-auto w-full px-4 md:px-8 py-24 md:py-32 relative border-t border-theme-text/5">
+                        <section id="skills" className="flex flex-col justify-center max-w-7xl mx-auto w-full px-4 md:px-8 py-20 md:py-28 relative border-t border-theme-text/5">
                             <motion.h2
                                 variants={sectionReveal}
                                 initial="hidden"
@@ -585,9 +556,15 @@ export default function HomePageLayout({ githubProjects = [] }) {
                         </section>
 
                         {/* Experience Section */}
-                        <section id="experience" className="min-h-screen flex flex-col justify-center max-w-5xl mx-auto w-full px-4 md:px-8 py-24 md:py-32 relative border-t border-theme-text/5">
-                            <h2 className="text-3xl md:text-5xl font-bold font-heading text-theme-text mb-8 md:mb-16">{t.experience.title} <span className="text-cyan-accent">{t.experience.highlight}</span></h2>
-                            <Timeline items={experiences} />
+                        <section id="experience" className="flex flex-col justify-center max-w-7xl mx-auto w-full px-4 md:px-8 py-20 md:py-28 relative border-t border-theme-text/5">
+                            <div className="space-y-4 mb-8">
+                                <span className="font-mono text-xs text-cyan-accent uppercase tracking-widest">[ CAREER TELEMETRY & TIMELINE ]</span>
+                                <h2 className="text-3xl md:text-5xl font-bold font-heading text-theme-text">{t.experience.title} <span className="text-cyan-accent">{t.experience.highlight}</span></h2>
+                                <p className="text-theme-text/70 text-base md:text-lg max-w-3xl font-light">
+                                    A track record of building high-concurrency backend services, engineering scalable data migration pipelines, and advancing explainable AI research in healthcare.
+                                </p>
+                            </div>
+                            <Timeline items={EXPERIENCE_DATA} />
                         </section>
 
                         {/* Contact Section */}

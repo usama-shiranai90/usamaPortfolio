@@ -87,6 +87,7 @@ export function Rirekisho({ data, photo }) {
                                 src={photo}
                                 alt="Profile"
                                 fill
+                                sizes="(min-width: 768px) 151px, 100px"
                                 style={{ objectFit: 'cover' }}
                             />
                         </div>
